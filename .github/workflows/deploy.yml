@@ -20,12 +20,34 @@ jobs:
       - name: Checkout your repository
         uses: actions/checkout@v4
 
-      # 🛠️ 追加：Node.js v22 を明示的にインストールする設定
+      # 1. 明示的に Node.js v22 をインストール
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'npm' # npmを使用している場合のキャッシュ有効化（pnpm/yarnなら適宜変更）
+          cache: 'npm' # pnpmやyarnを使っている場合はここを変更
 
-      - name: Install, build, and upload your site
-        uses: withastro/action@v3 # Nodeが入っていればそれを使ってビルドしてくれます
+      # 2. 依存パッケージのインストール
+      - name: Install dependencies
+        run: npm ci # もしくは npm install
+
+      # 3. Astroのビルドを実行
+      - name: Build site
+        run: npm run build
+
+      # 4. ビルドされた静的ファイルをPages用にアップロード
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist # Astroのデフォルト出力先
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
