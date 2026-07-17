@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { ContentsSchema } from './schema';
 
 const portfolioCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/posts' }),
@@ -11,7 +12,7 @@ const portfolioCollection = defineCollection({
     createdAt: z.coerce.date(),
     updatedAt: z.coerce.date().optional(),
 
-    contentType: z.enum(['project', 'blog', 'note']),
+    contentType: ContentsSchema,
     tags: z.array(z.string()).default([]),
     status: z.enum(['draft', 'published', 'archived']).default('published'),
     featured: z.boolean().default(false),
