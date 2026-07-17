@@ -1,10 +1,11 @@
 name: Deploy to GitHub Pages
 
 on:
-  # mainブランチにプッシュされたときに実行
   push:
-    branches: [ main ]
-  # GitHub上のActionsタブから手動で実行できるようにする設定
+    tags:
+      - 'v*'
+  issues:
+    types: [opened, edited, deleted]
   workflow_dispatch:
 
 # GitHub Actionsにページのデプロイを許可する権限設定
