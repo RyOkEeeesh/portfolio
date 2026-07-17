@@ -1,11 +1,10 @@
 ---
-import astroLogo from '@/assets/astro.svg';
 import background from '@/assets/background.svg';
 ---
 
 <div id="container">
   <img id="background" src={background.src} alt="" fetchpriority="high" />
-  <main>
+  <main class="center">
     <h1>Comming soon...</h1>
   </main>
 </div>
@@ -30,20 +29,11 @@ import background from '@/assets/background.svg';
 
   main {
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   h1 {
     font-size: 40px;
     margin-top: 0.25em;
-  }
-
-  @media screen and (max-height: 368px) {
-    #news {
-      display: none;
-    }
   }
 
   @media screen and (max-width: 768px) {
