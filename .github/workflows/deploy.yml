@@ -8,7 +8,6 @@ on:
     types: [opened, edited, deleted]
   workflow_dispatch:
 
-# GitHub Actionsにページのデプロイを許可する権限設定
 permissions:
   contents: read
   pages: write
@@ -17,30 +16,31 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'push' || 
+      github.event_name == 'workflow_dispatch' || 
+      (github.event_name == 'issues' && github.event.issue.user.login == github.repository_owner)
+    
     steps:
       - name: Checkout your repository
         uses: actions/checkout@v4
 
-      # 1. 明示的に Node.js v22 をインストール
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'npm' # pnpmやyarnを使っている場合はここを変更
+          cache: 'npm'
 
-      # 2. 依存パッケージのインストール
       - name: Install dependencies
-        run: npm ci # もしくは npm install
+        run: npm ci
 
-      # 3. Astroのビルドを実行
       - name: Build site
         run: npm run build
 
-      # 4. ビルドされた静的ファイルをPages用にアップロード
       - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist # Astroのデフォルト出力先
+          path: ./dist
 
   deploy:
     needs: build
