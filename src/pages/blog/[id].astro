@@ -2,20 +2,23 @@
 import type { CollectionEntry } from 'astro:content';
 import { getCollection, render } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
+import { ContentsSchema, StatusSchema } from '@/schema';
+import { POSTS } from '@/store';
 
 export async function getStaticPaths() {
-  const blogs = await getCollection('posts', (post: CollectionEntry<'posts'>) => {
-    return post.data.contentType === 'blog' && post.data.status === 'published';
-  });
+  const blogs = await getCollection(
+    POSTS,
+    post => post.data.contentType === ContentsSchema.enum.blog && post.data.status === StatusSchema.enum.published,
+  );
 
-  return blogs.map((post: CollectionEntry<'posts'>) => ({
+  return blogs.map(post => ({
     params: { id: post.id },
     props: { post },
   }));
 }
 
 interface Props {
-  post: CollectionEntry<'posts'>;
+  post: CollectionEntry<typeof POSTS>;
 }
 
 const { post } = Astro.props;
@@ -32,28 +35,11 @@ const { Content } = await render(post);
       <span style="color: #666;"
         >{post.data.createdAt.toLocaleDateString()}</span
       >
-      <h1
-        style="font-size: 2rem; margin-top: 5px; border-bottom: 2px solid #eee; padding-bottom: 10px;"
-      >
+      <h1 style="font-size: 2rem; margin-top: 5px; border-bottom: 2px solid #eee; padding-bottom: 10px;">
         {post.data.title}
       </h1>
 
       <Content />
     </article>
   </main>
-
-  <script is:inline type="module">
-    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
-    mermaid.initialize({ startOnLoad: false, theme: "neutral" });
-
-    const elements = document.querySelectorAll("pre.language-mermaid");
-    for (const el of elements) {
-      const code = el.querySelector("code").innerText;
-      const insertDiv = document.createElement("div");
-      insertDiv.className = "mermaid";
-      insertDiv.textContent = code;
-      el.replaceWith(insertDiv);
-    }
-    await mermaid.run();
-  </script>
 </Layout>

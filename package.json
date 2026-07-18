@@ -13,7 +13,9 @@
     "fmt": "npx biome check --write --unsafe ."
   },
   "dependencies": {
-    "astro": "^7.0.9",
+    "@astrojs/markdown-remark": "^7.2.1",
+    "astro": "^7.1.1",
+    "rehype-mermaid": "^3.0.0",
     "zod": "^4.4.3"
   },
   "allowScripts": {
@@ -21,6 +23,7 @@
     "fsevents@2.3.3": true
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.3"
+    "@biomejs/biome": "2.5.3",
+    "playwright": "^1.61.1"
   }
 }
