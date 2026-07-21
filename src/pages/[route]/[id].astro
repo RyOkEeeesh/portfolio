@@ -1,18 +1,19 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { getCollection, render } from 'astro:content';
+import { POSTS } from '@/constants';
 import Layout from '@/layouts/Layout.astro';
-import { ContentsSchema, StatusSchema } from '@/schema';
-import { POSTS } from '@/store';
+import { StatusSchema } from '@/schema';
 
 export async function getStaticPaths() {
-  const blogs = await getCollection(
-    POSTS,
-    post => post.data.contentType === ContentsSchema.enum.blog && post.data.status === StatusSchema.enum.published,
-  );
+  const blogs = await getCollection(POSTS, post => post.data.status === StatusSchema.enum.published);
 
   return blogs.map(post => ({
-    params: { id: post.id },
+    // route (contentType) と id (ファイルパス/Slug) の両方を返す
+    params: {
+      route: post.data.contentType,
+      id: post.id,
+    },
     props: { post },
   }));
 }
@@ -21,15 +22,18 @@ interface Props {
   post: CollectionEntry<typeof POSTS>;
 }
 
+const { route } = Astro.params;
 const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 
 <Layout title={post.data.title}>
   <main>
-    <a href="/blog">← 一覧へ戻る</a>
+    <a href={`/${route}`}>← 一覧へ戻る</a>
     <article class="markdown-body">
-      <span style="color: #666;">{post.data.createdAt.toLocaleDateString()}</span>
+      <span style="color: #666;"
+        >{post.data.createdAt.toLocaleDateString()}</span
+      >
       <h1>{post.data.title}</h1>
       <Content />
     </article>

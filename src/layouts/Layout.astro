@@ -51,22 +51,26 @@ const currentYear = Temporal.Now.plainDateISO().year;
 		<ClientRouter />
 
 		<script is:inline>
-      const applyTheme = () => {
-        // 将来coolieにするかも
-        const theme =
-          localStorage.getItem('theme') ??
-          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        document.documentElement.setAttribute('data-theme', theme);
-      };
+			const applyTheme = () => {
+				// 将来cookieにするかも
+				const theme =
+					localStorage.getItem("theme") ??
+					(window.matchMedia("(prefers-color-scheme: dark)").matches
+						? "dark"
+						: "light");
+				document.documentElement.setAttribute("data-theme", theme);
+			};
 
-      applyTheme();
-      document.addEventListener('astro:after-swap', applyTheme);
+			applyTheme();
+			document.addEventListener("astro:after-swap", applyTheme);
 		</script>
 	</head>
 	<body>
-    <dev class="contents center">
-      <slot />
-    </dev>
-		<footer><p>© {currentYear} <a href="https://github.com/RyOkEeeesh">kaji</a></p></footer>
+		<dev class="contents center">
+			<slot />
+		</dev>
+		<footer>
+			<p>© {currentYear} <a href="https://github.com/RyOkEeeesh" target="_blank" rel="noopener noreferrer">kaji</a></p>
+		</footer>
 	</body>
 </html>
