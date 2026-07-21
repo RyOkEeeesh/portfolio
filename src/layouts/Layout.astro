@@ -1,21 +1,22 @@
 ---
-import "@/styles/global.css";
-import { ClientRouter } from "astro:transitions";
+import '@/styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
-	title?: string;
-	description?: string;
-	image?: string;
+  title?: string;
+  description?: string;
+  image?: string;
 }
 
 const {
-	title = "ポートフォリオサイト",
-	description = "ポートフォリオサイトです。",
-	image = "/favicon.svg", //"/ogp.png", // 1200x630px 推奨
+  title = 'ポートフォリオサイト',
+  description = 'ポートフォリオサイトです。',
+  image = '/favicon.svg', //"/ogp.png", // 1200x630px 推奨
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogpURL = new URL(image, Astro.site);
+const currentYear = Temporal.Now.plainDateISO().year;
 ---
 
 <!doctype html>
@@ -46,18 +47,26 @@ const ogpURL = new URL(image, Astro.site);
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={ogpURL} />
+
 		<ClientRouter />
+
+		<script is:inline>
+      const applyTheme = () => {
+        // 将来coolieにするかも
+        const theme =
+          localStorage.getItem('theme') ??
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      };
+
+      applyTheme();
+      document.addEventListener('astro:after-swap', applyTheme);
+		</script>
 	</head>
 	<body>
-		<slot />
+    <dev class="contents center">
+      <slot />
+    </dev>
+		<footer><p>© {currentYear} <a href="https://github.com/RyOkEeeesh">kaji</a></p></footer>
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>

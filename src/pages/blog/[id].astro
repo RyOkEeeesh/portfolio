@@ -26,20 +26,24 @@ const { Content } = await render(post);
 ---
 
 <Layout title={post.data.title}>
-  <main
-    style="max-width: 700px; margin: 40px auto; padding: 0 20px; font-family: sans-serif; line-height: 1.7;"
-  >
+  <main>
     <a href="/blog">← 一覧へ戻る</a>
-
-    <article class="markdown-body" style="margin-top: 20px;">
-      <span style="color: #666;"
-        >{post.data.createdAt.toLocaleDateString()}</span
-      >
-      <h1 style="font-size: 2rem; margin-top: 5px; border-bottom: 2px solid #eee; padding-bottom: 10px;">
-        {post.data.title}
-      </h1>
-
+    <article class="markdown-body">
+      <span style="color: #666;">{post.data.createdAt.toLocaleDateString()}</span>
+      <h1>{post.data.title}</h1>
       <Content />
     </article>
   </main>
 </Layout>
+
+<style>
+  article {
+    margin-top: 20px;
+  }
+  h1 {
+    font-size: 2rem;
+    margin-top: 5px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+  }
+</style>

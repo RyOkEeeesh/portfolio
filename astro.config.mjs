@@ -1,5 +1,5 @@
-import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { defineConfig } from 'astro/config';
 import rehypeMermaid from 'rehype-mermaid';
 
 export default defineConfig({

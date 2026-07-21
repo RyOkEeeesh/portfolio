@@ -14,33 +14,20 @@ blogs.sort((a, b) => b.data.createdAt.valueOf() - a.data.createdAt.valueOf());
 ---
 
 <Layout title="ブログ一覧">
-  <main
-    style="max-width: 600px; margin: 40px auto; padding: 0 20px; font-family: sans-serif;"
-  >
+  <main>
     <a href="/">← トップへ戻る</a>
-    <h1 style="border-bottom: 2px solid #eee; padding-bottom: 10px;">Blog</h1>
-
+    <h1>Blog</h1>
+  
     {
       blogs.length === 0 ? (
         <p>記事がありません。</p>
       ) : (
-        <ul style="list-style: none; padding: 0;">
+        <ul>
           {blogs.map(post => (
-            <li style="margin-bottom: 20px; border: 1px solid #ddd; padding: 15px; border-radius: 8px;">
-              <span style="font-size: 0.85rem; color: #666;">
-                {post.data.createdAt.toLocaleDateString()}
-              </span>
-              <h2 style="margin: 5px 0 10px 0; font-size: 1.3rem;">
-                <a
-                  href={`/blog/${post.id}`}
-                  style="color: #0066cc; text-decoration: none;"
-                >
-                  {post.data.title}
-                </a>
-              </h2>
-              <p style="margin: 0; color: #444; font-size: 0.95rem;">
-                {post.data.description}
-              </p>
+            <li>
+              <span>{post.data.createdAt.toLocaleDateString()}</span>
+              <h2><a href={`/blog/${post.id}`}>{post.data.title}</a></h2>
+              <p>{post.data.description}</p>
             </li>
           ))}
         </ul>
@@ -48,3 +35,37 @@ blogs.sort((a, b) => b.data.createdAt.valueOf() - a.data.createdAt.valueOf());
     }
   </main>
 </Layout>
+
+<style>
+  h1 {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    li {
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 8px;
+      span{
+        font-size: 0.85rem;
+        color: #666;
+      }
+      h2 {
+        margin: 5px 0 10px 0;
+        font-size: 1.3rem;
+        a {
+          color: #0066cc;
+          text-decoration: none;
+        }
+      }
+      p {
+        margin: 0;
+        color: #444;
+        font-size: 0.95rem;
+      }
+    }
+  }
+</style>
