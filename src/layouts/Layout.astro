@@ -17,7 +17,7 @@ const {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogpURL = new URL(image, Astro.site);
-const currentYear = Temporal.Now.plainDateISO().year;
+const currentYear = Temporal.Now.plainDateISO('Asia/Tokyo').year;
 ---
 
 <!doctype html>
