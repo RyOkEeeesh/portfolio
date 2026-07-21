@@ -1,23 +1,23 @@
 ---
-import '@/styles/global.css';
-import { ClientRouter } from 'astro:transitions';
-import { Temporal } from '@js-temporal/polyfill';
+import "@/styles/global.css";
+import { ClientRouter } from "astro:transitions";
+import { Temporal } from "@js-temporal/polyfill";
 
 interface Props {
-  title?: string;
-  description?: string;
-  image?: string;
+	title?: string;
+	description?: string;
+	image?: string;
 }
 
 const {
-  title = 'ポートフォリオサイト',
-  description = 'ポートフォリオサイトです。',
-  image = '/favicon.svg', //"/ogp.png", // 1200x630px 推奨
+	title = "ポートフォリオサイト",
+	description = "ポートフォリオサイトです。",
+	image = "/ogp.png", // 1200x630px 推奨
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogpURL = new URL(image, Astro.site);
-const currentYear = Temporal.Now.plainDateISO('Asia/Tokyo').year;
+const currentYear = Temporal.Now.plainDateISO("Asia/Tokyo").year;
 ---
 
 <!doctype html>
@@ -71,7 +71,13 @@ const currentYear = Temporal.Now.plainDateISO('Asia/Tokyo').year;
 			<slot />
 		</div>
 		<footer>
-			<p>© {currentYear} <a href="https://github.com/RyOkEeeesh" target="_blank" rel="noopener noreferrer">kaji</a></p>
+			<p>
+				© {currentYear}
+				<a
+					href="https://github.com/RyOkEeeesh"
+					target="_blank"
+					rel="noopener noreferrer">kaji</a>
+			</p>
 		</footer>
 	</body>
 </html>

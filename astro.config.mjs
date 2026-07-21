@@ -4,13 +4,14 @@ import rehypeMermaid from 'rehype-mermaid';
 
 export default defineConfig({
   site: 'https://kaji.blog',
+  trailingSlash: 'never',
+  integrations: [sitemap()],
+
   markdown: {
     syntaxHighlight: {
       type: 'shiki',
       excludeLangs: ['mermaid'],
     },
-    trailingSlash: 'never',
-    integrations: [sitemap()],
     rehypePlugins: [
       [
         rehypeMermaid,
