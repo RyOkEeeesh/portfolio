@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import { POSTS } from '@/constants';
 import Layout from '@/layouts/Layout.astro';
-import { ContentsSchema, StatusSchema } from '@/schema';
+import { ContentsSchema, StatusSchema } from '@/schema/posts';
 
 export async function getStaticPaths() {
   const allPosts = await getCollection(POSTS, post => post.data.status === StatusSchema.enum.published);

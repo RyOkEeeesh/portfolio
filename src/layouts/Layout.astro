@@ -1,23 +1,28 @@
 ---
-import "@/styles/global.css";
-import { ClientRouter } from "astro:transitions";
-import { Temporal } from "@js-temporal/polyfill";
+import '@/styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import { Temporal } from '@js-temporal/polyfill';
+import type { Person, Thing, WithContext } from 'schema-dts';
 
 interface Props {
-	title?: string;
-	description?: string;
-	image?: string;
+  title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+  jsonld?: WithContext<Thing> | WithContext<Thing>[];
 }
 
 const {
-	title = "ポートフォリオサイト",
-	description = "ポートフォリオサイトです。",
-	image = "/ogp.png", // 1200x630px 推奨
+  title = 'ポートフォリオサイト',
+  description = 'ポートフォリオサイトです。',
+  image = '/ogp.png', // 1200x630px 推奨
+  noindex = false,
+  jsonld,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogpURL = new URL(image, Astro.site);
-const currentYear = Temporal.Now.plainDateISO("Asia/Tokyo").year;
+const currentYear = Temporal.Now.plainDateISO('Asia/Tokyo').year;
 ---
 
 <!doctype html>
@@ -36,6 +41,7 @@ const currentYear = Temporal.Now.plainDateISO("Asia/Tokyo").year;
 
 		<title>{title}</title>
 		<meta name="description" content={description} />
+		{noindex && <meta name="robots" content="noindex, nofollow" />}
 		<link rel="canonical" href={canonicalURL} />
 
 		<meta property="og:type" content="website" />
@@ -50,6 +56,12 @@ const currentYear = Temporal.Now.plainDateISO("Asia/Tokyo").year;
 		<meta name="twitter:image" content={ogpURL} />
 
 		<ClientRouter />
+
+		{
+			jsonld && (
+				<script type="application/ld+json" set:html={JSON.stringify(jsonld)} />
+			)
+		}
 
 		<script is:inline>
 			const applyTheme = () => {
@@ -76,7 +88,8 @@ const currentYear = Temporal.Now.plainDateISO("Asia/Tokyo").year;
 				<a
 					href="https://github.com/RyOkEeeesh"
 					target="_blank"
-					rel="noopener noreferrer">kaji</a>
+					rel="noopener noreferrer">kaji</a
+				>
 			</p>
 		</footer>
 	</body>

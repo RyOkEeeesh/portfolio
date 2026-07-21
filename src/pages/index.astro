@@ -1,8 +1,18 @@
 ---
-import Welcome from '@/components/Welcome.astro';
-import Layout from '@/layouts/Layout.astro';
+import Welcome from "@/components/Welcome.astro";
+import Layout from "@/layouts/Layout.astro";
+import type { Thing, WithContext } from "schema-dts";
+
+const jsonld: WithContext<Thing> = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "kaji",
+  url: "https://kaji.blog",
+  sameAs: ["https://github.com/RyOkEeeesh"],
+  jobTitle: "Student",
+};
 ---
 
-<Layout>
+<Layout jsonld={jsonld}>
   <Welcome />
 </Layout>

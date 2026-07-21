@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.3",
-    "playwright": "^1.61.1"
+    "playwright": "^1.61.1",
+    "schema-dts": "^2.0.0"
   }
 }
