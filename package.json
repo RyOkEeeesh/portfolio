@@ -15,7 +15,6 @@
   "dependencies": {
     "@astrojs/markdown-remark": "^7.2.1",
     "@astrojs/sitemap": "^3.7.3",
-    "@js-temporal/polyfill": "^0.5.1",
     "astro": "^7.1.1",
     "rehype-mermaid": "^3.0.0",
     "zod": "^4.4.3"
