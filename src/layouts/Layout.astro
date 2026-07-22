@@ -2,7 +2,7 @@
 import '@/styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import { Temporal } from '@js-temporal/polyfill';
-import type { Person, Thing, WithContext } from 'schema-dts';
+import type { Thing, WithContext } from 'schema-dts';
 
 interface Props {
   title?: string;
@@ -55,6 +55,10 @@ const currentYear = Temporal.Now.plainDateISO('Asia/Tokyo').year;
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={ogpURL} />
 
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet" />
+
 		<ClientRouter />
 
 		{
@@ -84,7 +88,12 @@ const currentYear = Temporal.Now.plainDateISO('Asia/Tokyo').year;
 		</div>
 		<footer>
 			<p>
-				© {currentYear} <a href="https://github.com/RyOkEeeesh" target="_blank" rel="noopener noreferrer">kaji</a>
+				© {currentYear}
+				<a
+					href="https://github.com/RyOkEeeesh"
+					target="_blank"
+					rel="noopener noreferrer">kaji</a
+				>
 			</p>
 		</footer>
 	</body>

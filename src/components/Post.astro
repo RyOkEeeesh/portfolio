@@ -1,0 +1,37 @@
+---
+import { Image } from 'astro:assets';
+import thumbnail from '@/assets/thumbnail.png';
+import { getImgName, getPostUrl } from '@/lib';
+import type { PostsType } from '@/types';
+
+interface Props {
+  post: PostsType;
+}
+
+const { post } = Astro.props;
+---
+
+<section>
+  <div class="">
+    <div class="">
+      <a href={getPostUrl(post)}>
+        <div class="">
+          <div class="">
+            <Image
+              class="post-img"
+              src={post.data.thumbnail ?? thumbnail}
+              alt={`${post.id}のサムネイル`}
+              format="avif"
+              quality={80}
+              loading="eager"
+              inferSize
+              transition:name={getImgName(post)}
+            />
+          </div>
+          <h3>{post.id}</h3>
+          <p><span>{post.data.createdAt.toLocaleDateString()}</span></p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>

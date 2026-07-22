@@ -1,15 +1,17 @@
 ---
-import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
+import thumbnail from '@/assets/thumbnail.png';
 import { POSTS } from '@/constants';
 import Layout from '@/layouts/Layout.astro';
+import { getImgName, getPostUrl } from '@/lib';
 import { StatusSchema } from '@/schema/posts';
+import type { PostsType } from '@/types';
 
 export async function getStaticPaths() {
   const blogs = await getCollection(POSTS, post => post.data.status === StatusSchema.enum.published);
 
   return blogs.map(post => ({
-    // route (contentType) と id (ファイルパス/Slug) の両方を返す
     params: {
       route: post.data.contentType,
       id: post.id,
@@ -19,7 +21,7 @@ export async function getStaticPaths() {
 }
 
 interface Props {
-  post: CollectionEntry<typeof POSTS>;
+  post: PostsType;
 }
 
 const { route } = Astro.params;
@@ -31,9 +33,17 @@ const { Content } = await render(post);
   <main>
     <a href={`/${route}`}>← 一覧へ戻る</a>
     <article class="markdown-body">
-      <span style="color: #666;"
-        >{post.data.createdAt.toLocaleDateString()}</span
-      >
+      <Image
+        class="post-img"
+        src={post.data.thumbnail ?? thumbnail}
+        alt={`${post.id}のサムネイル`}
+        format="avif"
+        quality={80}
+        loading="eager"
+        inferSize
+        transition:name={getImgName(post)}
+      />
+      <span>{post.data.createdAt.toLocaleDateString()}</span>
       <h1>{post.data.title}</h1>
       <Content />
     </article>
@@ -43,6 +53,9 @@ const { Content } = await render(post);
 <style>
   article {
     margin-top: 20px;
+    span {
+      color: #666;
+    }
   }
   h1 {
     font-size: 2rem;

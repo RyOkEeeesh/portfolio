@@ -1,0 +1,75 @@
+---
+import { getCollection } from 'astro:content';
+import Post from '@/components/Post.astro';
+import { POSTS } from '@/constants';
+import Layout from '@/layouts/Layout.astro';
+import { ContentsSchema, StatusSchema } from '@/schema/posts';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection(POSTS, post => post.data.status === StatusSchema.enum.published);
+
+  return ContentsSchema.options.map(route => {
+    const filteredBlogs = allPosts.filter(post => post.data.contentType === route);
+    filteredBlogs.sort((a, b) => b.data.createdAt.valueOf() - a.data.createdAt.valueOf());
+
+    return {
+      params: { route },
+      props: { blogs: filteredBlogs },
+    };
+  });
+}
+
+const { route } = Astro.params;
+const { blogs } = Astro.props;
+---
+
+<Layout title={`${route}一覧`}>
+  <main>
+    <a href="/">← トップへ戻る</a>
+    <h1>{route}</h1>
+    {
+      blogs.length === 0 ? (
+        <p>記事がありません。</p>
+      ) : (
+        <ul>
+          {blogs.map(post => <Post post={post}/>)}
+        </ul>
+      )
+    }
+  </main>
+</Layout>
+
+<style>
+  h1 {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    text-transform: capitalize;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    li {
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 8px;
+      span {
+        font-size: 0.85rem;
+        color: #666;
+      }
+      h2 {
+        margin: 5px 0 10px 0;
+        font-size: 1.3rem;
+        a {
+          color: #0066cc;
+          text-decoration: none;
+        }
+      }
+      p {
+        margin: 0;
+        color: #444;
+        font-size: 0.95rem;
+      }
+    }
+  }
+</style>

@@ -6,22 +6,23 @@ import { ContentsSchema, StatusSchema } from './schema/posts';
 
 const portfolioCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: `./src/${POSTS}` }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    thumbnail: z.string().default('/images/default-thumbnail.png'),
-    createdAt: z.coerce.date(),
-    updatedAt: z.coerce.date().optional(),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      thumbnail: image().optional(),
+      createdAt: z.coerce.date(),
+      updatedAt: z.coerce.date().optional(),
 
-    contentType: ContentsSchema,
-    tags: z.array(z.string()).default([]),
-    status: StatusSchema.default('published'),
-    featured: z.boolean().default(false),
+      contentType: ContentsSchema,
+      tags: z.array(z.string()).default([]),
+      status: StatusSchema.default('published'),
+      featured: z.boolean().default(false),
 
-    issueNumber: z.number(),
-  }),
+      issueNumber: z.number(),
+    }),
 });
 
 export const collections = {
-  posts: portfolioCollection,
+  [POSTS]: portfolioCollection,
 };

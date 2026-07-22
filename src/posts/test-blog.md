@@ -1,7 +1,7 @@
 ---
 title: "初めてのテスト投稿"
 description: "これはローカルでテストするための記事です。"
-thumbnail: "/images/default-thumbnail.png"
+# thumbnail: "/images/default-thumbnail.png"
 createdAt: "2026-07-15"
 contentType: "blog"
 tags: ["astro"]

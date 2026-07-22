@@ -1,7 +1,7 @@
 ---
 title: "mermaidテスト"
 description: "マーメイドのテストをしてます"
-thumbnail: "/images/default-thumbnail.png"
+# thumbnail: "/images/default-thumbnail.png"
 createdAt: "2026-07-15"
 contentType: "blog"
 tags: ["mermaid"]
