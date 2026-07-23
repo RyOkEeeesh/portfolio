@@ -1,4 +1,6 @@
 :root {
+  --header-h: 36px;
+  --content-max-w: 960px;/* 要調整 */
   --footer-h: 20px;
   --footer-clr: #4b5563;
 }
@@ -43,9 +45,32 @@ svg {
   max-width: 100%;
 }
 
+li {
+  list-style: none;
+}
+
+header {
+  width: 100%;
+  height: var(--header-h);
+
+  .header-container {
+    width: 100%;
+    max-width: var(--content-max-w); 
+    display: flex;
+    justify-content: space-between;
+  }
+
+  ul {
+    text-decoration:none;
+    display: flex;
+    gap: 1.5rem;
+  }
+}
+
+
 .contents {
   width: 100%;
-  min-height: calc(100vh - var(--footer-h));
+  min-height: calc(100vh - var(--header-h) - var(--footer-h));
 }
 
 main {
