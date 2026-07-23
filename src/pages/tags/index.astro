@@ -13,13 +13,13 @@ const tags = await getTags();
       tags.length === 0 ? (
         <p>タグがありません。</p>
       ) : (
-        <article>
+        <ul>
           {tags.map((tag) => (
             <li>
               <a href={`/tags/${tag}`}>{tag}</a>
             </li>
           ))}
-        </article>
+        </ul>
       )
     }
   </main>

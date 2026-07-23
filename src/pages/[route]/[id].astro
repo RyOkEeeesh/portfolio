@@ -30,8 +30,6 @@ const { Content } = await render(post);
         class="post-img"
         src={post.data.thumbnail ?? thumbnail}
         alt={`${post.id}のサムネイル`}
-        format="avif"
-        quality={80}
         loading="eager"
         inferSize
         transition:name={getImgName(post)}
