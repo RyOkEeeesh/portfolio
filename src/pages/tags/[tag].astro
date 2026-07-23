@@ -1,0 +1,53 @@
+---
+import Post from '@/components/Post.astro';
+import Layout from '@/layouts/Layout.astro';
+import { getPosts, getTags } from '@/lib';
+
+export async function getStaticPaths() {
+  const allPost = await getPosts();
+  const tags = await getTags();
+
+  return tags.map(tag => {
+    const posts = allPost.filter(post => post.data.tags.includes(tag));
+    return {
+      params: { tag },
+      props: { posts, tag },
+    };
+  });
+}
+
+const { posts, tag } = Astro.props;
+---
+
+<Layout title={tag}>
+  <main>
+    <a href="/tags">← タグ一覧</a>
+    <h1>{tag}</h1>
+    {
+      posts.length === 0 ? (
+        <p>記事がありません。</p>
+      ) : (
+        <article>
+          {posts.map((post) => (
+            <Post post={post} />
+          ))}
+        </article>
+      )
+    }
+  </main>
+</Layout>
+
+<style>
+  article {
+    margin-top: 20px;
+    span {
+      color: #666;
+    }
+  }
+  h1 {
+    font-size: 2rem;
+    margin-top: 5px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+  }
+</style>

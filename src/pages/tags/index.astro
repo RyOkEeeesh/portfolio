@@ -1,46 +1,25 @@
 ---
-import { getCollection } from 'astro:content';
-import { POSTS } from '@/constants';
 import Layout from '@/layouts/Layout.astro';
-import { ContentsSchema, StatusSchema } from '@/schema/posts';
+import { getTags } from '@/lib';
 
-export async function getStaticPaths() {
-  const allPosts = await getCollection(POSTS, post => post.data.status === StatusSchema.enum.published);
-
-  return ContentsSchema.options.map(route => {
-    const filteredBlogs = allPosts.filter(post => post.data.contentType === route);
-    filteredBlogs.sort((a, b) => b.data.createdAt.valueOf() - a.data.createdAt.valueOf());
-
-    return {
-      params: { route },
-      props: { blogs: filteredBlogs },
-    };
-  });
-}
-
-const { route } = Astro.params;
-const { blogs } = Astro.props;
+const tags = await getTags();
 ---
 
-<Layout title={`${route}一覧`}>
+<Layout title={"タグ一覧"}>
   <main>
     <a href="/">← トップへ戻る</a>
-    <h1>{route}</h1>
+    <h1>タグ一覧</h1>
     {
-      blogs.length === 0 ? (
-        <p>記事がありません。</p>
+      tags.length === 0 ? (
+        <p>タグがありません。</p>
       ) : (
-        <ul>
-          {blogs.map((post) => (
+        <article>
+          {tags.map((tag) => (
             <li>
-              <span>{post.data.createdAt.toLocaleDateString()}</span>
-              <h2>
-                <a href={`/${route}/${post.id}`}>{post.data.title}</a>
-              </h2>
-              <p>{post.data.description}</p>
+              <a href={`/tags/${tag}`}>{tag}</a>
             </li>
           ))}
-        </ul>
+        </article>
       )
     }
   </main>

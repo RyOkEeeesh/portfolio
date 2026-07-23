@@ -1,1 +1,1 @@
-export * from './getPostAttr';
+export * from './posts';

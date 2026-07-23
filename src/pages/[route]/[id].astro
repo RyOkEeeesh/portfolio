@@ -1,27 +1,20 @@
 ---
 import { Image } from 'astro:assets';
-import { getCollection, render } from 'astro:content';
+import { render } from 'astro:content';
 import thumbnail from '@/assets/thumbnail.png';
-import { POSTS } from '@/constants';
 import Layout from '@/layouts/Layout.astro';
-import { getImgName, getPostUrl } from '@/lib';
-import { StatusSchema } from '@/schema/posts';
-import type { PostsType } from '@/types';
+import { getImgName, getPosts } from '@/lib';
 
 export async function getStaticPaths() {
-  const blogs = await getCollection(POSTS, post => post.data.status === StatusSchema.enum.published);
+  const posts = await getPosts();
 
-  return blogs.map(post => ({
+  return posts.map(post => ({
     params: {
       route: post.data.contentType,
       id: post.id,
     },
     props: { post },
   }));
-}
-
-interface Props {
-  post: PostsType;
 }
 
 const { route } = Astro.params;
@@ -31,7 +24,7 @@ const { Content } = await render(post);
 
 <Layout title={post.data.title}>
   <main>
-    <a href={`/${route}`}>← 一覧へ戻る</a>
+    <button type="button" class="back-link"> ← 戻る </button>
     <article class="markdown-body">
       <Image
         class="post-img"
@@ -48,6 +41,14 @@ const { Content } = await render(post);
       <Content />
     </article>
   </main>
+
+  <script>
+    document.addEventListener("astro:page-load", () => {
+      document.querySelector(".back-link")?.addEventListener("click", () => {
+        history.back();
+      });
+    });
+  </script>
 </Layout>
 
 <style>
