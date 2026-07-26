@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import { render } from 'astro:content';
 import thumbnail from '@/assets/thumbnail.png';
 import Layout from '@/layouts/Layout.astro';
+import Title from '@/components/Title.astro';
 import { getImgName, getPosts } from '@/lib';
 
 export async function getStaticPaths() {
@@ -17,7 +18,6 @@ export async function getStaticPaths() {
   }));
 }
 
-const { route } = Astro.params;
 const { post } = Astro.props;
 const { Content } = await render(post);
 ---
@@ -35,11 +35,10 @@ const { Content } = await render(post);
         transition:name={getImgName(post)}
       />
       <span>{post.data.createdAt.toLocaleDateString()}</span>
-      <h1>{post.data.title}</h1>
+      <Title>{post.data.title}</Title>
       <Content />
     </article>
   </main>
-
   <script>
     document.addEventListener("astro:page-load", () => {
       document.querySelector(".back-link")?.addEventListener("click", () => {
@@ -48,18 +47,3 @@ const { Content } = await render(post);
     });
   </script>
 </Layout>
-
-<style>
-  article {
-    margin-top: 20px;
-    span {
-      color: #666;
-    }
-  }
-  h1 {
-    font-size: 2rem;
-    margin-top: 5px;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-  }
-</style>

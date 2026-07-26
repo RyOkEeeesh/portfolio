@@ -26,7 +26,7 @@ const { post } = Astro.props;
               transition:name={getImgName(post)}
             />
           </div>
-          <h3>{post.id}</h3>
+          <h3>{post.data.title}</h3>
           <p><span>{post.data.createdAt.toLocaleDateString()}</span></p>
         </div>
       </a>

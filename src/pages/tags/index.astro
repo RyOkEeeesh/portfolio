@@ -1,5 +1,6 @@
 ---
 import Layout from '@/layouts/Layout.astro';
+import Title from '@/components/Title.astro';
 import { getTags } from '@/lib';
 
 const tags = await getTags();
@@ -8,7 +9,7 @@ const tags = await getTags();
 <Layout title={"タグ一覧"}>
   <main>
     <a href="/">← トップへ戻る</a>
-    <h1>タグ一覧</h1>
+    <Title>タグ一覧</Title>
     {
       tags.length === 0 ? (
         <p>タグがありません。</p>
@@ -24,38 +25,3 @@ const tags = await getTags();
     }
   </main>
 </Layout>
-
-<style>
-  h1 {
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-    text-transform: capitalize;
-  }
-  ul {
-    list-style: none;
-    padding: 0;
-    li {
-      margin-bottom: 20px;
-      border: 1px solid #ddd;
-      padding: 15px;
-      border-radius: 8px;
-      span {
-        font-size: 0.85rem;
-        color: #666;
-      }
-      h2 {
-        margin: 5px 0 10px 0;
-        font-size: 1.3rem;
-        a {
-          color: #0066cc;
-          text-decoration: none;
-        }
-      }
-      p {
-        margin: 0;
-        color: #444;
-        font-size: 0.95rem;
-      }
-    }
-  }
-</style>

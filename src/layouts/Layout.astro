@@ -55,12 +55,9 @@ const currentYear = Temporal.Now.plainDateISO("Asia/Tokyo").year;
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={ogpURL} />
 
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Noto+Sans+JP:wght@100..900&display=swap"
-			rel="stylesheet"
-		/>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=LINE+Seed+JP:wght@100;400;700;800&family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
 
 		<ClientRouter />
 
@@ -75,31 +72,54 @@ const currentYear = Temporal.Now.plainDateISO("Asia/Tokyo").year;
 		}
 
 		<script is:inline>
-			const applyTheme = () => {
-				// 将来cookieにするかも
-				const theme =
-					localStorage.getItem("theme") ??
-					(window.matchMedia("(prefers-color-scheme: dark)").matches
-						? "dark"
-						: "light");
-				document.documentElement.setAttribute("data-theme", theme);
+			const themeKey = 'theme';
+			const light = 'light';
+			const dark = 'dark';
+
+			const getInitTheme = () =>  localStorage.getItem(themeKey) ?? (window.matchMedia('(prefers-color-scheme: dark)').matches ? dark : light);
+
+			const applyTheme = (theme) => {
+				document.documentElement.setAttribute(`data-${themeKey}`, theme);
+				localStorage.setItem(themeKey, theme);
 			};
 
-			applyTheme();
-			document.addEventListener("astro:after-swap", applyTheme);
+			applyTheme(getInitTheme());
+
+			document.addEventListener('astro:after-swap', () => {
+				applyTheme(getInitTheme());
+			});
+
+			document.addEventListener('astro:page-load', () => {
+				const btn = document.querySelector('.theme-btn');
+
+				if (!btn || btn.dataset.hasThemeListener) return;
+				btn.dataset.hasThemeListener = 'true';
+
+				btn.addEventListener('click', () => {
+					const currentTheme = document.documentElement.getAttribute(`data-${themeKey}`);
+					const nextTheme = currentTheme === dark ? light : dark;
+					applyTheme(nextTheme);
+				});
+			});
 		</script>
 	</head>
 	<body>
 		<header class="center" transition:persist>
 			<div class="header-container">
-				<h1><a href="/">kaji.blog</a></h1>
+				<h1><a class="top__a" href="/">kaji.blog</a></h1>
 				<nav>
 					<ul>
+						<li><a href="/about">about</a></li>
 						<li><a href="/project">project</a></li>
 						<li><a href="/blog">blog</a></li>
 						<li><a href="/note">note</a></li>
 						<li><a href="/tags">tags</a></li>
 					</ul>
+					<div class="center">
+						<button class="theme-btn canter" type="button">
+							<span class="theme-icon" />
+						</button>
+				</div>
 				</nav>
 			</div>
 		</header>
@@ -107,7 +127,7 @@ const currentYear = Temporal.Now.plainDateISO("Asia/Tokyo").year;
 			<slot />
 		</div>
 		<footer transition:persist>
-			<p>© {currentYear} <a href="https://github.com/RyOkEeeesh" target="_blank" rel="noopener noreferrer">kaji</a></p>
+			<p>© {currentYear} <a href="https://github.com/RyOkEeeesh/portfolio" target="_blank" rel="noopener noreferrer">kaji</a></p>
 		</footer>
 	</body>
 </html>

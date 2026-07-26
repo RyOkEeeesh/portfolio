@@ -1,8 +1,10 @@
 :root {
-  --header-h: 36px;
-  --content-max-w: 960px;/* 要調整 */
-  --footer-h: 20px;
+  --header-h: 3.5rem;
+  --content-min-w: 300px;
+  --content-max-w: 960px; /* 要調整 */
+  --footer-h: 1.2rem;
   --footer-clr: #4b5563;
+  --nav-gap: 1.2rem;
 }
 
 :root[data-theme="light"] {
@@ -24,14 +26,15 @@
 }
 
 html {
-  font-family: "Noto Sans JP", sans-serif; /* "JetBrains Mono", monospace; */
+  font-family: "Noto Sans JP", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 body {
+  position: relative;
   background-color: var(--bg-main-clr);
   color: var(--txt-main-clr);
 }
@@ -43,38 +46,92 @@ canvas,
 svg {
   display: block;
   max-width: 100%;
+  color: var(--txt-main-clr);
 }
 
 li {
   list-style: none;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  background-color: transparent;
+  color: inherit;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+}
+
 header {
+  position: fixed;
   width: 100%;
   height: var(--header-h);
+  font-family: "LINE Seed JP", sans-serif;
+  top: 0;
+  left: 0;
+  padding: 0 1.5rem;
+}
 
-  .header-container {
-    width: 100%;
-    max-width: var(--content-max-w); 
-    display: flex;
-    justify-content: space-between;
-  }
+.top__a {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.header-container {
+  width: 100%;
+  max-width: var(--content-max-w);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav {
+  height: var(--header-h);
+  display: flex;
+  gap: var(--nav-gap);
+  align-items: center;
 
   ul {
-    text-decoration:none;
+    text-decoration: none;
     display: flex;
-    gap: 1.5rem;
+    gap: var(--nav-gap);
   }
+}
+
+.theme-btn {
+  padding-top: 0.4rem;
+}
+
+.theme-icon {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  -webkit-mask: url('/img/light-mode.svg') no-repeat center / contain;
+  mask: url('/img/light-mode.svg') no-repeat center / contain;
+  background-color: var(--txt-main-clr);
+}
+
+:root[data-theme="dark"] .theme-icon {
+  -webkit-mask-image: url('/img/dark-mode.svg');
+  mask-image: url('/img/dark-mode.svg');
 }
 
 
 .contents {
   width: 100%;
-  min-height: calc(100vh - var(--header-h) - var(--footer-h));
+  min-height: calc(100vh - var(--footer-h));
+  padding: var(--header-h);
 }
 
 main {
-  max-width: 600px;
+  width: 100%;
+  min-width: var(--content-min-w);
+  max-width: var(--content-max-w);
 }
 
 footer {
@@ -99,4 +156,14 @@ footer {
 
 .post-img {
   height: auto;
+}
+
+.title {
+  font-family: "LINE Seed JP", sans-serif;
+}
+
+.sub-txt {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 300;
+  color: #666;
 }

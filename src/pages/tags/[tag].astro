@@ -1,6 +1,7 @@
 ---
 import Post from '@/components/Post.astro';
 import Layout from '@/layouts/Layout.astro';
+import Title from '@/components/Title.astro';
 import { getPosts, getTags } from '@/lib';
 
 export async function getStaticPaths() {
@@ -22,7 +23,7 @@ const { posts, tag } = Astro.props;
 <Layout title={tag}>
   <main>
     <a href="/tags">← タグ一覧</a>
-    <h1>{tag}</h1>
+    <Title>{tag}</Title>
     {
       posts.length === 0 ? (
         <p>記事がありません。</p>
@@ -36,18 +37,3 @@ const { posts, tag } = Astro.props;
     }
   </main>
 </Layout>
-
-<style>
-  article {
-    margin-top: 20px;
-    span {
-      color: #666;
-    }
-  }
-  h1 {
-    font-size: 2rem;
-    margin-top: 5px;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-  }
-</style>

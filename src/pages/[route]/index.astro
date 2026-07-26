@@ -1,6 +1,7 @@
 ---
 import Post from '@/components/Post.astro';
 import Layout from '@/layouts/Layout.astro';
+import Title from '@/components/Title.astro';
 import { getPosts } from '@/lib';
 import { ContentsSchema } from '@/schema/posts';
 
@@ -25,7 +26,7 @@ const { posts } = Astro.props;
 <Layout title={`${route}一覧`}>
   <main>
     <a href="/">← トップへ戻る</a>
-    <h1>{route}</h1>
+    <Title>{route}</Title>
     {
       posts.length === 0 ? (
         <p>記事がありません。</p>
@@ -39,38 +40,3 @@ const { posts } = Astro.props;
     }
   </main>
 </Layout>
-
-<style>
-  h1 {
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-    text-transform: capitalize;
-  }
-  ul {
-    list-style: none;
-    padding: 0;
-    li {
-      margin-bottom: 20px;
-      border: 1px solid #ddd;
-      padding: 15px;
-      border-radius: 8px;
-      span {
-        font-size: 0.85rem;
-        color: #666;
-      }
-      h2 {
-        margin: 5px 0 10px 0;
-        font-size: 1.3rem;
-        a {
-          color: #0066cc;
-          text-decoration: none;
-        }
-      }
-      p {
-        margin: 0;
-        color: #444;
-        font-size: 0.95rem;
-      }
-    }
-  }
-</style>

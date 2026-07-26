@@ -1,7 +1,8 @@
 ---
 import type { Thing, WithContext } from 'schema-dts';
-import Welcome from '@/components/Welcome.astro';
 import Layout from '@/layouts/Layout.astro';
+import Title from '@/components/Title.astro';
+import GithubIcon from '@/components/GithubIcon.astro';
 
 const jsonld: WithContext<Thing> = {
   '@context': 'https://schema.org',
@@ -14,5 +15,35 @@ const jsonld: WithContext<Thing> = {
 ---
 
 <Layout jsonld={jsonld}>
-  <Welcome />
+  <main>
+    <article>
+      <p><span class="sub-txt">Developer · Student</span></p>
+      <section>
+        <div class="">
+          <a href="/about">
+            <div class="">
+              <GithubIcon />
+            </div>
+            <div class="">
+              <p>加地 良寅 <span>Kaji Ryoin</span></p>
+              <p>HAL東京</p>
+              <p><a href="https://github.com/RyOkEeeesh" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+            </div>
+          </a>
+        </div>
+      </section>
+    </article>
+    <article>
+      <Title>Project</Title>
+    </article>
+    <article>
+      <Title>Blog</Title>
+    </article>
+    <article>
+      <Title>Note</Title>
+    </article>
+    <article>
+      <Title>Tags</Title>
+    </article>
+  </main>
 </Layout>
