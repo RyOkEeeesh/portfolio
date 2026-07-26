@@ -9,12 +9,16 @@
 
 :root[data-theme="light"] {
   --bg-main-clr: #f9fafb; /* gray-50 */
-  --txt-main-clr: #0f172a; /* slate-900 */
+  --txt-main-clr: #1e293b; /* slate-800 */
+  --txt-sub-clr: #334155; /* slate-600 */
+  --bordar-clr: #d1d5db; /* gray-300 */
 }
 
 :root[data-theme="dark"] {
   --bg-main-clr: #111827; /* gray-900 */
   --txt-main-clr: #e2e8f0; /* slate-200 */
+  --txt-sub-clr: #94a3b8; /* slate-400 */
+  --bordar-clr: #4b5563; /* gray-600 */
 }
 
 *,
@@ -37,6 +41,9 @@ body {
   position: relative;
   background-color: var(--bg-main-clr);
   color: var(--txt-main-clr);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 img,
@@ -72,6 +79,7 @@ header {
   width: 100%;
   height: var(--header-h);
   font-family: "LINE Seed JP", sans-serif;
+  font-weight: 700;
   top: 0;
   left: 0;
   padding: 0 1.5rem;
@@ -95,6 +103,7 @@ nav {
   display: flex;
   gap: var(--nav-gap);
   align-items: center;
+  font-size: 1.1rem;
 
   ul {
     text-decoration: none;
@@ -111,16 +120,15 @@ nav {
   display: inline-block;
   width: 1.5rem;
   height: 1.5rem;
-  -webkit-mask: url('/img/light-mode.svg') no-repeat center / contain;
-  mask: url('/img/light-mode.svg') no-repeat center / contain;
+  -webkit-mask: url("/img/light-mode.svg") no-repeat center / contain;
+  mask: url("/img/light-mode.svg") no-repeat center / contain;
   background-color: var(--txt-main-clr);
 }
 
 :root[data-theme="dark"] .theme-icon {
-  -webkit-mask-image: url('/img/dark-mode.svg');
-  mask-image: url('/img/dark-mode.svg');
+  -webkit-mask-image: url("/img/dark-mode.svg");
+  mask-image: url("/img/dark-mode.svg");
 }
-
 
 .contents {
   width: 100%;
@@ -136,6 +144,7 @@ main {
 
 footer {
   height: var(--footer-h);
+  font-family: "LINESeed JP", sans-serif;
   font-size: 0.8rem;
   color: var(--footer-clr);
   p {
@@ -164,6 +173,33 @@ footer {
 
 .sub-txt {
   font-family: "JetBrains Mono", monospace;
-  font-weight: 300;
-  color: #666;
+  font-weight: 200;
+  color: var(--txt-sub-clr);
+}
+
+.back-link {
+  position: relative;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  margin-bottom: 2rem;
+  transition: background-color 0.2s ease-out;
+}
+
+.back-link::before,
+.back-link::after {
+  position: absolute;
+  content: "";
+  top: 50%;
+  left: 68%;
+  width: 0.8rem;
+  height: 0.8rem;
+  transform: translate(-68%, -50%) rotate(-45deg);
+  border-top: 0.2rem solid var(--txt-main-clr);
+  border-left: 0.2rem solid var(--txt-main-clr);
+  z-index: 10;
+}
+
+.back-link:hover {
+  background-color: var(--bordar-clr);
 }
