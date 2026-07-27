@@ -1,0 +1,71 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import ThemeScript from '@/layouts/Layout/ThemeScript/index.astro';
+import type { Thing, WithContext } from 'schema-dts';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  ogp?: string;
+  noindex?: boolean;
+  jsonld?: WithContext<Thing> | WithContext<Thing>[];
+}
+
+const {
+  title = 'kaji.blog',
+  description = 'ポートフォリオサイトです。',
+  ogp = '/ogp.png', // 1200x630px 推奨
+  noindex = false,
+  jsonld,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogpURL = new URL(ogp, Astro.site);
+---
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="kaji.blog" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <meta name="generator" content={Astro.generator} />
+
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+  <link rel="canonical" href={canonicalURL} />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogpURL} />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogpURL} />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=LINE+Seed+JP:wght@100;400;700;800&family=Noto+Sans+JP:wght@100..900&display=block" rel="stylesheet">
+
+  <ClientRouter />
+
+  {
+    jsonld && (
+      <script
+        is:inline
+        type="application/ld+json"
+        set:html={JSON.stringify(jsonld)}
+      />
+    )
+  }
+
+  <ThemeScript />
+</head>
