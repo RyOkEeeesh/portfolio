@@ -1,24 +1,27 @@
 :root {
-  --header-h: 3.5rem;
-  --content-min-w: 300px;
-  --content-max-w: 960px; /* 要調整 */
-  --footer-h: 1.2rem;
-  --footer-clr: #4b5563;
-  --nav-gap: 1.2rem;
+  --font-main: "Noto Sans JP", sans-serif;
+  --font-title: "LINE Seed JP", sans-serif;
+   --font-sub: "JetBrains Mono", monospace;
+  --h-header: 3.5rem;
+  --w-min-content: 300px;
+  --w-max-content: 960px; /* 要調整 */
+  --h-footer: 1.2rem;
+  --clr-footer: #4b5563;
+  --spacing-gap-nav: 1.2rem;
 }
 
 :root[data-theme="light"] {
-  --bg-main-clr: #f9fafb; /* gray-50 */
-  --txt-main-clr: #1e293b; /* slate-800 */
-  --txt-sub-clr: #334155; /* slate-600 */
-  --bordar-clr: #d1d5db; /* gray-300 */
+  --clr-bg-main: #f9fafb; /* gray-50 */
+  --clr-txt-main: #1e293b; /* slate-800 */
+  --clr-txt-sub: #334155; /* slate-600 */
+  --clr-bordar: #d1d5db; /* gray-300 */
 }
 
 :root[data-theme="dark"] {
-  --bg-main-clr: #111827; /* gray-900 */
-  --txt-main-clr: #e2e8f0; /* slate-200 */
-  --txt-sub-clr: #94a3b8; /* slate-400 */
-  --bordar-clr: #4b5563; /* gray-600 */
+  --clr-bg-main: #111827; /* gray-900 */
+  --clr-txt-main: #e2e8f0; /* slate-200 */
+  --clr-txt-sub: #94a3b8; /* slate-400 */
+  --clr-bordar: #4b5563; /* gray-600 */
 }
 
 *,
@@ -30,7 +33,7 @@
 }
 
 html {
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: var(--font-main);
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
@@ -40,7 +43,7 @@ html {
 body {
   position: relative;
   background-color: var(--bg-main-clr);
-  color: var(--txt-main-clr);
+  color: var(--clr-txt-main);
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
@@ -53,7 +56,7 @@ canvas,
 svg {
   display: block;
   max-width: 100%;
-  color: var(--txt-main-clr);
+  color: var(--clr-txt-main);
 }
 
 li {
@@ -77,8 +80,8 @@ button {
 header {
   position: fixed;
   width: 100%;
-  height: var(--header-h);
-  font-family: "LINE Seed JP", sans-serif;
+  height: var(--h-header);
+  font-family: var(--font-title);
   font-weight: 700;
   top: 0;
   left: 0;
@@ -92,23 +95,23 @@ header {
 
 .header-container {
   width: 100%;
-  max-width: var(--content-max-w);
+  max-width: var(--w-max-content);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 nav {
-  height: var(--header-h);
+  height: var(--h-header);
   display: flex;
-  gap: var(--nav-gap);
+  gap: var(--spacing-gap-nav);
   align-items: center;
   font-size: 1.1rem;
 
   ul {
     text-decoration: none;
     display: flex;
-    gap: var(--nav-gap);
+    gap: var(--spacing-gap-nav);
   }
 }
 
@@ -122,7 +125,7 @@ nav {
   height: 1.5rem;
   -webkit-mask: url("/img/light-mode.svg") no-repeat center / contain;
   mask: url("/img/light-mode.svg") no-repeat center / contain;
-  background-color: var(--txt-main-clr);
+  background-color: var(--clr-txt-main);
 }
 
 :root[data-theme="dark"] .theme-icon {
@@ -132,27 +135,27 @@ nav {
 
 .contents {
   width: 100%;
-  min-height: calc(100vh - var(--footer-h));
-  padding: var(--header-h);
+  min-height: calc(100vh - var(--h-footer));
+  padding: var(--h-header);
 }
 
 main {
   width: 100%;
-  min-width: var(--content-min-w);
-  max-width: var(--content-max-w);
+  min-width: var(--w-min-content);
+  max-width: var(--w-max-content);
 }
 
 footer {
-  height: var(--footer-h);
-  font-family: "LINESeed JP", sans-serif;
+  height: var(--h-footer);
+  font-family: var(--font-title);
   font-size: 0.8rem;
-  color: var(--footer-clr);
+  color: var(--clr-footer);
   p {
     text-align: center;
   }
   a:link,
   a:visited {
-    color: var(--footer-clr);
+    color: var(--clr-footer);
     text-decoration: underline;
   }
 }
@@ -168,13 +171,13 @@ footer {
 }
 
 .title {
-  font-family: "LINE Seed JP", sans-serif;
+  font-family: var(--font-title);
 }
 
 .sub-txt {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-sub);
   font-weight: 200;
-  color: var(--txt-sub-clr);
+  color: var(--clr-txt-sub);
 }
 
 .back-link {
@@ -195,11 +198,11 @@ footer {
   width: 0.8rem;
   height: 0.8rem;
   transform: translate(-68%, -50%) rotate(-45deg);
-  border-top: 0.2rem solid var(--txt-main-clr);
-  border-left: 0.2rem solid var(--txt-main-clr);
+  border-top: 0.2rem solid var(--clr-txt-main);
+  border-left: 0.2rem solid var(--clr-txt-main);
   z-index: 10;
 }
 
 .back-link:hover {
-  background-color: var(--bordar-clr);
+  background-color: var(--clr-bordar);
 }
