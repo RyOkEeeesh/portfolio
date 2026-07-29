@@ -1,0 +1,9 @@
+---
+import { Temporal } from '@js-temporal/polyfill';
+
+const currentYear = Temporal.Now.plainDateISO('Asia/Tokyo').year;
+---
+
+<footer transition:persist>
+	<p>© {currentYear} <a href="https://github.com/RyOkEeeesh/portfolio" target="_blank" rel="noopener noreferrer">kaji</a></p>
+</footer>

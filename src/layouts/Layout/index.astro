@@ -1,39 +1,23 @@
 ---
 import '@/styles/global.css';
-import { Temporal } from '@js-temporal/polyfill';
-import Head, { type Props } from '@/layouts/Layout/Head/index.astro';
 
-const currentYear = Temporal.Now.plainDateISO('Asia/Tokyo').year;
+import type { MainLayoutProps } from '@/types/layouts';
+import Head from '@/layouts/Layout/Head/index.astro';
+import Header from '@/components/Header/index.astro';
+import Footer from '@/components/Footer/index.astro';
+
+interface Props extends MainLayoutProps {}
+
 ---
 
 <!doctype html>
 <html lang="ja">
 	<Head {...Astro.props} />
 	<body>
-		<header class="center" transition:persist>
-			<div class="header-container">
-				<h1><a class="top__a" href="/">kaji.blog</a></h1>
-				<nav>
-					<ul>
-						<li><a href="/about">about</a></li>
-						<li><a href="/project">project</a></li>
-						<li><a href="/blog">blog</a></li>
-						<li><a href="/note">note</a></li>
-						<li><a href="/tags">tags</a></li>
-					</ul>
-					<div class="center">
-						<button class="theme-btn canter" type="button">
-							<span class="theme-icon" />
-						</button>
-				</div>
-				</nav>
-			</div>
-		</header>
+		<Header />
 		<div class="contents center">
 			<slot />
 		</div>
-		<footer transition:persist>
-			<p>© {currentYear} <a href="https://github.com/RyOkEeeesh/portfolio" target="_blank" rel="noopener noreferrer">kaji</a></p>
-		</footer>
+		<Footer />
 	</body>
 </html>
