@@ -7,3 +7,22 @@ const currentYear = Temporal.Now.plainDateISO('Asia/Tokyo').year;
 <footer transition:persist>
 	<p>© {currentYear} <a href="https://github.com/RyOkEeeesh/portfolio" target="_blank" rel="noopener noreferrer">kaji</a></p>
 </footer>
+
+<style>
+  footer {
+    height: var(--h-footer);
+    font-family: var(--font-title);
+    font-size: 0.8rem;
+    color: var(--clr-footer);
+  }
+
+  p {
+    text-align: center;
+  }
+
+  a:link,
+  a:visited {
+    color: var(--clr-footer);
+    text-decoration: underline;
+  }
+</style>

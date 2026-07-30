@@ -1,6 +1,6 @@
 ---
 import type { Thing, WithContext } from 'schema-dts';
-import GithubIcon from '@/components/GithubIcon/index.astro';
+import AboutCard from '@/components/parts/card/AboutCard/index.astro';
 import Title from '@/components/Title/index.astro';
 import Layout from '@/layouts/Layout/index.astro';
 
@@ -16,34 +16,18 @@ const jsonld: WithContext<Thing> = {
 
 <Layout jsonld={jsonld}>
   <main>
-    <article>
-      <p><span class="sub-txt">Developer · Student</span></p>
-      <section>
-        <div class="">
-          <a href="/about">
-            <div class="">
-              <GithubIcon />
-            </div>
-            <div class="">
-              <p>加地 良寅 <span>Kaji Ryoin</span></p>
-              <p>HAL東京</p>
-              <p><a href="https://github.com/RyOkEeeesh" target="_blank" rel="noopener noreferrer">GitHub</a></p>
-            </div>
-          </a>
-        </div>
-      </section>
-    </article>
-    <article>
+    <AboutCard />
+    <section>
       <Title>Project</Title>
-    </article>
-    <article>
+    </section>
+    <section>
       <Title>Blog</Title>
-    </article>
-    <article>
+    </section>
+    <section>
       <Title>Note</Title>
-    </article>
-    <article>
+    </section>
+    <section>
       <Title>Tags</Title>
-    </article>
+    </section>
   </main>
 </Layout>

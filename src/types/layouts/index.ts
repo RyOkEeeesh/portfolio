@@ -6,4 +6,4 @@ export type MainLayoutProps = {
   ogp?: string;
   noindex?: true;
   jsonld?: WithContext<Thing> | WithContext<Thing>[];
-}
+};

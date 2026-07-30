@@ -17,3 +17,61 @@
 		</nav>
 	</div>
 </header>
+
+<style>
+  header {
+    position: fixed;
+    width: 100%;
+    height: var(--h-header);
+    font-family: var(--font-title);
+    font-weight: 700;
+    top: 0;
+    left: 0;
+    padding: 0 1.5rem;
+  }
+  
+  .top__a {
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+  
+  .header-container {
+    width: 100%;
+    max-width: var(--w-max-content);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  nav {
+    height: var(--h-header);
+    display: flex;
+    gap: var(--spacing-gap-nav);
+    align-items: center;
+    font-size: 1.1rem;
+  
+    ul {
+      text-decoration: none;
+      display: flex;
+      gap: var(--spacing-gap-nav);
+    }
+  }
+  
+  .theme-btn {
+    padding-top: 0.4rem;
+  }
+  
+  .theme-icon {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    -webkit-mask: url("/img/light-mode.svg") no-repeat center / contain;
+    mask: url("/img/light-mode.svg") no-repeat center / contain;
+    background-color: var(--clr-txt-main);
+  }
+  
+  :root[data-theme="dark"] .theme-icon {
+    -webkit-mask-image: url("/img/dark-mode.svg");
+    mask-image: url("/img/dark-mode.svg");
+  }
+</style>

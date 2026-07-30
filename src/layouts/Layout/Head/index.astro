@@ -1,11 +1,10 @@
 ---
-import type {MainLayoutProps} from '@/types/layouts';
+import { ClientRouter } from 'astro:transitions';
 
 import Favicon from '@/layouts/Layout/Head/Favicon/index.astro';
-import Fonts from '@/layouts/Layout/Head/Fonts/index.astro'
+import Fonts from '@/layouts/Layout/Head/Fonts/index.astro';
 import ThemeScript from '@/layouts/Layout/ThemeScript/index.astro';
-
-import { ClientRouter } from 'astro:transitions';
+import type { MainLayoutProps } from '@/types/layouts';
 
 interface Props extends MainLayoutProps {}
 
