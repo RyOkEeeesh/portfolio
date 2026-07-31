@@ -1,10 +1,12 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 
+import type { MainLayoutProps } from '@/types/layouts';
+
 import Favicon from '@/layouts/Layout/Head/Favicon/index.astro';
 import Fonts from '@/layouts/Layout/Head/Fonts/index.astro';
-import ThemeScript from '@/layouts/Layout/ThemeScript/index.astro';
-import type { MainLayoutProps } from '@/types/layouts';
+import ThemeScript from '@/layouts/Layout/Head/ThemeScript/index.astro';
+import History from '@/layouts/Layout/Head/History/index.astro';
 
 interface Props extends MainLayoutProps {}
 
@@ -58,4 +60,5 @@ const ogpURL = new URL(ogp, Astro.site);
   }
 
   <ThemeScript />
+  <History />
 </head>

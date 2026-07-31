@@ -15,7 +15,7 @@
   --clr-txt-main: #1e293b; /* slate-800 */
   --clr-txt-sub: #334155; /* slate-600 */
   --clr-border: #d1d5db; /* gray-300 */
-  --clr-border-active: #4b5563; /* gray-300 */
+  --clr-border-active: #6b7280; /* gray-500 */
 }
 
 :root[data-theme="dark"] {
@@ -23,7 +23,7 @@
   --clr-txt-main: #e2e8f0; /* slate-200 */
   --clr-txt-sub: #94a3b8; /* slate-400 */
   --clr-border: #4b5563; /* gray-600 */
-  --clr-border-active: #d1d5db; /* gray-300 */
+  --clr-border-active: #9ca3af ; /* gray-400 */
 }
 
 *,
@@ -110,31 +110,4 @@ main {
   font-family: var(--font-sub);
   font-weight: 200;
   color: var(--clr-txt-sub);
-}
-
-.back-link {
-  position: relative;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  margin-bottom: 2rem;
-  transition: background-color 0.2s ease-out;
-}
-
-.back-link::before,
-.back-link::after {
-  position: absolute;
-  content: "";
-  top: 50%;
-  left: 68%;
-  width: 0.8rem;
-  height: 0.8rem;
-  transform: translate(-68%, -50%) rotate(-45deg);
-  border-top: 0.2rem solid var(--clr-txt-main);
-  border-left: 0.2rem solid var(--clr-txt-main);
-  z-index: 10;
-}
-
-.back-link:hover {
-  background-color: var(--clr-border);
 }

@@ -1,6 +1,9 @@
 ---
-import Title from '@/components/Title/index.astro';
 import Layout from '@/layouts/Layout/index.astro';
+
+import Title from '@/components/Title/index.astro';
+import Back from '@/components/parts/btn/Back/index.astro';
+
 import { getTags } from '@/lib';
 
 const tags = await getTags();
@@ -8,7 +11,7 @@ const tags = await getTags();
 
 <Layout title={"タグ一覧"}>
   <main>
-    <a href="/">← トップへ戻る</a>
+    <Back href="/" />
     <Title>タグ一覧</Title>
     {
       tags.length === 0 ? (

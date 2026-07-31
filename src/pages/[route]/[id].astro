@@ -1,9 +1,13 @@
 ---
 import { Image } from 'astro:assets';
 import { render } from 'astro:content';
+
 import thumbnail from '@/assets/thumbnail.png';
+
 import Title from '@/components/Title/index.astro';
 import Layout from '@/layouts/Layout/index.astro';
+import Back from '@/components/parts/btn/Back/index.astro';
+
 import { getImgName, getPosts } from '@/lib';
 
 export async function getStaticPaths() {
@@ -18,14 +22,13 @@ export async function getStaticPaths() {
   }));
 }
 
-const { route } = Astro.params;
 const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 
 <Layout title={post.data.title}>
   <main>
-    <button type="button" class="back-link" data-route={`/${route}`} />
+    <Back />
     <article class="markdown-body">
       <Image
         class="post-img"
@@ -40,24 +43,4 @@ const { Content } = await render(post);
       <Content />
     </article>
   </main>
-  
-  <script>
-    document.addEventListener("astro:page-load", () => {
-      const backButton = document.querySelector(".back-link") as HTMLButtonElement | null;
-      if (!backButton) return;
-
-      backButton.addEventListener("click", e => {
-        e.preventDefault();
-
-        const defaultRoute = backButton.dataset.route || "/";
-        const referrer = document.referrer;
-
-        if (referrer && new URL(referrer).origin === window.location.origin) {
-          history.back();
-        } else {
-          window.location.href = defaultRoute;
-        }
-      });
-    });
-  </script>
 </Layout>

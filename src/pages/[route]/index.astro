@@ -1,9 +1,13 @@
 ---
-import Post from '@/components/Post/index.astro';
-import Title from '@/components/Title/index.astro';
-import Layout from '@/layouts/Layout/index.astro';
-import { getPosts } from '@/lib';
 import { ContentsSchema } from '@/schema/posts';
+
+import Layout from '@/layouts/Layout/index.astro';
+
+import PostCard from '@/components/parts/card/PostCard/index.astro';
+import Title from '@/components/Title/index.astro';
+import Back from '@/components/parts/btn/Back/index.astro';
+
+import { getPosts } from '@/lib';
 
 export async function getStaticPaths() {
   const allPosts = await getPosts();
@@ -25,7 +29,7 @@ const { posts } = Astro.props;
 
 <Layout title={`${route}一覧`}>
   <main>
-    <a href="/">← トップへ戻る</a>
+    <Back href='/' />
     <Title>{route}</Title>
     {
       posts.length === 0 ? (
@@ -33,7 +37,7 @@ const { posts } = Astro.props;
       ) : (
         <article>
           {posts.map((post) => (
-            <Post post={post} />
+            <PostCard post={post} />
           ))}
         </article>
       )

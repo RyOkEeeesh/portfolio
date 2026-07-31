@@ -1,7 +1,10 @@
 ---
-import Post from '@/components/Post/index.astro';
-import Title from '@/components/Title/index.astro';
 import Layout from '@/layouts/Layout/index.astro';
+
+import PostCard from '@/components/parts/card/PostCard/index.astro';
+import Title from '@/components/Title/index.astro';
+import Back from '@/components/parts/btn/Back/index.astro';
+
 import { getPosts, getTags } from '@/lib';
 
 export async function getStaticPaths() {
@@ -22,7 +25,7 @@ const { posts, tag } = Astro.props;
 
 <Layout title={tag}>
   <main>
-    <a href="/tags">← タグ一覧</a>
+    <Back href='/tags' />
     <Title>{tag}</Title>
     {
       posts.length === 0 ? (
@@ -30,7 +33,7 @@ const { posts, tag } = Astro.props;
       ) : (
         <article>
           {posts.map((post) => (
-            <Post post={post} />
+            <PostCard post={post} />
           ))}
         </article>
       )
