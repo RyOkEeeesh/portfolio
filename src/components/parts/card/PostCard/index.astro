@@ -22,7 +22,6 @@ const { post } = Astro.props;
               src={post.data.thumbnail ?? thumbnail}
               alt={`${post.id}のサムネイル`}
               loading="eager"
-              inferSize
               transition:name={getImgName(post)}
             />
           </div>
@@ -33,3 +32,9 @@ const { post } = Astro.props;
     </div>
   </div>
 </section>
+
+<style>
+  .post-img {
+    height: auto;
+  }
+</style>

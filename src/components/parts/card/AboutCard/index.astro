@@ -1,22 +1,21 @@
 ---
+import LinkPart from '@/components/parts/link/LinkPart/index.astro';
 import GithubIcon from '@/components/parts/image/GithubIcon/index.astro';
 ---
 
 <section>
   <span class="sub-txt">Developer · Student</span>
-  <div class="about-card">
-    <a href="/about" class="about-link">
-      <div class="link-content">
-        <div class="content">
-          <GithubIcon />
-        </div>
-        <div class="about-content">
-          <p>加地 良寅 <span>Kaji Ryoin</span></p>
-          <p>HAL東京</p>
-          </div>
+  <LinkPart class="about-card" href="/about">
+    <div class="link-content">
+      <div class="content">
+        <GithubIcon />
       </div>
-    </a>
-  </div>
+      <div class="about-content">
+        <p>加地 良寅 <span>Kaji Ryoin</span></p>
+        <p>HAL東京</p>
+        </div>
+      </div>
+  </LinkPart>
 </section>
 
 <style>
@@ -26,16 +25,16 @@ import GithubIcon from '@/components/parts/image/GithubIcon/index.astro';
     gap: 20px;
   }
 
-  .about-card {
-      overflow: hidden;
-      border-radius: 8px;
-      border: 1px solid var(--clr-border); 
-      transition: border-color 0.15s ease;
-  
-      &:has(a:hover) {
-        border-color: var(--clr-border-active); 
-      }
+  :global(.about-card) {
+    overflow: hidden;
+    border-radius: 8px;
+    border: 2px solid var(--clr-border); 
+    transition: border-color 0.15s ease;
+
+    &:has(a:hover) {
+      border-color: var(--clr-border-active);
     }
+  }
 
   .link-content {
     display: flex;

@@ -1,1 +1,50 @@
-// TODO
+---
+import LinkIcon from "@/assets/icon/link.svg";
+
+interface Props {
+	href: string;
+	class?: string;
+}
+
+const {
+  href,
+  class: className = "",
+} = Astro.props;
+---
+
+<div class={className}>
+  <a href={href}>
+    <div class="container">
+      <slot></slot>
+      <div class="icon-wrap">
+        <LinkIcon class="icon" />
+      </div>
+    </div>
+  </a>
+</div>
+
+<style>
+  .container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    --is-hovered: 0;
+  }
+
+  .container:hover {
+    --is-hovered: 1;
+  }
+
+  .icon {
+    color: ;
+    opacity: calc(0.6 + var(--is-hovered, 0) * 0.4); 
+    transform: scale(calc(1 + var(--is-hovered, 0) * 0.1)); 
+    transform-origin: left bottom;
+    transition: 
+      opacity 0.15s ease,
+      transform 0.15s ease;
+  }
+</style>
