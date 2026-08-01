@@ -2,7 +2,7 @@
 const { route } = Astro.params;
 
 interface Props {
-	href?: string;
+  href?: string;
 }
 
 const { href } = Astro.props;
@@ -12,7 +12,6 @@ const { href } = Astro.props;
 
 <script>
   import { PREV_URL } from "@/constants";
-import { navigate } from "astro:transitions/client";
 
   document.addEventListener("astro:page-load", () => {
     const back = document.querySelector(".back") as HTMLAnchorElement | null;
