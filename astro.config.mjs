@@ -1,6 +1,7 @@
 import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
 import rehypeMermaid from 'rehype-mermaid';
+import remarkBehead from 'remark-behead';
 
 export default defineConfig({
   site: 'https://kaji.blog',
@@ -8,6 +9,9 @@ export default defineConfig({
   integrations: [sitemap()],
 
   markdown: {
+    remarkPlugins: [
+      [remarkBehead, { depth: 2 }]
+    ],
     syntaxHighlight: {
       type: 'shiki',
       excludeLangs: ['mermaid'],
