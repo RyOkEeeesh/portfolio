@@ -108,3 +108,8 @@ main {
   font-weight: 200;
   color: var(--clr-txt-sub);
 }
+
+/* PostCardと[id].astroで使うのでグローバル */
+.post-img {
+  height: auto;
+}

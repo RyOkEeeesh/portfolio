@@ -39,11 +39,12 @@ const {
   }
 
   .icon {
-    color: ;
+    fill: var(--clr-txt-main);
     opacity: calc(0.6 + var(--is-hovered, 0) * 0.4); 
     transform: scale(calc(1 + var(--is-hovered, 0) * 0.1)); 
     transform-origin: left bottom;
     transition: 
+      fill 0.15s ease,
       opacity 0.15s ease,
       transform 0.15s ease;
   }
