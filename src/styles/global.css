@@ -113,3 +113,15 @@ main {
 .post-img {
   height: auto;
 }
+
+/* コードブロック */
+.expressive-code .code-icon {
+  width: 1rem;
+  aspect-ratio: 1;
+}
+
+.expressive-code .code-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

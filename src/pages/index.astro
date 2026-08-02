@@ -1,8 +1,10 @@
 ---
 import type { Thing, WithContext } from 'schema-dts';
 import AboutCard from '@/components/parts/card/AboutCard/index.astro';
-import Title from '@/components/Title/index.astro';
+import ContentCard from '@/components/parts/card/ContentCard/index.astro';
 import Layout from '@/layouts/Layout/index.astro';
+
+import { ContentsSchema } from '@/schema/posts';
 
 const jsonld: WithContext<Thing> = {
   '@context': 'https://schema.org',
@@ -17,17 +19,7 @@ const jsonld: WithContext<Thing> = {
 <Layout jsonld={jsonld}>
   <main>
     <AboutCard />
-    <section>
-      <Title>Project</Title>
-    </section>
-    <section>
-      <Title>Blog</Title>
-    </section>
-    <section>
-      <Title>Note</Title>
-    </section>
-    <section>
-      <Title>Tags</Title>
-    </section>
+    {ContentsSchema.options.map(route => (<ContentCard title={route} href={`/${route}`} />))}
+    <ContentCard title="tags" href="/tags" />
   </main>
 </Layout>

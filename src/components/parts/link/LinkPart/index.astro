@@ -1,21 +1,18 @@
 ---
-import LinkIcon from "@/assets/icon/link.svg";
+import LinkIcon from '@/assets/icon/link.svg';
 
 interface Props {
-	href: string;
-	class?: string;
+  href: string;
+  class?: string;
 }
 
-const {
-  href,
-  class: className = "",
-} = Astro.props;
+const { href, class: className = '' } = Astro.props;
 ---
 
 <div class={className}>
   <a href={href}>
     <div class="container">
-      <slot></slot>
+      <slot />
       <div class="icon-wrap">
         <LinkIcon class="icon" />
       </div>
@@ -25,17 +22,15 @@ const {
 
 <style>
   .container {
-    width: 100%;
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.5rem 1rem;
+    gap: 0.8rem;
     --is-hovered: 0;
-  }
 
-  .container:hover {
-    --is-hovered: 1;
+    &:hover {
+      --is-hovered: 1;
+    }
   }
 
   .icon {

@@ -1,7 +1,6 @@
 ---
 import Back from '@/components/parts/link/Back/index.astro';
-
-import Title from '@/components/Title/index.astro';
+import Title from '@/components/parts/Title/index.astro';
 import Layout from '@/layouts/Layout/index.astro';
 
 import { getTags } from '@/lib';
@@ -18,7 +17,7 @@ const tags = await getTags();
         <p>タグがありません。</p>
       ) : (
         <ul>
-          {tags.map((tag) => (
+          {tags.map(tag => (
             <li>
               <a href={`/tags/${tag}`}>{tag}</a>
             </li>
