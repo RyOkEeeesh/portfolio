@@ -11,9 +11,9 @@ export async function getStaticPaths() {
   const tags = await getTags();
 
   return tags.map(tag => {
-    const posts = allPost.filter(post => post.data.tags.includes(tag));
+    const posts = allPost.filter(post => post.data.tags.includes(tag.name));
     return {
-      params: { tag },
+      params: { tag: tag.name },
       props: { posts, tag },
     };
   });
@@ -22,10 +22,10 @@ export async function getStaticPaths() {
 const { posts, tag } = Astro.props;
 ---
 
-<Layout title={tag}>
+<Layout title={tag.name}>
   <main>
     <Back href='/tags' />
-    <Title>{tag}</Title>
+    <Title>{tag.name}</Title>
     {
       posts.length === 0 ? (
         <p>記事がありません。</p>

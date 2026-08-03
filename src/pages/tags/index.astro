@@ -19,7 +19,7 @@ const tags = await getTags();
         <ul>
           {tags.map(tag => (
             <li>
-              <a href={`/tags/${tag}`}>{tag}</a>
+              <a href={`/tags/${tag.name}`}>{tag.count}{tag.name}</a>
             </li>
           ))}
         </ul>

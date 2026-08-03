@@ -19,7 +19,7 @@ const jsonld: WithContext<Thing> = {
 <Layout jsonld={jsonld}>
   <main>
     <AboutCard />
-    {ContentsSchema.options.map(route => (<ContentCard title={route} href={`/${route}`} />))}
-    <ContentCard title="tags" href="/tags" />
+    {ContentsSchema.options.map(route => (<ContentCard route={route} />))}
+    <ContentCard route='tags' />
   </main>
 </Layout>

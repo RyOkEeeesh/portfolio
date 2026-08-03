@@ -9,7 +9,7 @@ interface Props {
 const { href, class: className = '' } = Astro.props;
 ---
 
-<div class={className}>
+<div class:list={["linkPart", className]}>
   <a href={href}>
     <div class="container">
       <slot />
@@ -21,16 +21,19 @@ const { href, class: className = '' } = Astro.props;
 </div>
 
 <style>
-  .container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.8rem;
+  .linkPart {
     --is-hovered: 0;
 
     &:hover {
       --is-hovered: 1;
     }
+  }
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
   }
 
   .icon {

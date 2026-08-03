@@ -11,24 +11,20 @@ interface Props {
 const { post } = Astro.props;
 ---
 
-<section>
-  <div class="">
+<div class="">
+  <a href={getPostUrl(post)}>
     <div class="">
-      <a href={getPostUrl(post)}>
-        <div class="">
-          <div class="">
-            <Image
-              class="post-img"
-              src={post.data.thumbnail ?? thumbnail}
-              alt={`${post.id}のサムネイル`}
-              loading="eager"
-              transition:name={getImgName(post)}
-            />
-          </div>
-          <h3>{post.data.title}</h3>
-          <p><span>{post.data.createdAt.toLocaleDateString()}</span></p>
-        </div>
-      </a>
+      <div class="">
+        <Image
+          class="post-img"
+          src={post.data.thumbnail ?? thumbnail}
+          alt={`${post.id}のサムネイル`}
+          loading="eager"
+          transition:name={getImgName(post)}
+        />
+      </div>
+      <h3>{post.data.title}</h3>
+      <p><span>{post.data.createdAt.toLocaleDateString()}</span></p>
     </div>
-  </div>
-</section>
+  </a>
+</div>
