@@ -35,7 +35,7 @@ const { Content } = await render(post);
         alt={`${post.id}のサムネイル`}
         loading="eager"
         inferSize
-        transition:name={getImgName(post)}
+        transition:name={getImgName(post)} 
       />
       <span>{post.data.createdAt.toLocaleDateString()}</span>
       <Title>{post.data.title}</Title>

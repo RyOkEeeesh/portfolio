@@ -1,15 +1,20 @@
 ---
+import { BASE_URL } from '@/constants';
+
+import type { MainLayoutProps } from '@/types/layouts';
+
 import { ClientRouter } from 'astro:transitions';
+
 import Favicon from '@/layouts/Layout/Head/Favicon/index.astro';
 import Fonts from '@/layouts/Layout/Head/Fonts/index.astro';
-import History from '@/layouts/Layout/Head/History/index.astro';
-import ThemeScript from '@/layouts/Layout/Head/ThemeScript/index.astro';
-import type { MainLayoutProps } from '@/types/layouts';
+import ThemeScript from '@/layouts/Layout/Head/scripts/ThemeScript/index.astro';
+import History from '@/layouts/Layout/Head/scripts/History/index.astro';
+import AnimationControl from '@/layouts/Layout/Head/scripts/AnimationControl/index.astro';
 
 interface Props extends MainLayoutProps {}
 
 const {
-  title = 'kaji.blog',
+  title = BASE_URL,
   description = 'ポートフォリオサイトです。',
   ogp = '/ogp.png', // 1200x630px 推奨
   noindex,
@@ -59,4 +64,5 @@ const ogpURL = new URL(ogp, Astro.site);
 
   <ThemeScript />
   <History />
+  <AnimationControl />
 </head>

@@ -1,24 +1,19 @@
 ---
 import LinkIcon from '@/components/parts/link/LinkPart/index.astro';
 import Title from '@/components/parts/Title/index.astro';
-import type { ContentsType } from '@/schema';
+import type { RouteType } from '@/types';
 
 interface Props {
-  route: ContentsType | 'tags';
+  route: RouteType;
 }
 
 const { route } = Astro.props;
 ---
 
-<section class="">
-  <div class="title-content">
-    <Title>{route}</Title>
-    <LinkIcon href={route}><span class="link-text">view all</span></LinkIcon>
-  </div>
-  <div class="">
-    <slot />
-  </div>
-</section>
+<div class="title-content">
+  <Title>{route}</Title>
+  <LinkIcon href={route}><span class="link-text">view all</span></LinkIcon>
+</div>
 
 <style>
   .title-content {

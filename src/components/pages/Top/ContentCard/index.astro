@@ -1,0 +1,39 @@
+---
+import type { ContentsType } from '@/schema';
+
+import Title from '@/components/pages/Top/Title/index.astro';
+import PostContainer from '@/components/parts/PostsContainer/index.astro';
+
+import { getPublishedPosts } from '@/lib';
+
+interface Props {
+  route: ContentsType;
+}
+
+const { route } = Astro.props;
+
+const posts = await getPublishedPosts(route, 3)
+---
+
+<section class="">
+  <Title route={route} />
+  <div class="">
+    <PostContainer posts={posts} />
+  </div>
+</section>
+
+<style>
+  .title-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    border-bottom: 2px solid var(--clr-border);
+    padding: 0.5rem 0.25rem;
+  }
+
+  .link-text {
+    opacity: calc(0.6 + var(--is-hovered, 0) * 0.4); 
+    transition: opacity 0.15s ease;
+  }
+</style>

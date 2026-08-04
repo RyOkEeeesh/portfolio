@@ -1,0 +1,20 @@
+<script>
+  document.addEventListener('astro:before-preparation', (event) => {
+    const fromPath = location.pathname;
+    const toPath = event.to.pathname;
+
+    // パスの階層の深さで「詳細ページ」かどうかを判定する
+    // 例: "/" -> length 0 (一覧)
+    // 例: "/blog" -> length 1 (一覧)
+    // 例: "/blog/123" -> length 2 (詳細)
+    const isFromDetail = fromPath.split('/').filter(Boolean).length >= 2;
+    const isToDetail = toPath.split('/').filter(Boolean).length >= 2;
+
+    if (!isFromDetail && !isToDetail) {
+      const images = document.querySelectorAll<HTMLElement>('.post-img');
+      images.forEach(img => {
+        img.style.viewTransitionName = 'none';
+      });
+    }
+  });
+</script>

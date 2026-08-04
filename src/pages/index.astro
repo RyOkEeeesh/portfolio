@@ -1,25 +1,22 @@
 ---
 import type { Thing, WithContext } from 'schema-dts';
-import AboutCard from '@/components/parts/card/AboutCard/index.astro';
-import ContentCard from '@/components/parts/card/ContentCard/index.astro';
+
+import { BASE_URL } from '@/constants';
+
 import Layout from '@/layouts/Layout/index.astro';
 
-import { ContentsSchema } from '@/schema/posts';
+import Top from '@/components/pages/Top/index.astro';
 
 const jsonld: WithContext<Thing> = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'kaji',
-  url: 'https://kaji.blog',
+  url: `https://${BASE_URL}`,
   sameAs: ['https://github.com/RyOkEeeesh'],
   jobTitle: 'Student',
 };
 ---
 
 <Layout jsonld={jsonld}>
-  <main>
-    <AboutCard />
-    {ContentsSchema.options.map(route => (<ContentCard route={route} />))}
-    <ContentCard route='tags' />
-  </main>
+  <Top />
 </Layout>

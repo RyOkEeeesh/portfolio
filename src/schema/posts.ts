@@ -1,6 +1,8 @@
 import { z } from 'astro/zod';
 
-export const ContentsSchema = z.enum(['project', 'blog', 'note']);
+import { PROJECT, BLOG, NOTE } from '@/constants';
+
+export const ContentsSchema = z.enum([PROJECT, BLOG, NOTE]);
 
 export type ContentsType = z.infer<typeof ContentsSchema>;
 

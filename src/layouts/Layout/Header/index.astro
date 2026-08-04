@@ -1,13 +1,17 @@
+---
+import { BASE_URL, ABOUT, PROJECT, BLOG, NOTE, TAGS } from '@/constants';
+---
+
 <header class="center" transition:persist>
 	<div class="header-container">
-		<h1><a class="top" href="/">kaji.blog</a></h1>
+		<h1><a class="top" href="/">{BASE_URL}</a></h1>
 		<nav>
 			<ul>
-				<li><a href="/about">about</a></li>
-				<li><a href="/project">project</a></li>
-				<li><a href="/blog">blog</a></li>
-				<li><a href="/note">note</a></li>
-				<li><a href="/tags">tags</a></li>
+				<li><a href={`/${ABOUT}`}>{ABOUT}</a></li>
+				<li><a href={`/${PROJECT}`}>{PROJECT}</a></li>
+				<li><a href={`/${BLOG}`}>{BLOG}</a></li>
+				<li><a href={`/${NOTE}`}>{NOTE}</a></li>
+				<li><a href={`/${TAGS}`}>{TAGS}</a></li>
 			</ul>
 			<div class="center">
 				<button class="theme-btn canter" type="button">

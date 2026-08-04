@@ -1,0 +1,12 @@
+---
+import AboutCard from '@/components/parts/card/AboutCard/index.astro';
+import ContentCard from '@/components/pages/Top/ContentCard/index.astro';
+
+import { ContentsSchema } from '@/schema/posts';
+---
+
+<main>
+  <AboutCard />
+  {ContentsSchema.options.map(route => (<ContentCard route={route} />))}
+  <!-- <ContentCard route='tags' /> -->
+</main>
