@@ -1,10 +1,8 @@
 ---
-import type { ContentsType } from '@/schema';
-
 import Title from '@/components/pages/Top/Title/index.astro';
 import PostContainer from '@/components/parts/PostsContainer/index.astro';
-
 import { getPublishedPosts } from '@/lib';
+import type { ContentsType } from '@/schema';
 
 interface Props {
   route: ContentsType;
@@ -12,7 +10,7 @@ interface Props {
 
 const { route } = Astro.props;
 
-const posts = await getPublishedPosts(route, 3)
+const posts = await getPublishedPosts(route, 3);
 ---
 
 <section class="">

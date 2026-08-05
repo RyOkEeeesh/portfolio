@@ -1,6 +1,6 @@
 import { z } from 'astro/zod';
 
-import { PROJECT, BLOG, NOTE } from '@/constants';
+import { BLOG, NOTE, PROJECT } from '@/constants';
 
 export const ContentsSchema = z.enum([PROJECT, BLOG, NOTE]);
 

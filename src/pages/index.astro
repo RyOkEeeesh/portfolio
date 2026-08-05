@@ -1,11 +1,8 @@
 ---
 import type { Thing, WithContext } from 'schema-dts';
-
-import { BASE_URL } from '@/constants';
-
-import Layout from '@/layouts/Layout/index.astro';
-
 import Top from '@/components/pages/Top/index.astro';
+import { BASE_URL } from '@/constants';
+import Layout from '@/layouts/Layout/index.astro';
 
 const jsonld: WithContext<Thing> = {
   '@context': 'https://schema.org',
