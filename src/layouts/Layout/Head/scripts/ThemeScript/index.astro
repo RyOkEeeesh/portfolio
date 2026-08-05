@@ -1,29 +1,33 @@
 <script is:inline>
-  const themeKey = 'theme';
-  const light = 'light';
-  const dark = 'dark';
+  const themeKey = "theme";
+  const light = "light";
+  const dark = "dark";
 
-  const getInitTheme = () => localStorage.getItem(themeKey) ?? (window.matchMedia('(prefers-color-scheme: dark)').matches ? dark : light);
+  const getInitTheme = () =>
+    localStorage.getItem(themeKey) ??
+    (window.matchMedia("(prefers-color-scheme: dark)").matches ? dark : light);
 
-  const applyTheme = theme => {
+  const applyTheme = (theme) => {
     document.documentElement.setAttribute(`data-${themeKey}`, theme);
     localStorage.setItem(themeKey, theme);
   };
 
   applyTheme(getInitTheme());
 
-  document.addEventListener('astro:after-swap', () => {
+  document.addEventListener("astro:after-swap", () => {
     applyTheme(getInitTheme());
   });
 
-  document.addEventListener('astro:page-load', () => {
-    const btn = document.querySelector('.theme-btn');
+  document.addEventListener("astro:page-load", () => {
+    const btn = document.querySelector(".theme-btn");
 
     if (!btn || btn.dataset.hasThemeListener) return;
-    btn.dataset.hasThemeListener = 'true';
+    btn.dataset.hasThemeListener = "true";
 
-    btn.addEventListener('click', () => {
-      const currentTheme = document.documentElement.getAttribute(`data-${themeKey}`);
+    btn.addEventListener("click", () => {
+      const currentTheme = document.documentElement.getAttribute(
+        `data-${themeKey}`,
+      );
       const nextTheme = currentTheme === dark ? light : dark;
       applyTheme(nextTheme);
     });

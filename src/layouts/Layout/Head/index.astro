@@ -5,7 +5,9 @@ import Favicon from '@/layouts/Layout/Head/Favicon/index.astro';
 import Fonts from '@/layouts/Layout/Head/Fonts/index.astro';
 import AnimationControl from '@/layouts/Layout/Head/scripts/AnimationControl/index.astro';
 import History from '@/layouts/Layout/Head/scripts/History/index.astro';
+import ScrollEvent from '@/layouts/Layout/Head/scripts/ScrollEvent/index.astro';
 import ThemeScript from '@/layouts/Layout/Head/scripts/ThemeScript/index.astro';
+
 import type { MainLayoutProps } from '@/types/layouts';
 
 interface Props extends MainLayoutProps {}
@@ -62,4 +64,5 @@ const ogpURL = new URL(ogp, Astro.site);
   <ThemeScript />
   <History />
   <AnimationControl />
+  <ScrollEvent />
 </head>

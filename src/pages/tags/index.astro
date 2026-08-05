@@ -17,9 +17,12 @@ const tags = await getTags();
         <p>タグがありません。</p>
       ) : (
         <ul>
-          {tags.map(tag => (
+          {tags.map((tag) => (
             <li>
-              <a href={`/tags/${tag.name}`}>{tag.count}{tag.name}</a>
+              <a href={`/tags/${tag.name}`}>
+                {tag.count}
+                {tag.name}
+              </a>
             </li>
           ))}
         </ul>

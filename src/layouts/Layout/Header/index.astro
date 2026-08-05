@@ -3,35 +3,46 @@ import { ABOUT, BASE_URL, BLOG, NOTE, PROJECT, TAGS } from '@/constants';
 ---
 
 <header class="center" transition:persist>
-	<div class="header-container">
-		<h1><a class="top" href="/">{BASE_URL}</a></h1>
-		<nav>
-			<ul>
-				<li><a href={`/${ABOUT}`}>{ABOUT}</a></li>
-				<li><a href={`/${PROJECT}`}>{PROJECT}</a></li>
-				<li><a href={`/${BLOG}`}>{BLOG}</a></li>
-				<li><a href={`/${NOTE}`}>{NOTE}</a></li>
-				<li><a href={`/${TAGS}`}>{TAGS}</a></li>
-			</ul>
-			<div class="center">
-				<button class="theme-btn canter" type="button">
-					<span class="theme-icon" />
-				</button>
-  		</div>
-		</nav>
-	</div>
+  <div class="header-container">
+    <h1><a class="top" href="/">{BASE_URL}</a></h1>
+    <nav>
+      <ul>
+        <li><a href={`/${ABOUT}`}>{ABOUT}</a></li>
+        <li><a href={`/${PROJECT}`}>{PROJECT}</a></li>
+        <li><a href={`/${BLOG}`}>{BLOG}</a></li>
+        <li><a href={`/${NOTE}`}>{NOTE}</a></li>
+        <li><a href={`/${TAGS}`}>{TAGS}</a></li>
+      </ul>
+      <div class="center">
+        <button class="theme-btn canter" type="button">
+          <span class="theme-icon"></span>
+        </button>
+      </div>
+    </nav>
+  </div>
 </header>
 
 <style>
   header {
     position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
     width: 100%;
     height: var(--h-header);
     font-family: var(--font-title);
     font-weight: 700;
-    top: 0;
-    left: 0;
-    padding: 0 1.5rem;
+    background-color: rgb(from var(--clr-bg-main) r g b / 0.8);
+    backdrop-filter: blur(0);
+    -webkit-backdrop-filter: blur(0);
+    transition:
+      backdrop-filter 0.15s ease,
+      -webkit-backdrop-filter 0.15s ease;
+
+    &.is-scrolled {
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
   }
 
   .top {
@@ -44,7 +55,7 @@ import { ABOUT, BASE_URL, BLOG, NOTE, PROJECT, TAGS } from '@/constants';
   .top:hover {
     opacity: 0.8;
   }
-  
+
   .header-container {
     width: 100%;
     max-width: var(--w-max-content);
@@ -52,25 +63,25 @@ import { ABOUT, BASE_URL, BLOG, NOTE, PROJECT, TAGS } from '@/constants';
     justify-content: space-between;
     align-items: center;
   }
-  
+
   nav {
     height: var(--h-header);
     display: flex;
     gap: var(--spacing-gap-nav);
     align-items: center;
     font-size: 1.1rem;
-  
+
     ul {
       text-decoration: none;
       display: flex;
       gap: var(--spacing-gap-nav);
     }
   }
-  
+
   .theme-btn {
     padding-top: 0.4rem;
   }
-  
+
   .theme-icon {
     display: inline-block;
     width: 1.5rem;
@@ -78,5 +89,5 @@ import { ABOUT, BASE_URL, BLOG, NOTE, PROJECT, TAGS } from '@/constants';
     -webkit-mask: var(--theme-icon) no-repeat center / contain;
     mask: var(--theme-icon) no-repeat center / contain;
     background-color: var(--clr-txt-main);
-   }
+  }
 </style>

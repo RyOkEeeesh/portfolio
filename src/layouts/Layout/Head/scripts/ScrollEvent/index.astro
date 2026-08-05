@@ -1,0 +1,27 @@
+<script>
+  function initScrollCheck() {
+    const header = document.querySelector("header");
+    let isTicking = false;
+
+    const handleScroll = () => {
+      if (!isTicking && header) {
+        window.requestAnimationFrame(() => {
+          const isAtTop = window.scrollY <= 10;
+          if (isAtTop) {
+            header.classList.remove("is-scrolled");
+          } else {
+            header.classList.add("is-scrolled");
+          }
+          isTicking = false;
+        });
+        isTicking = true;
+      }
+    };
+
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+  }
+
+  document.addEventListener("astro:page-load", initScrollCheck);
+</script>

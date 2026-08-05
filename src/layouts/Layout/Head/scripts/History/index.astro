@@ -1,7 +1,7 @@
 <script>
   import { PREV_URL } from "@/constants";
 
-  document.addEventListener('astro:before-preparation', () => {
+  document.addEventListener("astro:before-preparation", () => {
     sessionStorage.setItem(PREV_URL, location.pathname);
   });
 </script>

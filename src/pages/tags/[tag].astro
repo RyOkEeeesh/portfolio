@@ -24,14 +24,14 @@ const { posts, tag } = Astro.props;
 
 <Layout title={tag.name}>
   <main>
-    <Back href='/tags' />
+    <Back href="/tags" />
     <Title>{tag.name}</Title>
     {
       posts.length === 0 ? (
         <p>記事がありません。</p>
       ) : (
         <article>
-          {posts.map(post => (
+          {posts.map((post) => (
             <PostCard post={post} />
           ))}
         </article>

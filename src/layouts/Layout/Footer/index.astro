@@ -1,5 +1,5 @@
 ---
-import { Temporal } from '@js-temporal/polyfill';
+import 'temporal-polyfill/global';
 
 const currentYear = Temporal.Now.plainDateISO('Asia/Tokyo').year;
 ---
