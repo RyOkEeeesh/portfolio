@@ -1,7 +1,7 @@
 import { getCollection } from 'astro:content';
 import { POSTS } from '@/constants';
-import { type ContentsType, StatusSchema } from '@/schema';
-import type { PostsType, TagType } from '@/types';
+import { StatusSchema } from '@/schema';
+import type { ContentsType, PostsType, TagType } from '@/types';
 
 let posts: PostsType[] | null = null;
 

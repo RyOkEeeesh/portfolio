@@ -7,13 +7,15 @@ import { pluginColorChips } from 'expressive-code-color-chips'; // https://deluc
 import rehypeMermaid from 'rehype-mermaid';
 import remarkBehead from 'remark-behead';
 
+import { BASE_URL } from '@/constants';
+
 // https://twoslash.studiocms.dev/
 // https://expressive-code.com/plugins/community-plugins/
 // 今後あんま使いそうになかったら消すかも
 // https://frostybee.github.io/expressive-code-fullscreen/examples/
 
 export default defineConfig({
-  site: 'https://kaji.blog',
+  site: `https://${BASE_URL}`,
   trailingSlash: 'never',
   integrations: [
     sitemap(),

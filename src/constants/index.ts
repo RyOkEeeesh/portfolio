@@ -1,4 +1,6 @@
 export const POSTS = 'posts';
+export const DATA = 'data';
+
 export const PREV_URL = 'prev-url';
 
 // url
