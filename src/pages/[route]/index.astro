@@ -1,19 +1,21 @@
 ---
-import PostCard from '@/components/parts/card/PostCard/index.astro';
+import { getPosts } from '@/lib';
+import { ContentsSchema } from '@/schema/posts';
+
+import Layout from '@/layouts/Layout/index.astro';
+
 import Back from '@/components/parts/link/Back/index.astro';
 import PostsContainer from '@/components/parts/PostsContainer/index.astro';
 import Title from '@/components/parts/Title/index.astro';
-import Layout from '@/layouts/Layout/index.astro';
-
-import { getPosts } from '@/lib';
-import { ContentsSchema } from '@/schema/posts';
 
 export async function getStaticPaths() {
   const allPosts = await getPosts();
 
-  return ContentsSchema.options.map(route => {
-    const posts = allPosts.filter(post => post.data.contentType === route);
-    posts.sort((a, b) => b.data.createdAt.valueOf() - a.data.createdAt.valueOf());
+  return ContentsSchema.options.map((route) => {
+    const posts = allPosts.filter((post) => post.data.contentType === route);
+    posts.sort(
+      (a, b) => b.data.createdAt.valueOf() - a.data.createdAt.valueOf(),
+    );
 
     return {
       params: { route },

@@ -1,8 +1,10 @@
 ---
+import { getPublishedPosts } from '@/lib';
+
+import type { ContentsType } from '@/types';
+
 import Title from '@/components/pages/Top/Title/index.astro';
 import PostContainer from '@/components/parts/PostsContainer/index.astro';
-import { getPublishedPosts } from '@/lib';
-import type { ContentsType } from '@/types';
 
 interface Props {
   route: ContentsType;
@@ -31,7 +33,7 @@ const posts = await getPublishedPosts(route, 3);
   }
 
   .link-text {
-    opacity: calc(0.6 + var(--is-hovered, 0) * 0.4); 
-    transition: opacity 0.15s ease;
+    opacity: calc(0.6 + var(--is-hovered, 0) * 0.4);
+    transition: opacity var(--duration-common);
   }
 </style>

@@ -1,8 +1,10 @@
 ---
-import { Image } from 'astro:assets';
-import thumbnail from '@/assets/thumbnail.png';
 import { getImgName, getPostUrl } from '@/lib';
+import { Image } from 'astro:assets';
+
 import type { PostsType } from '@/types';
+
+import thumbnail from '@/assets/thumbnail.png';
 
 interface Props {
   post: PostsType;

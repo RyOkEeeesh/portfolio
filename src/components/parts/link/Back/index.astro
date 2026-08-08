@@ -17,10 +17,10 @@ const { href } = Astro.props;
 </div>
 
 <script>
-  import { PREV_URL } from "@/constants";
+  import { PREV_URL } from '@/constants';
 
-  document.addEventListener("astro:page-load", () => {
-    const back = document.querySelector(".link") as HTMLAnchorElement | null;
+  document.addEventListener('astro:page-load', () => {
+    const back = document.querySelector('.link') as HTMLAnchorElement | null;
 
     if (back?.dataset.href || !back) return;
 
@@ -39,7 +39,7 @@ const { href } = Astro.props;
     transition: background-color 0.2s ease-out;
     margin-bottom: 2rem;
   }
-  
+
   .back:hover {
     background-color: var(--clr-border);
   }

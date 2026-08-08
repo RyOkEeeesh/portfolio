@@ -7,8 +7,10 @@ export const PREV_URL = 'prev-url';
 export const BASE_URL = 'kaji.blog';
 
 // slug
-export const ABOUT = 'about';
-export const PROJECT = 'project';
-export const BLOG = 'blog';
-export const NOTE = 'note';
-export const TAGS = 'tags';
+export const ROUTES = {
+  ABOUT: 'about',
+  PROJECT: 'project',
+  BLOG: 'blog',
+  NOTE: 'note',
+  TAGS: 'tags',
+} as const;

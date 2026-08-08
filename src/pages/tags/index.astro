@@ -1,14 +1,15 @@
 ---
-import Back from '@/components/parts/link/Back/index.astro';
-import Title from '@/components/parts/Title/index.astro';
+import { getTags } from '@/lib';
+
 import Layout from '@/layouts/Layout/index.astro';
 
-import { getTags } from '@/lib';
+import Back from '@/components/parts/link/Back/index.astro';
+import Title from '@/components/parts/Title/index.astro';
 
 const tags = await getTags();
 ---
 
-<Layout title={"タグ一覧"}>
+<Layout title={'タグ一覧'}>
   <main>
     <Back href="/" />
     <Title>タグ一覧</Title>

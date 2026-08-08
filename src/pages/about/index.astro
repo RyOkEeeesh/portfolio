@@ -1,6 +1,9 @@
 ---
-import GithubIcon from '@/components/parts/image/GithubIcon/index.astro';
+import { SITE_DATA } from '@/data/index.ts';
+
 import Layout from '@/layouts/Layout/index.astro';
+
+import GithubIcon from '@/components/parts/image/GithubIcon/index.astro';
 ---
 
 <Layout title="プロファイル">
@@ -9,7 +12,7 @@ import Layout from '@/layouts/Layout/index.astro';
       <!-- 自己紹介 -->
       <div class="center">
         <GithubIcon />
-        <p>加地 良寅</p>
+        <p>{`${SITE_DATA.user.name.last} ${SITE_DATA.user.name.first}`}</p>
         <div class="external-links">
           <a
             href="https://github.com/RyOkEeeesh"

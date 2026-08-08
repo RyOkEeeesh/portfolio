@@ -1,31 +1,45 @@
 :root {
+  /* fonts */
   --font-main: "Noto Sans JP", sans-serif;
   --font-title: "LINE Seed JP", sans-serif;
   --font-sub: "JetBrains Mono", monospace;
+
+  /* sizing */
   --h-header: 4rem;
   --w-min-content: 300px;
   --w-max-content: 960px; /* 要調整 */
   --h-footer: 1.2rem;
-  --clr-footer: #4b5563; /* gray-600 */
+
+  /* spacing */
   --spacing-gap-nav: 1.2rem;
+
+  /* color */
+  --clr-footer: #4b5563; /* gray-600 */
+
+  /* duration */
+  --duration-common: 0.15s ease;
+
+  /* 明度調整要 */
+  --num-txt-sub: 25;
+  --num-border: 23;
 }
 
 :root[data-theme="light"] {
   --theme-icon: url("/img/icon/light.svg");
-  --clr-bg-main: #f9fafb; /* gray-50 */
-  --clr-txt-main: #1e293b; /* slate-800 */
-  --clr-txt-sub: #334155; /* slate-600 */
-  --clr-border: #d1d5db; /* gray-300 */
+  --clr-bg-main: #f3f4f6; /* gray-100 */
+  --clr-txt-main: #334155; /* slate-700 */
+  --clr-txt-sub: hsl(from var(--clr-txt-main) h s calc(l + var(--num-txt-sub)));
   --clr-border-active: #9ca3af; /* gray-400 */
+  --clr-border: hsl(from var(--clr-border-active) h s calc(l + var(--num-border)));
 }
 
 :root[data-theme="dark"] {
   --theme-icon: url("/img/icon/dark.svg");
   --clr-bg-main: #111827; /* gray-900 */
   --clr-txt-main: #e2e8f0; /* slate-200 */
-  --clr-txt-sub: #94a3b8; /* slate-400 */
-  --clr-border: #4b5563; /* gray-600 */
+  --clr-txt-sub: hsl(from var(--clr-txt-main) h s calc(l - var(--num-txt-sub)));
   --clr-border-active: #6b7280; /* gray-500 */
+  --clr-border: hsl(from var(--clr-border-active) h s calc(l - var(--num-border)));
 }
 
 *,

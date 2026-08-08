@@ -1,17 +1,14 @@
-import type { RouteType } from '@/types/route';
+import type { UserInfo } from '@/types';
 
-export type PageData = {
-  title: string;
-  heading?: string;
-}
-
-export type UserData = {
-  name: string;
+export type UserDataType = {
+  name: UserInfo;
+  reading: UserInfo;
   email: string;
-  github: string;
+  githubId: string;
 };
 
-export type SiteData = {
-  routes: Record<RouteType, PageData>;
-  user: UserData
-} & PageData;
+export type SiteDataType = {
+  title: string;
+  heading?: string;
+  user: UserDataType;
+};

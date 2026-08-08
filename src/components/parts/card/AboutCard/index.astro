@@ -1,6 +1,6 @@
 ---
 import GithubIcon from '@/components/parts/image/GithubIcon/index.astro';
-import LinkPart from '@/components/parts/link/LinkPart/index.astro';
+import LinkPart from '@/components/parts/link/Link/index.astro';
 ---
 
 <section>
@@ -13,8 +13,8 @@ import LinkPart from '@/components/parts/link/LinkPart/index.astro';
       <div class="about-content">
         <p>加地 良寅 <span>Kaji Ryoin</span></p>
         <p>HAL東京</p>
-        </div>
       </div>
+    </div>
   </LinkPart>
 </section>
 
@@ -28,8 +28,8 @@ import LinkPart from '@/components/parts/link/LinkPart/index.astro';
   :global(.about-card) {
     overflow: hidden;
     border-radius: 8px;
-    border: 2px solid var(--clr-border); 
-    transition: border-color 0.15s ease;
+    border: 2px solid var(--clr-border);
+    transition: border-color var(--duration-common);
     padding: 0 1rem;
 
     &:hover {

@@ -1,6 +1,6 @@
 <script>
   function initScrollCheck() {
-    const header = document.querySelector("header");
+    const header = document.querySelector('header');
     let isTicking = false;
 
     const handleScroll = () => {
@@ -8,9 +8,9 @@
         window.requestAnimationFrame(() => {
           const isAtTop = window.scrollY <= 10;
           if (isAtTop) {
-            header.classList.remove("is-scrolled");
+            header.classList.remove('is-scrolled');
           } else {
-            header.classList.add("is-scrolled");
+            header.classList.add('is-scrolled');
           }
           isTicking = false;
         });
@@ -20,8 +20,8 @@
 
     handleScroll();
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
   }
 
-  document.addEventListener("astro:page-load", initScrollCheck);
+  document.addEventListener('astro:page-load', initScrollCheck);
 </script>

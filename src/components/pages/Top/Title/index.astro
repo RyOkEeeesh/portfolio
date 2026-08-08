@@ -1,7 +1,8 @@
 ---
-import LinkIcon from '@/components/parts/link/LinkPart/index.astro';
-import Title from '@/components/parts/Title/index.astro';
 import type { RouteType } from '@/types';
+
+import LinkIcon from '@/components/parts/link/Link/index.astro';
+import Title from '@/components/parts/Title/index.astro';
 
 interface Props {
   route: RouteType;
@@ -26,7 +27,7 @@ const { route } = Astro.props;
   }
 
   .link-text {
-    opacity: calc(0.6 + var(--is-hovered, 0) * 0.4); 
-    transition: opacity 0.15s ease;
+    opacity: calc(0.6 + var(--is-hovered, 0) * 0.4);
+    transition: opacity var(--duration-common);
   }
 </style>

@@ -1,17 +1,19 @@
 ---
-import { ABOUT, BASE_URL, BLOG, NOTE, PROJECT, TAGS } from '@/constants';
+import { BASE_URL, ROUTES } from '@/constants';
 ---
 
 <header class="center" transition:persist>
   <div class="header-container">
-    <h1><a class="top" href="/">{BASE_URL}</a></h1>
+    <h1><a href="/">{BASE_URL}</a></h1>
     <nav>
       <ul>
-        <li><a href={`/${ABOUT}`}>{ABOUT}</a></li>
-        <li><a href={`/${PROJECT}`}>{PROJECT}</a></li>
-        <li><a href={`/${BLOG}`}>{BLOG}</a></li>
-        <li><a href={`/${NOTE}`}>{NOTE}</a></li>
-        <li><a href={`/${TAGS}`}>{TAGS}</a></li>
+        {
+          Object.entries(ROUTES).map(([_, value]) => (
+            <li>
+              <a href={`/${value}`}>{value}</a>
+            </li>
+          ))
+        }
       </ul>
       <div class="center">
         <button class="theme-btn canter" type="button">
@@ -36,8 +38,9 @@ import { ABOUT, BASE_URL, BLOG, NOTE, PROJECT, TAGS } from '@/constants';
     backdrop-filter: blur(0);
     -webkit-backdrop-filter: blur(0);
     transition:
-      backdrop-filter 0.15s ease,
-      -webkit-backdrop-filter 0.15s ease;
+      background-color var(--duration-common),
+      backdrop-filter var(--duration-common),
+      -webkit-backdrop-filter var(--duration-common);
 
     &.is-scrolled {
       backdrop-filter: blur(20px);
@@ -45,15 +48,15 @@ import { ABOUT, BASE_URL, BLOG, NOTE, PROJECT, TAGS } from '@/constants';
     }
   }
 
-  .top {
-    font-size: 2.5rem;
+  h1 {
+    font-size: clamp(1.5rem, 2vw + 1rem, 2.5rem);
     font-weight: 700;
     opacity: 1;
     transition: opacity 0.15s;
-  }
 
-  .top:hover {
-    opacity: 0.8;
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
   .header-container {
