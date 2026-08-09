@@ -74,6 +74,7 @@ canvas,
 svg {
   display: block;
   max-width: 100%;
+  height: auto;
   color: var(--clr-txt-main);
 }
 
@@ -121,11 +122,6 @@ main {
   font-family: var(--font-sub);
   font-weight: 200;
   color: var(--clr-txt-sub);
-}
-
-/* PostCardと[id].astroで使うのでグローバル */
-.post-img {
-  height: auto;
 }
 
 /* コードブロック */

@@ -8,6 +8,8 @@ import Layout from '@/layouts/Layout/index.astro';
 import Back from '@/components/parts/link/Back/index.astro';
 import Title from '@/components/parts/Title/index.astro';
 
+import { ELEMENTS } from '@/constants';
+
 import thumbnail from '@/assets/thumbnail.png';
 
 export async function getStaticPaths() {
@@ -31,7 +33,7 @@ const { Content } = await render(post);
     <Back />
     <article class="markdown-body">
       <Image
-        class="post-img"
+        class={ELEMENTS.POST_IMG}
         src={post.data.thumbnail ?? thumbnail}
         alt={`${post.id}のサムネイル`}
         loading="eager"

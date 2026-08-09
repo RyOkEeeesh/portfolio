@@ -14,3 +14,8 @@ export const ROUTES = {
   NOTE: 'note',
   TAGS: 'tags',
 } as const;
+
+// elements class names
+export const ELEMENTS = {
+  POST_IMG: 'post-img',
+}
