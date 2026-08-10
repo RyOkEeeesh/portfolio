@@ -15,9 +15,9 @@ const { route } = Astro.props;
 const posts = await getPublishedPosts(route, 3);
 ---
 
-<section class="">
+<section>
   <Title route={route} />
-  <div class="">
+  <div>
     <PostContainer posts={posts} />
   </div>
 </section>

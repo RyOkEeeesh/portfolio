@@ -4,6 +4,12 @@
   --font-title: "LINE Seed JP", sans-serif;
   --font-sub: "JetBrains Mono", monospace;
 
+  /* font-size */
+  --font-size-mut-title-l: clamp(1.5rem, 3vw + 1rem, 2.5rem);
+  --font-size-mut-title-m: clamp(1rem, 1vw + 1rem, 1.5rem);
+  --font-size-mut-txt-m: clamp(0.5rem, 1vw + 0.5rem, 1rem);
+  --font-size-mut-txt-s: clamp(0.5rem, 1vw + 0.5rem, 0.8rem);
+
   /* sizing */
   --h-header: 4rem;
   --w-min-content: 300px;
@@ -56,7 +62,7 @@ html {
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-  font-size: 18px;
+  font-size: clamp(16px, 102vw, 18px);
 }
 
 body {
@@ -119,7 +125,7 @@ main {
   font-family: var(--font-title);
 }
 
-.sub-txt {
+.sub {
   font-family: var(--font-sub);
   font-weight: 200;
   color: var(--clr-txt-sub);

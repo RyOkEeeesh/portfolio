@@ -1,7 +1,7 @@
 ---
 import type { RouteType } from '@/types';
 
-import LinkIcon from '@/components/parts/link/Link/index.astro';
+import Link from '@/components/parts/link/Link/index.astro';
 import Title from '@/components/parts/Title/index.astro';
 
 interface Props {
@@ -13,7 +13,7 @@ const { route } = Astro.props;
 
 <div class="title-content">
   <Title>{route}</Title>
-  <LinkIcon href={route}><span class="link-text">view all</span></LinkIcon>
+  <Link href={route}><span class="link-text">view all</span></Link>
 </div>
 
 <style>
@@ -24,9 +24,11 @@ const { route } = Astro.props;
     user-select: none;
     border-bottom: 2px solid var(--clr-border);
     padding: 0.5rem 0.25rem;
+    transition: border-bottom var(--duration-common);
   }
 
   .link-text {
+    font-size: var(--font-size-mut-txt-m);
     opacity: calc(0.6 + var(--is-hovered, 0) * 0.4);
     transition: opacity var(--duration-common);
   }

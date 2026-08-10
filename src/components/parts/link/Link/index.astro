@@ -9,16 +9,14 @@ interface Props {
 const { href, class: className = '' } = Astro.props;
 ---
 
-<div class:list={['link', className]}>
-  <a href={href}>
-    <div class="container">
-      <slot />
-      <div class="icon-wrap">
-        <LinkIcon class="icon" />
-      </div>
+<a class:list={['link', className]} href={href}>
+  <div class="container">
+    <slot />
+    <div class="icon-wrap">
+      <LinkIcon class="icon" />
     </div>
-  </a>
-</div>
+  </div>
+</a>
 
 <style>
   .link {
@@ -33,10 +31,18 @@ const { href, class: className = '' } = Astro.props;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0.8rem;
+    gap: 0.25rem;
+  }
+
+  .icon-wrap {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
   }
 
   .icon {
+    width: var(--font-size-mut-txt-m);
+    height: var(--font-size-mut-txt-m);
     fill: var(--clr-txt-main);
     opacity: calc(0.6 + var(--is-hovered, 0) * 0.4);
     transform: scale(calc(1 + var(--is-hovered, 0) * 0.15));

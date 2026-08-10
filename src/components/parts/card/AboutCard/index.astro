@@ -1,11 +1,11 @@
 ---
 import GithubIcon from '@/components/parts/image/GithubIcon/index.astro';
-import LinkPart from '@/components/parts/link/Link/index.astro';
+import Link from '@/components/parts/link/Link/index.astro';
 ---
 
 <section>
-  <span class="sub-txt">Developer · Student</span>
-  <LinkPart class="about-card" href="/about">
+  <span class="sub">Developer · Student</span>
+  <Link class="about-card" href="/about">
     <div class="link-content">
       <div class="content">
         <GithubIcon />
@@ -15,7 +15,7 @@ import LinkPart from '@/components/parts/link/Link/index.astro';
         <p>HAL東京</p>
       </div>
     </div>
-  </LinkPart>
+  </Link>
 </section>
 
 <style>
@@ -26,6 +26,7 @@ import LinkPart from '@/components/parts/link/Link/index.astro';
   }
 
   :global(.about-card) {
+    display: block;
     overflow: hidden;
     border-radius: 8px;
     border: 2px solid var(--clr-border);
@@ -35,6 +36,10 @@ import LinkPart from '@/components/parts/link/Link/index.astro';
     &:hover {
       border-color: var(--clr-border-active);
     }
+  }
+
+  .sub {
+    font-size: var(--font-size-mut-txt-m);
   }
 
   .link-content {
