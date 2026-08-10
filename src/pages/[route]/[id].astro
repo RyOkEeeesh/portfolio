@@ -1,5 +1,4 @@
 ---
-import { getImgName, getPosts } from '@/lib';
 import { Image } from 'astro:assets';
 import { render } from 'astro:content';
 
@@ -8,6 +7,7 @@ import Layout from '@/layouts/Layout/index.astro';
 import Back from '@/components/parts/link/Back/index.astro';
 import Title from '@/components/parts/Title/index.astro';
 
+import { getImgName, getPosts } from '@/lib';
 import { ELEMENTS } from '@/constants';
 
 import thumbnail from '@/assets/thumbnail.png';
@@ -15,7 +15,7 @@ import thumbnail from '@/assets/thumbnail.png';
 export async function getStaticPaths() {
   const posts = await getPosts();
 
-  return posts.map((post) => ({
+  return posts.map(post => ({
     params: {
       route: post.data.contentType,
       id: post.id,

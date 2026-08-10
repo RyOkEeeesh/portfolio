@@ -18,4 +18,4 @@ export const ROUTES = {
 // elements class names
 export const ELEMENTS = {
   POST_IMG: 'post-img',
-}
+};

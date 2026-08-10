@@ -1,7 +1,9 @@
 /** @type {import('prettier').Config} */
 export default {
   // 1. クォートの設定
-  singleQuote: true, // 文字列にシングルクォートを使用
+  singleQuote: true,
+  printWidth: 120,
+  arrowParens: 'avoid',
 
   // 2. プラグインの指定
   plugins: ['@ianvs/prettier-plugin-sort-imports', 'prettier-plugin-astro'],
@@ -23,14 +25,17 @@ export default {
     '<TYPES>',
     '',
     // ③ layout
-    '^@/layouts/(.*)$',
+    '^@/layouts(.*)$',
     '',
     // ④ component
-    '^@/components/(.*)$',
+    '^@/components(.*)$',
     '',
-    // ⑤ module
-    '^@/lib/(.*)$',
-    '^@/assets/(.*)$',
+    // ⑤ module (lib や constants)
+    '^@/lib(.*)$',
+    '^@/constants(.*)$',
+    '',
+    // ⑥ assets / 相対パス
+    '^@/assets(.*)$',
     '^[./]',
   ],
 

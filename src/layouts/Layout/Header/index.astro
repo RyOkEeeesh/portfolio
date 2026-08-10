@@ -35,16 +35,16 @@ import { BASE_URL, ROUTES } from '@/constants';
     font-family: var(--font-title);
     font-weight: 700;
     background-color: rgb(from var(--clr-bg-main) r g b / 0.8);
-    backdrop-filter: blur(0);
-    -webkit-backdrop-filter: blur(0);
+    box-shadow: 0 0px 0px var(--clr-shadow);
+    backdrop-filter: blur(18);
+    -webkit-backdrop-filter: blur(18);
     transition:
       background-color var(--duration-common),
-      backdrop-filter var(--duration-common),
-      -webkit-backdrop-filter var(--duration-common);
+      box-shadow var(--duration-common);
 
     &.is-scrolled {
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      border-color: var(--clr-border);
+      box-shadow: 0 2px 4px var(--clr-shadow);
     }
   }
 

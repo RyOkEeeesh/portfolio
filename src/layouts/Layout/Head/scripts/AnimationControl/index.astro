@@ -1,8 +1,9 @@
 <script>
   import { ContentsSchema } from '@/schema';
+
   import { ELEMENTS } from '@/constants';
 
-  document.addEventListener('astro:before-preparation', (event) => {
+  document.addEventListener('astro:before-preparation', event => {
     const fromPath = location.pathname;
     const toPath = event.to.pathname;
 
@@ -12,12 +13,11 @@
     const isContentDetail = (segments: string[]) =>
       segments.length >= 2 && ContentsSchema.safeParse(segments[0]).success;
 
-    const shouldAnimate =
-      isContentDetail(fromSegments) || isContentDetail(toSegments);
+    const shouldAnimate = isContentDetail(fromSegments) || isContentDetail(toSegments);
 
     if (!shouldAnimate) {
       const images = document.querySelectorAll<HTMLElement>(`.${ELEMENTS.POST_IMG}`);
-      images.forEach((img) => {
+      images.forEach(img => {
         img.style.viewTransitionName = 'none';
       });
     }

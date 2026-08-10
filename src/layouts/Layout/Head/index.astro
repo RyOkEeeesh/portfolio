@@ -1,5 +1,4 @@
 ---
-import { BASE_URL } from '@/constants';
 import { ClientRouter } from 'astro:transitions';
 
 import type { MainLayoutProps } from '@/types/layouts';
@@ -10,6 +9,8 @@ import AnimationControl from '@/layouts/Layout/Head/scripts/AnimationControl/ind
 import History from '@/layouts/Layout/Head/scripts/History/index.astro';
 import ScrollEvent from '@/layouts/Layout/Head/scripts/ScrollEvent/index.astro';
 import ThemeScript from '@/layouts/Layout/Head/scripts/ThemeScript/index.astro';
+
+import { BASE_URL } from '@/constants';
 
 interface Props extends MainLayoutProps {}
 
@@ -52,15 +53,7 @@ const ogpURL = new URL(ogp, Astro.site);
   <Fonts />
   <ClientRouter />
 
-  {
-    jsonld && (
-      <script
-        is:inline
-        type="application/ld+json"
-        set:html={JSON.stringify(jsonld)}
-      />
-    )
-  }
+  {jsonld && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
 
   <ThemeScript />
   <History />

@@ -4,10 +4,9 @@
   const dark = 'dark';
 
   const getInitTheme = () =>
-    localStorage.getItem(themeKey) ??
-    (window.matchMedia('(prefers-color-scheme: dark)').matches ? dark : light);
+    localStorage.getItem(themeKey) ?? (window.matchMedia('(prefers-color-scheme: dark)').matches ? dark : light);
 
-  const applyTheme = (theme) => {
+  const applyTheme = theme => {
     document.documentElement.setAttribute(`data-${themeKey}`, theme);
     localStorage.setItem(themeKey, theme);
   };
@@ -25,9 +24,7 @@
     btn.dataset.hasThemeListener = 'true';
 
     btn.addEventListener('click', () => {
-      const currentTheme = document.documentElement.getAttribute(
-        `data-${themeKey}`,
-      );
+      const currentTheme = document.documentElement.getAttribute(`data-${themeKey}`);
       const nextTheme = currentTheme === dark ? light : dark;
       applyTheme(nextTheme);
     });

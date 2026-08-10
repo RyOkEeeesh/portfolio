@@ -15,6 +15,7 @@
 
   /* color */
   --clr-footer: #4b5563; /* gray-600 */
+  --clr-shadow: rgb(from #111827 r g b / 0.3); /* gray-900 */
 
   /* duration */
   --duration-common: 0.15s ease;
