@@ -29,6 +29,9 @@
   /* 明度調整要 */
   --num-txt-sub: 25;
   --num-border: 23;
+
+  /* dvice */
+  --media-width: 768px;
 }
 
 :root[data-theme="light"] {
@@ -62,7 +65,7 @@ html {
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-  font-size: clamp(16px, 102vw, 18px);
+  font-size: clamp(16px, 2vw, 18px);
 }
 
 body {
