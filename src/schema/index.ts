@@ -1,1 +1,2 @@
-export * from './posts';
+export * from '@/schema/github';
+export * from '@/schema/posts';

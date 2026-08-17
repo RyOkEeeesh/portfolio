@@ -4,8 +4,8 @@ on:
   push:
     tags:
       - 'v*'
-  issues:
-    types: [opened, edited, deleted]
+  # issues:
+  #   types: [opened, edited, deleted]
   workflow_dispatch:
 
 permissions:
@@ -25,20 +25,25 @@ jobs:
       - name: Checkout your repository
         uses: actions/checkout@v4
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+        run: pnpm exec playwright install --with-deps
 
       - name: Build site
-        run: npm run build
+        run: pnpm run build
 
       - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
