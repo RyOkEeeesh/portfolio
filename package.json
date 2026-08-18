@@ -12,7 +12,8 @@
     "astro": "astro",
     "fmt:biome": "biome check --write --unsafe .",
     "fmt:astro": "prettier --write \"**/*.astro\"",
-    "fmt": "pnpm fmt:biome && pnpm fmt:astro"
+    "fmt": "pnpm fmt:biome && pnpm fmt:astro",
+    "api:fetch": "tsx src/scripts/run-github-fetch.ts"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.2.2",
@@ -39,7 +40,8 @@
     "postcss": "^8.5.25",
     "prettier": "3.9.6",
     "prettier-plugin-astro": "0.14.1",
-    "schema-dts": "^2.0.0"
+    "schema-dts": "^2.0.0",
+    "tsx": "^4.23.12"
   },
   "browserslist": [
     "last 2 Chrome versions",

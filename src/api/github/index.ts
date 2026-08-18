@@ -8,12 +8,12 @@ export const githubGraphQL = graphql.defaults({
   },
 });
 
-async function _getAllPostsFromGithubIssues(): Promise<IssueType[]> {
+export async function getAllPostsFromGithubIssues(): Promise<IssueType[]> {
   const issues: IssueType[] = [];
   let cursor: string | null = null;
   let hasNextPage = true;
 
-  const searchQuery = `repo:${process.env.GITHUB_REPO} is:issue author:@me label:${StatusSchema.enum.published}`;
+  const searchQuery = `repo:${process.env.GITHUB_REPO} is:issue author:@me label:status:${StatusSchema.enum.published}`;
 
   while (hasNextPage) {
     // raw を unknown として受け取ることで完全な any 排除を明示
