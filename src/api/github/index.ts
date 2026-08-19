@@ -1,5 +1,5 @@
 import { graphql } from '@octokit/graphql';
-import { SearchResultSchema, StatusSchema } from '@/schema';
+import { IssueSearchResultSchema, StatusSchema } from '@/schema';
 import type { IssueType } from '@/types';
 
 export const githubGraphQL = graphql.defaults({
@@ -30,8 +30,7 @@ export async function getAllPostsFromGithubIssues(): Promise<IssueType[]> {
               ... on Issue {
                 number
                 title
-                url
-                state
+                body
                 createdAt
                 labels(first: 100) {
                   nodes { name }
@@ -45,7 +44,7 @@ export async function getAllPostsFromGithubIssues(): Promise<IssueType[]> {
     );
 
     // Zod スキーマでランタイムチェック 兼 型確定
-    const result = SearchResultSchema.parse(raw);
+    const result = IssueSearchResultSchema.parse(raw);
     const { nodes, pageInfo } = result.search;
 
     issues.push(...nodes);
@@ -55,3 +54,4 @@ export async function getAllPostsFromGithubIssues(): Promise<IssueType[]> {
 
   return issues;
 }
+

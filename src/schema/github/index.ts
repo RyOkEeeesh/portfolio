@@ -3,15 +3,14 @@ import { z } from 'zod';
 export const IssueSchema = z.object({
   number: z.number(),
   title: z.string(),
-  url: z.string(),
-  state: z.string(),
+  body: z.string(),
   createdAt: z.string(),
   labels: z.object({
     nodes: z.array(z.object({ name: z.string() })),
   }),
 });
 
-export const SearchResultSchema = z.object({
+export const IssueSearchResultSchema = z.object({
   search: z.object({
     issueCount: z.number(),
     pageInfo: z.object({
@@ -21,3 +20,7 @@ export const SearchResultSchema = z.object({
     nodes: z.array(IssueSchema),
   }),
 });
+
+// export const CommentSchema = z.object({
+  
+// });
