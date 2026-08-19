@@ -23,7 +23,7 @@ export const hasValue = <T>(value: Maybe<T>): value is T => {
 };
 
 export const isHttpUrl = (value: string): boolean => {
-  if (!value || !value.trim()) return false;
+  if (!value?.trim()) return false;
 
   try {
     const parsed = new URL(value);
@@ -113,7 +113,7 @@ export const checkResourceExists = async (value: unknown): Promise<boolean> => {
       return false;
     }
 
-    const results = await Promise.all(value.map((item) => checkResourceExists(item)));
+    const results = await Promise.all(value.map(item => checkResourceExists(item)));
     return results.every(Boolean);
   }
 

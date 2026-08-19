@@ -13,10 +13,9 @@ export async function getAllPostsFromGithubIssues(): Promise<IssueType[]> {
   let cursor: string | null = null;
   let hasNextPage = true;
 
-  const searchQuery = `repo:${process.env.GITHUB_REPO} is:issue author:@me label:status:${StatusSchema.enum.published}`;
+  const q = `repo:${process.env.GITHUB_REPO} is:issue author:@me label:status:${StatusSchema.enum.published}`;
 
   while (hasNextPage) {
-    // raw を unknown として受け取ることで完全な any 排除を明示
     const raw = await githubGraphQL<unknown>(
       `
         query search($q: String!, $cursor: String) {
@@ -40,10 +39,9 @@ export async function getAllPostsFromGithubIssues(): Promise<IssueType[]> {
           }
         }
       `,
-      { q: searchQuery, cursor },
+      { q, cursor },
     );
 
-    // Zod スキーマでランタイムチェック 兼 型確定
     const result = IssueSearchResultSchema.parse(raw);
     const { nodes, pageInfo } = result.search;
 
@@ -54,4 +52,3 @@ export async function getAllPostsFromGithubIssues(): Promise<IssueType[]> {
 
   return issues;
 }
-

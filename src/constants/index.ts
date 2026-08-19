@@ -19,3 +19,8 @@ export const ROUTES = {
 export const ELEMENTS = {
   POST_IMG: 'post-img',
 };
+
+export const ISSUE_META = {
+  THUMBNAIL: 'thumbnail',
+  DESCRIPTION: 'description',
+};

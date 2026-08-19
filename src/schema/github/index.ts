@@ -20,7 +20,3 @@ export const IssueSearchResultSchema = z.object({
     nodes: z.array(IssueSchema),
   }),
 });
-
-// export const CommentSchema = z.object({
-  
-// });
