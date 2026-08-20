@@ -18,9 +18,9 @@ export const ROUTES = {
 // elements class names
 export const ELEMENTS = {
   POST_IMG: 'post-img',
-};
+} as const;
 
 export const ISSUE_META = {
   THUMBNAIL: 'thumbnail',
   DESCRIPTION: 'description',
-};
+} as const;

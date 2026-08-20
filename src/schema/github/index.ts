@@ -1,4 +1,11 @@
 import { z } from 'zod';
+import { ISSUE_META } from '@/constants';
+
+export const IssueMetaSchema = z.object({
+  [ISSUE_META.THUMBNAIL]: z.string().optional(),
+  // TODO: descriptionのminは後で80に変えて
+  [ISSUE_META.DESCRIPTION]: z.string().min(1),
+});
 
 export const IssueSchema = z.object({
   number: z.number(),

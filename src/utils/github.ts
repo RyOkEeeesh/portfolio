@@ -1,29 +1,31 @@
 import { ISSUE_META } from '@/constants';
-import type { IssueMetaType, IssueType } from '@/types/github';
+import { IssueMetaSchema } from '@/schema';
+import type { IssueType, PostType } from '@/types';
 
-export function getIssueMeta(rawBody: IssueType['body']): { meta: IssueMetaType; content: string } {
-  const metaMatch = rawBody.match(/<!--\s*([\s\S]*?)\s*-->/);
+const COMMENT_REGEX = /<!--\s*([\s\S]*?)\s*-->/;
 
-  const meta: IssueMetaType = {};
+export function getIssueMetaAndBody(rawBody: IssueType['body']): Pick<PostType, 'thumbnail' | 'description' | 'body'> {
+  const metaMatch = rawBody.match(COMMENT_REGEX);
+  const rawMeta: Record<string, string> = {};
 
   if (metaMatch) {
     const commentContent = metaMatch[1];
 
-    const thumbnailRegex = new RegExp(`^${ISSUE_META.THUMBNAIL}:\\s*(.+)$`, 'm');
-    const descriptionRegex = new RegExp(`^${ISSUE_META.DESCRIPTION}:\\s*(.+)$`, 'm');
+    for (const line of commentContent.split('\n')) {
+      const [key, ...valueParts] = line.split(':');
+      if (!key || valueParts.length === 0) continue;
 
-    const thumbnailMatch = commentContent.match(thumbnailRegex);
-    const descriptionMatch = commentContent.match(descriptionRegex);
+      const trimmedKey = key.trim();
+      const value = valueParts.join(':').trim();
 
-    if (thumbnailMatch) {
-      meta[ISSUE_META.THUMBNAIL] = thumbnailMatch[1].trim();
-    }
-    if (descriptionMatch) {
-      meta[ISSUE_META.DESCRIPTION] = descriptionMatch[1].trim();
+      if (trimmedKey === ISSUE_META.THUMBNAIL || trimmedKey === ISSUE_META.DESCRIPTION) {
+        rawMeta[trimmedKey] = value;
+      }
     }
   }
 
-  const content = rawBody.replace(/<!--[\s\S]*?-->/, '').trim();
+  const meta = IssueMetaSchema.parse(rawMeta);
+  const body = rawBody.replace(COMMENT_REGEX, '').trim();
 
-  return { meta, content };
+  return { ...meta, body };
 }

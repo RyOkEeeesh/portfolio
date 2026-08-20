@@ -1,5 +1,5 @@
 import { getAllPostsFromGithubIssues } from '@/api/github';
-import { hasValue, getIssueMeta } from '@/utils';
+import { getIssueMetaAndBody, hasValue } from '@/utils';
 
 async function main() {
   console.log('Fetching GitHub issues...');
@@ -8,10 +8,9 @@ async function main() {
 
     if (hasValue(posts)) {
       posts.forEach(post => {
-        const { meta, content } = getIssueMeta(post.body);
-        console.log(meta);
-        console.log(content);
-      })
+        const issue = getIssueMetaAndBody(post.body);
+        console.log(issue);
+      });
     }
   } catch (error) {
     console.error('Error fetching posts:', error);
