@@ -1,6 +1,8 @@
 ---
 import GithubIcon from '@/components/parts/image/GithubIcon/index.astro';
 import Link from '@/components/parts/link/Link/index.astro';
+
+import { SITE_DATA } from '@/data';
 ---
 
 <section>
@@ -11,8 +13,8 @@ import Link from '@/components/parts/link/Link/index.astro';
         <GithubIcon />
       </div>
       <div class="about-content">
-        <p>加地 良寅 <span>Kaji Ryoin</span></p>
-        <p>HAL東京</p>
+        <p>{SITE_DATA.user.name.last} {SITE_DATA.user.name.first}<span>{SITE_DATA.user.reading.last} {SITE_DATA.user.reading.first}</span></p>
+        <p>{SITE_DATA.user.affiliation}</p>
       </div>
     </div>
   </Link>

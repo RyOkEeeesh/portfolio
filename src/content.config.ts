@@ -1,8 +1,9 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
-import { POSTS } from './constants';
-import { ContentsSchema, StatusSchema } from './schema/posts';
+
+import { POSTS } from '@/constants';
+import { ContentsSchema, StatusSchema } from '@/schema/posts';
 
 const portfolioCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: `./src/${POSTS}` }),

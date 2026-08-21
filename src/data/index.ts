@@ -12,6 +12,7 @@ const user = {
   },
   email: 'ryokesh.dev@gmail.com',
   githubId: 'RyOkEeeesh',
+  affiliation: 'HAL東京',
 } satisfies UserDataType;
 
 export const SITE_DATA = {

@@ -5,6 +5,7 @@ export type UserDataType = {
   reading: UserInfo;
   email: string;
   githubId: string;
+  affiliation: string,
 };
 
 export type SiteDataType = {
