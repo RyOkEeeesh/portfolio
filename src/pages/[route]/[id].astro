@@ -17,7 +17,7 @@ export async function getStaticPaths() {
 
   return posts.map(post => ({
     params: {
-      route: post.contentType,
+      route: post.data.contentType,
       id: post.id,
     },
     props: { post },
@@ -28,32 +28,34 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<Layout title={post.title}>
+<Layout title={post.data.title}>
   <main>
     <Back />
     <article class="markdown-body">
-      {typeof (post.thumbnail || thumbnail) === 'string' ? (
-        <Image
-          class={ELEMENTS.POST_IMG}
-          src={(post.thumbnail || thumbnail) as string}
-          alt={`${post.title}のサムネイル`}
-          width={800}
-          height={450}
-          loading="eager"
-          transition:name={getImgName(post)}
-        />
-      ) : (
-        <Image
-          class={ELEMENTS.POST_IMG}
-          src={(post.thumbnail || thumbnail) as ImageMetadata}
-          alt={`${post.title}のサムネイル`}
-          loading="eager"
-          transition:name={getImgName(post)}
-        />
-      )}
+      {
+        typeof (post.data.thumbnail || thumbnail) === 'string' ? (
+          <Image
+            class={ELEMENTS.POST_IMG}
+            src={(post.data.thumbnail || thumbnail) as string}
+            alt={`${post.data.title}のサムネイル`}
+            width={800}
+            height={450}
+            loading="eager"
+            transition:name={getImgName(post)}
+          />
+        ) : (
+          <Image
+            class={ELEMENTS.POST_IMG}
+            src={(post.data.thumbnail || thumbnail) as ImageMetadata}
+            alt={`${post.data.title}のサムネイル`}
+            loading="eager"
+            transition:name={getImgName(post)}
+          />
+        )
+      }
       <!-- TODO:  -->
-      <span>{post.createdAt}</span>
-      <Title>{post.title}</Title>
+      <span>{post.data.createdAt}</span>
+      <Title>{post.data.title}</Title>
       <Content />
     </article>
     <div class="spacer"></div>

@@ -19,28 +19,30 @@ const { post } = Astro.props;
   <a href={getPostUrl(post)}>
     <div class="">
       <div class="">
-        {typeof (post.thumbnail || thumbnail) === 'string' ? (
-          <Image
-            class={ELEMENTS.POST_IMG}
-            src={(post.thumbnail || thumbnail) as string}
-            alt={`${post.title}のサムネイル`}
-            width={800}
-            height={450}
-            loading="eager"
-            transition:name={getImgName(post)}
-          />
-        ) : (
-          <Image
-            class={ELEMENTS.POST_IMG}
-            src={(post.thumbnail || thumbnail) as ImageMetadata}
-            alt={`${post.title}のサムネイル`}
-            loading="eager"
-            transition:name={getImgName(post)}
-          />
-        )}
+        {
+          typeof (post.data.thumbnail || thumbnail) === 'string' ? (
+            <Image
+              class={ELEMENTS.POST_IMG}
+              src={(post.data.thumbnail || thumbnail) as string}
+              alt={`${post.data.title}のサムネイル`}
+              width={800}
+              height={450}
+              loading="eager"
+              transition:name={getImgName(post)}
+            />
+          ) : (
+            <Image
+              class={ELEMENTS.POST_IMG}
+              src={(post.data.thumbnail || thumbnail) as ImageMetadata}
+              alt={`${post.data.title}のサムネイル`}
+              loading="eager"
+              transition:name={getImgName(post)}
+            />
+          )
+        }
       </div>
-      <h3>{post.title}</h3>
-      <p><span>{post.createdAt}</span></p>
+      <h3>{post.data.title}</h3>
+      <p><span>{post.data.createdAt}</span></p>
     </div>
   </a>
 </div>

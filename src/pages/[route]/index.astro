@@ -13,9 +13,7 @@ export async function getStaticPaths() {
   const allPosts = await getPosts();
 
   return ContentsSchema.options.map(route => {
-    const posts = allPosts.filter(post => post.contentType === route);
-    // TODO: Tamporalのsort関数作って
-    // posts.sort((a, b) => b.data.createdAt.valueOf() - a.data.createdAt.valueOf());
+    const posts = allPosts.filter(post => post.data.contentType === route);
 
     return {
       params: { route },

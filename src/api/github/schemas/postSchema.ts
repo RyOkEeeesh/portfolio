@@ -17,6 +17,7 @@ export const RawIssueNodeSchema = z.object({
   title: z.string(),
   body: z.string(),
   createdAt: z.string(),
+  updatedAt: z.string(),
   labels: z.object({
     nodes: z.array(z.object({ name: z.string() })),
   }),
@@ -75,16 +76,18 @@ export function transformIssueNode(issue: RawIssueNodeType) {
   // --- 3. UI/ドメイン用の最終構造 ---
   return {
     id: String(issue.number),
-    title: issue.title,
+    collection: 'posts' as const,
     body: cleanBody,
-    createdAt: issue.createdAt,
-    thumbnail: meta[ISSUE_META.THUMBNAIL],
-    description: meta[ISSUE_META.DESCRIPTION],
-    status,
-    contentType,
-    featured,
-    tags,
+    data: {
+      title: issue.title,
+      description: meta[ISSUE_META.DESCRIPTION],
+      thumbnail: meta[ISSUE_META.THUMBNAIL],
+      status,
+      contentType,
+      featured,
+      tags,
+      createdAt: issue.createdAt,
+      updatedAt: issue.updatedAt,
+    },
   };
 }
-
-export type PostType = ReturnType<typeof transformIssueNode>;
