@@ -1,14 +1,21 @@
 import { Temporal } from 'temporal-polyfill';
 import { getAllPostsFromGithubIssues } from '@/api';
-
+import { transformIssueNode, type PostType } from '@/api/github/schemas/postSchema';
 import { StatusSchema } from '@/schema';
-import type { ContentsType, PostType, TagType } from '@/types';
+import type { ContentsType, TagType } from '@/types';
 
 let posts: PostType[] | null = null;
 
 export async function getPosts(): Promise<PostType[]> {
   if (posts?.length) return posts;
-  posts = await getAllPostsFromGithubIssues();
+
+  const rawPosts = await getAllPostsFromGithubIssues();
+  posts = rawPosts.map(transformIssueNode);
+
+  // https://github.com/user-attachments/assets/a0090c73-4559-4983-8598-949a51529ef5
+  
+  console.log(posts);
+  
   return posts;
 }
 
@@ -31,11 +38,11 @@ export async function getTags(): Promise<TagType[]> {
 }
 
 export function getImgName(post: PostType): string {
-  return `${post.number}-img`;
+  return `${post.id}-img`;
 }
 
 export function getPostUrl(post: PostType): string {
-  return `/${post.contentType}/${post.number}`;
+  return `/${post.contentType}/${post.id}`;
 }
 
 export async function getPublishedPosts(content: ContentsType, limit?: number): Promise<PostType[]> {

@@ -1,11 +1,11 @@
 import { githubGraphQL } from '@/api/github/client';
-import { IssueSearchResultSchema, type PostType } from '@/api/github/schemas/postSchema';
+import { RawIssueSearchResultSchema, type RawIssueNodeType } from '@/api/github/schemas/postSchema';
 import { StatusSchema } from '@/schema';
 
-const repo = import.meta.env.GITHUB_REPO || process.env.GITHUB_REPO;
+const repo = process.env.GITHUB_REPO || import.meta.env.GITHUB_REPO;
 
-export async function getAllPostsFromGithubIssues(): Promise<PostType[]> {
-  const posts: PostType[] = [];
+export async function getAllPostsFromGithubIssues(): Promise<RawIssueNodeType[]> {
+  const posts: RawIssueNodeType[] = [];
   let cursor: string | null = null;
   let hasNextPage = true;
 
@@ -38,8 +38,8 @@ export async function getAllPostsFromGithubIssues(): Promise<PostType[]> {
       { q, cursor },
     );
 
-    // parse 時に内側の transform が自動実行され、nodes は完全に整った PostType[] になる
-    const result = IssueSearchResultSchema.parse(raw);
+    // 生のレスポンス構造を parse
+    const result = RawIssueSearchResultSchema.parse(raw);
     const { nodes, pageInfo } = result.search;
 
     posts.push(...nodes);

@@ -18,14 +18,14 @@ export async function getStaticPaths() {
   return posts.map(post => ({
     params: {
       route: post.contentType,
-      number: post.number,
+      id: post.id,
     },
     props: { post },
   }));
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post); // TODO
+const { Content } = await render(post);
 ---
 
 <Layout title={post.title}>

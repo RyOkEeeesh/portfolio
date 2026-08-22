@@ -1,29 +1,21 @@
 import { defineCollection } from 'astro:content';
-import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { getPosts } from '@/lib';
 
-import { POSTS } from '@/constants';
-import { ContentsSchema, StatusSchema } from '@/schema/posts';
-
-const portfolioCollection = defineCollection({
-  loader: glob({ pattern: '**/[^_]*.md', base: `./src/${POSTS}` }),
-  schema: ({ image }) =>
-    z.object({
-      title: z.string(),
-      description: z.string(),
-      thumbnail: image().optional(),
-      createdAt: z.coerce.date(),
-      updatedAt: z.coerce.date().optional(),
-
-      contentType: ContentsSchema,
-      tags: z.array(z.string()).default([]),
-      status: StatusSchema.default('published'),
-      featured: z.boolean().default(false),
-
-      issueNumber: z.number(),
-    }),
+const posts = defineCollection({
+  loader: async () => await getPosts(),
+  schema: z.object({
+    id: z.string(),
+    title: z.string(),
+    body: z.string(),
+    createdAt: z.string(),
+    thumbnail: z.string().optional(),
+    description: z.string(),
+    status: z.string(),
+    contentType: z.string(),
+    featured: z.boolean(),
+    tags: z.array(z.string()),
+  }),
 });
 
-export const collections = {
-  [POSTS]: portfolioCollection,
-};
+export const collections = { posts };
