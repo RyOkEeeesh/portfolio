@@ -9,7 +9,7 @@ interface Props {
 const { href, class: className = '' } = Astro.props;
 ---
 
-<a class:list={['link', className]} href={href}>
+<a class:list={['link-about', className]} href={href}>
   <div class="container">
     <slot />
     <div class="icon-wrap">
@@ -19,7 +19,7 @@ const { href, class: className = '' } = Astro.props;
 </a>
 
 <style>
-  .link {
+  .link-about {
     --is-hovered: 0;
 
     &:hover {

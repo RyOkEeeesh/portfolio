@@ -11,7 +11,7 @@ const { href } = Astro.props;
 ---
 
 <div class="back">
-  <a class="link" href={href || '/'} data-href={href} data-route={route}>
+  <a class="link-back" href={href || '/'} data-href={href} data-route={route}>
     <BackIcon class="icon" />
   </a>
 </div>
@@ -20,7 +20,7 @@ const { href } = Astro.props;
   import { PREV_URL } from '@/constants';
 
   document.addEventListener('astro:page-load', () => {
-    const back = document.querySelector('.link') as HTMLAnchorElement | null;
+    const back = document.querySelector('.link-back') as HTMLAnchorElement | null;
 
     if (back?.dataset.href || !back) return;
 
