@@ -1,22 +1,15 @@
+import { getCollection } from 'astro:content';
 import { Temporal } from 'temporal-polyfill';
-import { getAllPostsFromGithubIssues } from '@/api';
-import { transformIssueNode } from '@/api/github/schemas/postSchema';
+import { POSTS } from '@/constants';
 import { StatusSchema } from '@/schema';
 import type { ContentsType, PostType, TagType } from '@/types';
 
-let posts: PostType[] | null = null;
+const posts: PostType[] | null = null;
 
 export async function getPosts(): Promise<PostType[]> {
   if (posts?.length) return posts;
 
-  const rawPosts = await getAllPostsFromGithubIssues();
-  posts = rawPosts.map(transformIssueNode);
-
-  // https://github.com/user-attachments/assets/a0090c73-4559-4983-8598-949a51529ef5
-
-  console.log(posts);
-
-  return posts;
+  return await getCollection(POSTS);
 }
 
 let tags: TagType[] | null = null;

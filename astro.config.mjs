@@ -1,24 +1,18 @@
-import { unified } from '@astrojs/markdown-remark';
+import { unified } from '@astrojs/markdown-remark'; // ← 追加
 import sitemap from '@astrojs/sitemap';
-import { pluginFileIcons } from '@xt0rted/expressive-code-file-icons'; // https://github.com/xt0rted/expressive-code-file-icons
+import { pluginFileIcons } from '@xt0rted/expressive-code-file-icons';
 import { defineConfig } from 'astro/config';
-import expressiveCode from 'astro-expressive-code'; // https://expressive-code.com/key-features/syntax-highlighting/
-import { pluginColorChips } from 'expressive-code-color-chips'; // https://delucis.github.io/expressive-code-color-chips/getting-started/
+import expressiveCode from 'astro-expressive-code';
+import { pluginColorChips } from 'expressive-code-color-chips';
 import rehypeMermaid from 'rehype-mermaid';
 import remarkBehead from 'remark-behead';
 
 import { BASE_URL } from '@/constants';
 
-// https://twoslash.studiocms.dev/
-// https://expressive-code.com/plugins/community-plugins/
-// 今後あんま使いそうになかったら消すかも
-// https://frostybee.github.io/expressive-code-fullscreen/examples/
-
 export default defineConfig({
   site: `https://${BASE_URL}`,
   trailingSlash: 'never',
   integrations: [
-    sitemap(),
     expressiveCode({
       themes: ['github-dark', 'github-light'],
       plugins: [
@@ -34,6 +28,7 @@ export default defineConfig({
         },
       },
     }),
+    sitemap(),
   ],
   markdown: {
     processor: unified({

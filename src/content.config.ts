@@ -1,28 +1,29 @@
+// content.config.ts
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
-import { getPosts } from '@/lib';
+import { getAllPostsFromGithubIssues } from '@/api';
+import { transformIssueNode } from '@/api/github/schemas/postSchema';
 
 const posts = defineCollection({
   loader: {
     name: 'github-posts-loader',
-    load: async ({ store, parseData }) => {
-      const posts = await getPosts();
+    load: async ({ store, parseData, renderMarkdown }) => {
+      const rawPosts = await getAllPostsFromGithubIssues();
+      const posts = rawPosts.map(transformIssueNode);
 
-      // 既存データを一度クリアして再セット
       store.clear();
 
       for (const post of posts) {
-        // schema によるバリデーションとパース
         const data = await parseData({
           id: post.id,
           data: post.data,
         });
 
-        // DataStore に登録
         store.set({
           id: post.id,
           data,
           body: post.body,
+          rendered: await renderMarkdown(post.body),
         });
       }
     },
