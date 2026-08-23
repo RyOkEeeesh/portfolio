@@ -50,3 +50,4 @@ packages/astro/e2e/fixtures/cloudflare/.wrangler/deploy/config.json
 public/download-img/*
 public/thumbnail/*
 !public/thumbnail/index.png
+src/data/images-map.json

@@ -1,8 +1,8 @@
-// content.config.ts
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { getAllPostsFromGithubIssues } from '@/api';
 import { transformIssueNode } from '@/api/github/schemas/postSchema';
+import { downloadImg } from '@/lib';
 
 const posts = defineCollection({
   loader: {
@@ -14,16 +14,17 @@ const posts = defineCollection({
       store.clear();
 
       for (const post of posts) {
+        const parsedPost = await downloadImg(post);
         const data = await parseData({
-          id: post.id,
-          data: post.data,
+          id: parsedPost.id,
+          data: parsedPost.data,
         });
 
         store.set({
-          id: post.id,
+          id: parsedPost.id,
           data,
-          body: post.body,
-          rendered: await renderMarkdown(post.body),
+          body: parsedPost.body,
+          rendered: parsedPost.body ? await renderMarkdown(parsedPost.body) : undefined,
         });
       }
     },

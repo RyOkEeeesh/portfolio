@@ -6,8 +6,6 @@ import type { PostType } from '@/types';
 
 import { ELEMENTS } from '@/constants';
 
-import thumbnail from '@/assets/thumbnail.png';
-
 interface Props {
   post: PostType;
 }
@@ -19,27 +17,15 @@ const { post } = Astro.props;
   <a href={getPostUrl(post)}>
     <div class="">
       <div class="">
-        {
-          typeof (post.data.thumbnail || thumbnail) === 'string' ? (
-            <Image
-              class={ELEMENTS.POST_IMG}
-              src={(post.data.thumbnail || thumbnail) as string}
-              alt={`${post.data.title}のサムネイル`}
-              width={800}
-              height={450}
-              loading="eager"
-              transition:name={getImgName(post)}
-            />
-          ) : (
-            <Image
-              class={ELEMENTS.POST_IMG}
-              src={(post.data.thumbnail || thumbnail) as ImageMetadata}
-              alt={`${post.data.title}のサムネイル`}
-              loading="eager"
-              transition:name={getImgName(post)}
-            />
-          )
-        }
+        <Image
+          class={ELEMENTS.POST_IMG}
+          src={post.data.thumbnail || '/thumbnail/index.png'}
+          alt={`${post.data.title}のサムネイル`}
+          width={1200}
+          height={630}
+          loading="eager"
+          transition:name={getImgName(post)}
+        />
       </div>
       <h3>{post.data.title}</h3>
       <p><span>{fmtDate(post.data.createdAt)}</span></p>
