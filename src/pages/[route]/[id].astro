@@ -1,4 +1,6 @@
 ---
+import { fmtDate } from '@/utils';
+import { getImgName } from '@/utils/page';
 import { Image } from 'astro:assets';
 import { render } from 'astro:content';
 
@@ -7,7 +9,7 @@ import Layout from '@/layouts/Layout/index.astro';
 import Back from '@/components/parts/link/Back/index.astro';
 import Title from '@/components/parts/Title/index.astro';
 
-import { getImgName, getPosts } from '@/lib';
+import { getPosts } from '@/lib';
 import { ELEMENTS } from '@/constants';
 
 import thumbnail from '@/assets/thumbnail.png';
@@ -53,8 +55,7 @@ const { Content } = await render(post);
           />
         )
       }
-      <!-- TODO:  -->
-      <span>{post.data.createdAt}</span>
+      <span>{fmtDate(post.data.createdAt)}</span>
       <Title>{post.data.title}</Title>
       <Content />
     </article>

@@ -1,9 +1,9 @@
 ---
+import { fmtDate, getImgName, getPostUrl } from '@/utils';
 import { Image } from 'astro:assets';
 
 import type { PostType } from '@/types';
 
-import { getImgName, getPostUrl } from '@/lib';
 import { ELEMENTS } from '@/constants';
 
 import thumbnail from '@/assets/thumbnail.png';
@@ -42,7 +42,7 @@ const { post } = Astro.props;
         }
       </div>
       <h3>{post.data.title}</h3>
-      <p><span>{post.data.createdAt}</span></p>
+      <p><span>{fmtDate(post.data.createdAt)}</span></p>
     </div>
   </a>
 </div>

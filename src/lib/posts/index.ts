@@ -30,14 +30,6 @@ export async function getTags(): Promise<TagType[]> {
   return tags;
 }
 
-export function getImgName(post: PostType): string {
-  return `${post.id}-img`;
-}
-
-export function getPostUrl(post: PostType): string {
-  return `/${post.data.contentType}/${post.id}`;
-}
-
 export async function getPublishedPosts(content: ContentsType, limit?: number): Promise<PostType[]> {
   const allPosts = await getPosts();
 

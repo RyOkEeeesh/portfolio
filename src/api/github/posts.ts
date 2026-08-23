@@ -1,5 +1,5 @@
 import { githubGraphQL } from '@/api/github/client';
-import { RawIssueSearchResultSchema, type RawIssueNodeType } from '@/api/github/schemas/postSchema';
+import { type RawIssueNodeType, RawIssueSearchResultSchema } from '@/api/github/schemas/postSchema';
 import { StatusSchema } from '@/schema';
 
 const repo = process.env.GITHUB_REPO || import.meta.env.GITHUB_REPO;
