@@ -13,7 +13,7 @@ export default defineConfig({
   site: `https://${BASE_URL}`,
   trailingSlash: 'never',
   image: {
-    service: passthroughImageService()
+    service: passthroughImageService(),
   },
   integrations: [
     expressiveCode({

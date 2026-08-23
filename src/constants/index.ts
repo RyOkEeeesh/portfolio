@@ -24,3 +24,8 @@ export const ISSUE_META = {
   THUMBNAIL: 'thumbnail',
   DESCRIPTION: 'description',
 } as const;
+
+export const IMG_CONTAINER = {
+  THUMBNAIL: 'thumbnail',
+  BODY: 'download-img',
+};
