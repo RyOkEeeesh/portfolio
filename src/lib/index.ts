@@ -1,2 +1,2 @@
-export * from '@/lib/downloadImg';
+export * from '@/lib/downloadAsset';
 export * from '@/lib/posts';

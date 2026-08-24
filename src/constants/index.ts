@@ -27,5 +27,5 @@ export const ISSUE_META = {
 
 export const IMG_CONTAINER = {
   THUMBNAIL: 'thumbnail',
-  BODY: 'download-img',
+  BODY: 'download-asset',
 };

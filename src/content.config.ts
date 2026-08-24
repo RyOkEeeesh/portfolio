@@ -2,7 +2,7 @@ import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { getAllPostsFromGithubIssues } from '@/api';
 import { transformIssueNode } from '@/api/github/schemas/postSchema';
-import { downloadImg } from '@/lib';
+import { downloadAsset } from '@/lib';
 
 const posts = defineCollection({
   loader: {
@@ -14,7 +14,7 @@ const posts = defineCollection({
       store.clear();
 
       for (const post of posts) {
-        const parsedPost = await downloadImg(post);
+        const parsedPost = await downloadAsset(post);
         const data = await parseData({
           id: parsedPost.id,
           data: parsedPost.data,

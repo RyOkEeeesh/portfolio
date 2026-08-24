@@ -5,21 +5,27 @@ import { IMG_CONTAINER } from '@/constants';
 import type { PostType } from '@/types';
 import { hasValue } from '@/utils';
 
-type ImageMap = Record<string, string>;
+type AssetMap = Record<string, string>;
 
-const GITHUB_IMAGE_REGEX =
+const GITHUB_ASSET_REGEX =
   /https:\/\/github\.com\/(?:user-attachments\/assets|assets|[-a-zA-Z0-9_.]+\/[-a-zA-Z0-9_.]+\/assets)\/[-a-zA-Z0-9_.-]+/g;
 
 const MIME_EXTENSION_MAP: Record<string, string> = {
+  // 画像
   'image/jpeg': '.jpg',
   'image/png': '.png',
   'image/gif': '.gif',
   'image/webp': '.webp',
   'image/svg+xml': '.svg',
   'image/avif': '.avif',
-};
+  // 動画
+  'video/mp4': '.mp4',
+  'video/quicktime': '.mov',
+  'video/webm': '.webm',
+  'video/ogg': '.ogv',
+} as const;
 
-const MAP_PATH = path.join(process.cwd(), 'src/data/images-map.json');
+const MAP_PATH = path.join(process.cwd(), 'src/data/assets-map.json');
 const BODY_DOWNLOAD_CONCURRENCY = 5;
 
 function getGithubToken(): string {
@@ -30,11 +36,7 @@ function getGithubToken(): string {
   return token;
 }
 
-/**
- * 渡されたURLから安全に画像をダウンロードする
- * GitHubの assets 画像は S3 等へリダイレクトされるケースがあるため redirect: 'manual' で処理
- */
-async function downloadImage(url: string, dir: string, fileName: string, token: string): Promise<string> {
+async function downloadFile(url: string, dir: string, fileName: string, token: string): Promise<string> {
   let response = await fetch(url, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -79,27 +81,13 @@ async function downloadImage(url: string, dir: string, fileName: string, token: 
   return outputFilename;
 }
 
-/** インデックスベースの並列制御（Shiftの非同期競合を回避） */
-async function runWithConcurrencyLimit<T>(items: T[], limit: number, task: (item: T) => Promise<void>): Promise<void> {
-  let index = 0;
-  const workers = Array.from({ length: Math.min(limit, items.length) }, async () => {
-    while (index < items.length) {
-      const currentIndex = index++;
-      await task(items[currentIndex]);
-    }
-  });
-
-  await Promise.all(workers);
-}
-
-/** 一意のファイル名生成用 helper */
 function generateRandomFileName(prefix: string): string {
   return `${prefix}-${crypto.randomBytes(6).toString('hex')}`;
 }
 
 async function processThumbnail(
   thumbnailUrl: PostType['data']['thumbnail'],
-  imagesMap: ImageMap,
+  imagesMap: AssetMap,
   token: string,
 ): Promise<PostType['data']['thumbnail']> {
   if (!thumbnailUrl) return undefined;
@@ -107,7 +95,7 @@ async function processThumbnail(
 
   try {
     const fileName = generateRandomFileName('thumbnail');
-    const downloadedFileName = await downloadImage(thumbnailUrl, `public/${IMG_CONTAINER.THUMBNAIL}`, fileName, token);
+    const downloadedFileName = await downloadFile(thumbnailUrl, `public/${IMG_CONTAINER.THUMBNAIL}`, fileName, token);
     const localPath = `/${IMG_CONTAINER.THUMBNAIL}/${downloadedFileName}`;
     imagesMap[thumbnailUrl] = localPath;
     return localPath;
@@ -119,32 +107,39 @@ async function processThumbnail(
 
 export async function processBody(
   body: PostType['body'],
-  imagesMap: ImageMap,
+  imagesMap: AssetMap,
   token: string,
 ): Promise<PostType['body']> {
   if (!body) return body;
 
-  const urlList = [...new Set(body.match(GITHUB_IMAGE_REGEX) || [])];
+  const urlList = [...new Set(body.match(GITHUB_ASSET_REGEX) || [])];
   if (urlList.length === 0) return body;
 
-  const replacements: ImageMap = {};
+  const replacements: AssetMap = {};
+  let index = 0;
 
-  await runWithConcurrencyLimit(urlList, BODY_DOWNLOAD_CONCURRENCY, async url => {
-    try {
-      let localImagePath = imagesMap[url];
+  const workerCount = Math.min(BODY_DOWNLOAD_CONCURRENCY, urlList.length);
+  const workers = Array.from({ length: workerCount }, async () => {
+    while (index < urlList.length) {
+      const url = urlList[index++];
+      try {
+        let localPath = imagesMap[url];
 
-      if (!localImagePath) {
-        const fileName = generateRandomFileName('asset');
-        const downloadedFileName = await downloadImage(url, `public/${IMG_CONTAINER.BODY}`, fileName, token);
-        localImagePath = `/${IMG_CONTAINER.BODY}/${downloadedFileName}`;
-        imagesMap[url] = localImagePath;
+        if (!localPath) {
+          const fileName = generateRandomFileName('asset');
+          const downloadedFileName = await downloadFile(url, `public/${IMG_CONTAINER.BODY}`, fileName, token);
+          localPath = `/${IMG_CONTAINER.BODY}/${downloadedFileName}`;
+          imagesMap[url] = localPath;
+        }
+
+        replacements[url] = localPath;
+      } catch (error) {
+        console.error(`アセットファイルのダウンロードに失敗しました: ${url}`, error);
       }
-
-      replacements[url] = localImagePath;
-    } catch (error) {
-      console.error(`本文画像のダウンロードに失敗しました: ${url}`, error);
     }
   });
+
+  await Promise.all(workers);
 
   let updatedBody = body;
   for (const [url, localPath] of Object.entries(replacements)) {
@@ -154,7 +149,7 @@ export async function processBody(
   return updatedBody;
 }
 
-async function loadImagesMap(): Promise<ImageMap> {
+async function loadAssetMap(): Promise<AssetMap> {
   try {
     return JSON.parse(await fs.readFile(MAP_PATH, 'utf-8'));
   } catch {
@@ -162,20 +157,20 @@ async function loadImagesMap(): Promise<ImageMap> {
   }
 }
 
-async function saveImagesMap(imagesMap: ImageMap): Promise<void> {
-  const current = await loadImagesMap();
+async function saveAssetMap(imagesMap: AssetMap): Promise<void> {
+  const current = await loadAssetMap();
   const merged = { ...current, ...imagesMap };
   await fs.writeFile(MAP_PATH, JSON.stringify(merged, null, 2));
 }
 
-export async function downloadImg(post: PostType): Promise<PostType> {
+export async function downloadAsset(post: PostType): Promise<PostType> {
   const token = getGithubToken();
-  const imagesMap = await loadImagesMap();
+  const imagesMap = await loadAssetMap();
 
   const thumbnail = await processThumbnail(post.data.thumbnail, imagesMap, token);
   const body = await processBody(post.body, imagesMap, token);
 
-  await saveImagesMap(imagesMap);
+  await saveAssetMap(imagesMap);
 
   return { ...post, data: { ...post.data, thumbnail }, body };
 }
