@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { IMG_CONTAINER } from '@/constants';
+import { ASSET_MAP_PATH, IMG_CONTAINER } from '@/constants';
 import type { PostType } from '@/types';
 import { hasValue } from '@/utils';
 
@@ -25,7 +25,7 @@ const MIME_EXTENSION_MAP: Record<string, string> = {
   'video/ogg': '.ogv',
 } as const;
 
-const MAP_PATH = path.join(process.cwd(), 'src/data/assets-map.json');
+const MAP_PATH = path.join(process.cwd(), ASSET_MAP_PATH);
 const BODY_DOWNLOAD_CONCURRENCY = 5;
 
 function getGithubToken(): string {

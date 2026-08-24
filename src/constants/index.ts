@@ -29,3 +29,5 @@ export const IMG_CONTAINER = {
   THUMBNAIL: 'thumbnail',
   BODY: 'download-asset',
 };
+
+export const ASSET_MAP_PATH = 'src/data/assets-map.json';
