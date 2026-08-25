@@ -1,6 +1,7 @@
 import { graphql } from '@octokit/graphql';
+import { getEnv } from '@/utils';
 
-const token = process.env.GITHUB_TOKEN || import.meta.env.GITHUB_TOKEN;
+const token = getEnv('GITHUB_TOKEN');
 
 export const githubGraphQL = graphql.defaults({
   headers: {

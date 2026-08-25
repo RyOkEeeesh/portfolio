@@ -1,7 +1,8 @@
 import { githubGraphQL } from '@/api/github/client';
 import { type RawIssueNodeType, RawIssueSearchResultSchema, StatusSchema } from '@/api/github/schemas/postSchema';
+import { getEnv } from '@/utils';
 
-const repo = process.env.GITHUB_REPO || import.meta.env.GITHUB_REPO;
+const repo = getEnv('GITHUB_REPO');
 
 export async function getAllPostsFromGithubIssues(): Promise<RawIssueNodeType[]> {
   const posts: RawIssueNodeType[] = [];

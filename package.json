@@ -14,7 +14,8 @@
     "fmt:biome": "biome check --write --unsafe .",
     "fmt:astro": "prettier --write \"**/*.astro\"",
     "fmt": "pnpm fmt:biome && pnpm fmt:astro",
-    "clean:assets": "tsx src/scripts/cleanAssets.ts"
+    "clean:assets": "tsx src/scripts/cleanAssets.ts",
+    "test": "node --import tsx --test src/scripts/__tests__/*.test.ts"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.2.4",

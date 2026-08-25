@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { ASSET_MAP_PATH, IMG_CONTAINER } from '@/constants';
 import type { PostType } from '@/types';
-import { hasValue } from '@/utils';
+import { getEnv, hasValue } from '@/utils';
 
 type AssetMap = Record<string, string>;
 
@@ -29,7 +29,7 @@ const MAP_PATH = path.join(process.cwd(), ASSET_MAP_PATH);
 const BODY_DOWNLOAD_CONCURRENCY = 5;
 
 function getGithubToken(): string {
-  const token = process.env.GITHUB_TOKEN || import.meta.env.GITHUB_TOKEN;
+  const token = getEnv('GITHUB_TOKEN');
   if (!hasValue(token)) {
     throw new Error('環境変数 GITHUB_TOKEN が設定されていません');
   }

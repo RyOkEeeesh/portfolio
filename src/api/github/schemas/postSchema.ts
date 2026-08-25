@@ -41,7 +41,7 @@ export const RawIssueSearchResultSchema = z.object({
 
 export const CollectionSchema = z.object({
   title: z.string(),
-  description: z.string(), // TODO 文字数制限
+  description: z.string().min(10), // TODO 文字数制限
   thumbnail: z.string().optional(),
   url: z.string(),
   status: z.string(),
@@ -58,6 +58,8 @@ export const TransformCollectionSchema = z.object({
   body: z.string(),
   data: CollectionSchema,
 });
+
+export type IssueLabelType = z.infer<typeof IssueLabelSchema>;
 
 export type RawIssueNodeType = z.infer<typeof RawIssueNodeSchema>;
 
