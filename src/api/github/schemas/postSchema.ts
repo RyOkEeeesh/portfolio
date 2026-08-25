@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { FEATURED, ISSUE_META, POSTS, ROUTES } from '@/constants';
+import { ContentsSchema } from '@/schema';
 
-export const ContentsSchema = z.enum([ROUTES.PROJECT, ROUTES.BLOG, ROUTES.NOTE]);
 export const StatusSchema = z.enum(['draft', 'published', 'archived']);
 
 const COMMENT_REGEX = /<!--\s*([\s\S]*?)\s*-->/;

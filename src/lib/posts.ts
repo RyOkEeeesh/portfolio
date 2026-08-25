@@ -1,5 +1,4 @@
 import { getCollection } from 'astro:content';
-import { Temporal } from 'temporal-polyfill';
 import { StatusSchema } from '@/api/github/schemas/postSchema';
 import { POSTS } from '@/constants';
 import type { ContentsType, PostType, TagType } from '@/types';
