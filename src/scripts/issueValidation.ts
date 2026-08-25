@@ -1,5 +1,6 @@
 import { ZodError } from 'zod';
 import {
+  type IssueLabelType,
   type RawIssueNodeType,
   TransformCollectionSchema,
   type TransformCollectionType,
@@ -10,7 +11,7 @@ import { getEnv } from '@/utils';
 export type ValidationResult = { success: true } | { success: false; errors: string[] };
 
 export function getIssue(): RawIssueNodeType {
-  let labelNodes: { name: string; color: string }[] = [];
+  let labelNodes: IssueLabelType[] = [];
 
   const rawLabels = getEnv('ISSUE_LABELS');
   if (rawLabels) {

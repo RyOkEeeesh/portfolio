@@ -81,38 +81,32 @@ describe('description のバリデーションテスト', () => {
   });
 
   it('異常系: status: ラベルが複数ある場合は検証失敗する', () => {
-      const issue = createMockIssue(['status:published', 'status:draft', 'type:article']);
-      const result = validateIssue(issue);
-  
-      assert.equal(result.success, false);
-      if (!result.success) {
-        assert.ok(
-          result.errors.some(err => err.includes('ステータス(status:)が複数設定されています'))
-        );
-      }
-    });
-  
-    it('異常系: status:published なのに type: が無い場合に検証失敗する', () => {
-      const issue = createMockIssue(['status:published']);
-      const result = validateIssue(issue);
-  
-      assert.equal(result.success, false);
-      if (!result.success) {
-        assert.ok(
-          result.errors.some(err => err.includes('コンテンツタイプ(type:)が設定されていません'))
-        );
-      }
-    });
-  
-    it('異常系: type: ラベルが複数ある場合は検証失敗する', () => {
-      const issue = createMockIssue(['type:article', 'type:scrap']);
-      const result = validateIssue(issue);
-  
-      assert.equal(result.success, false);
-      if (!result.success) {
-        assert.ok(
-          result.errors.some(err => err.includes('コンテンツタイプ(type:)が複数設定されています'))
-        );
-      }
-    });
+    const issue = createMockIssue(['status:published', 'status:draft', 'type:article']);
+    const result = validateIssue(issue);
+
+    assert.equal(result.success, false);
+    if (!result.success) {
+      assert.ok(result.errors.some(err => err.includes('ステータス(status:)が複数設定されています')));
+    }
+  });
+
+  it('異常系: status:published なのに type: が無い場合に検証失敗する', () => {
+    const issue = createMockIssue(['status:published']);
+    const result = validateIssue(issue);
+
+    assert.equal(result.success, false);
+    if (!result.success) {
+      assert.ok(result.errors.some(err => err.includes('コンテンツタイプ(type:)が設定されていません')));
+    }
+  });
+
+  it('異常系: type: ラベルが複数ある場合は検証失敗する', () => {
+    const issue = createMockIssue(['type:article', 'type:scrap']);
+    const result = validateIssue(issue);
+
+    assert.equal(result.success, false);
+    if (!result.success) {
+      assert.ok(result.errors.some(err => err.includes('コンテンツタイプ(type:)が複数設定されています')));
+    }
+  });
 });

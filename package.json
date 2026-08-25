@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "validate": "tsx src/scripts/issueValidation.ts",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
