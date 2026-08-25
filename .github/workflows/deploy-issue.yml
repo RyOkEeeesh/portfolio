@@ -9,7 +9,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # オーナー以外がstatus:publishedを付けた場合は即座に剥がして終了
   guard-non-owner-publish:
     if: |
       github.event.issue.user.login != github.repository_owner &&
@@ -48,6 +47,9 @@ jobs:
       ISSUE_LABELS: ${{ toJSON(github.event.issue.labels) }}
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
       - uses: ./.github/actions/setup-pnpm
 
       - name: Run validation

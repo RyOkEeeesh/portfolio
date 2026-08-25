@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
       - uses: ./.github/actions/setup-pnpm
 
       - name: Install Playwright browsers
