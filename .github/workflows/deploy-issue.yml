@@ -1,0 +1,97 @@
+name: Deploy via Issue Label
+
+on:
+  issues:
+    types: [labeled]
+
+concurrency:
+  group: issue-deploy-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  # オーナー以外がstatus:publishedを付けた場合は即座に剥がして終了
+  guard-non-owner-publish:
+    if: |
+      github.event.issue.user.login != github.repository_owner &&
+      contains(github.event.issue.labels.*.name, 'status:published')
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Remove status:published label (non-owner)
+        uses: actions/github-script@v9
+        with:
+          script: |
+            await github.rest.issues.removeLabel({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              name: 'status:published',
+            });
+
+  validate:
+    needs: guard-non-owner-publish
+    if: |
+      always() && !failure() &&
+      github.event.issue.user.login == github.repository_owner &&
+      contains(github.event.issue.labels.*.name, 'status:published')
+
+    runs-on: ubuntu-latest
+
+    env:
+      ISSUE_NUMBER: ${{ github.event.issue.number }}
+      ISSUE_TITLE: ${{ github.event.issue.title }}
+      ISSUE_BODY: ${{ github.event.issue.body }}
+      ISSUE_URL: ${{ github.event.issue.html_url }}
+      ISSUE_CREATED_AT: ${{ github.event.issue.created_at }}
+      ISSUE_UPDATED_AT: ${{ github.event.issue.updated_at }}
+      ISSUE_LABELS: ${{ toJSON(github.event.issue.labels) }}
+
+    steps:
+      - uses: ./.github/actions/setup-pnpm
+
+      - name: Run validation
+        run: pnpm run validate
+
+      - name: Revert status labels to draft on failure
+        if: failure()
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const issueNumber = context.issue.number;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const issue = await github.rest.issues.get({
+              owner,
+              repo,
+              issue_number: issueNumber,
+            });
+
+            const currentStatusLabels = issue.data.labels
+              .map(label => typeof label === 'string' ? label : label.name)
+              .filter(name => name.startsWith('status:'));
+
+            for (const labelName of currentStatusLabels) {
+              await github.rest.issues.removeLabel({
+                owner,
+                repo,
+                issue_number: issueNumber,
+                name: labelName,
+              });
+            }
+
+            await github.rest.issues.addLabels({
+              owner,
+              repo,
+              issue_number: issueNumber,
+              labels: ['status:draft'],
+            });
+
+  call-deploy:
+    needs: [guard-non-owner-publish, validate]
+    if: |
+      needs.validate.result == 'success' ||
+      (needs.validate.result == 'skipped' && needs.guard-non-owner-publish.result != 'success')
+    uses: ./.github/workflows/_reusable-deploy.yml
+    secrets: inherit

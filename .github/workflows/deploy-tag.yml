@@ -1,0 +1,34 @@
+name: Deploy on Tag Push
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: false
+
+jobs:
+  archive-tag-branch:
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Create and push branch from tag
+        run: |
+          TAG_NAME="${GITHUB_REF#refs/tags/}"
+          BRANCH_NAME="release/${TAG_NAME}"
+          git checkout -b "$BRANCH_NAME"
+          git push origin "$BRANCH_NAME"
+
+  call-deploy:
+    needs: archive-tag-branch
+    if: always() && !failure()
+    uses: ./.github/workflows/_reusable-deploy.yml
+    secrets: inherit

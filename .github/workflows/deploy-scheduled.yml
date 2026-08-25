@@ -1,0 +1,15 @@
+name: Scheduled or Manual Deploy
+
+on:
+  issues:
+    types:
+      - closed
+      - deleted
+  schedule:
+    - cron: '0 15 31 12 *'
+  workflow_dispatch:
+
+jobs:
+  call-deploy:
+    uses: ./.github/workflows/_reusable-deploy.yml
+    secrets: inherit
