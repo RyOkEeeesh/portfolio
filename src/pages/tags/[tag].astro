@@ -12,7 +12,7 @@ export async function getStaticPaths() {
   const tags = await getTags();
 
   return tags.map(tag => {
-    const posts = allPost.filter(post => post.data.tags.includes(tag.name));
+    const posts = allPost.filter(post => post.data.tags.some(tags => tags.name === tag.name));
     return {
       params: { tag: tag.name },
       props: { posts, tag },

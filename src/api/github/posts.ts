@@ -1,6 +1,5 @@
 import { githubGraphQL } from '@/api/github/client';
-import { type RawIssueNodeType, RawIssueSearchResultSchema } from '@/api/github/schemas/postSchema';
-import { StatusSchema } from '@/schema';
+import { type RawIssueNodeType, RawIssueSearchResultSchema, StatusSchema } from '@/api/github/schemas/postSchema';
 
 const repo = process.env.GITHUB_REPO || import.meta.env.GITHUB_REPO;
 
@@ -26,10 +25,14 @@ export async function getAllPostsFromGithubIssues(): Promise<RawIssueNodeType[]>
                 number
                 title
                 body
+                url
                 createdAt
                 updatedAt
                 labels(first: 100) {
-                  nodes { name }
+                  nodes {
+                    name
+                    color
+                  }
                 }
               }
             }

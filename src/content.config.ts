@@ -1,7 +1,6 @@
 import { defineCollection } from 'astro:content';
-import { z } from 'astro/zod';
 import { getAllPostsFromGithubIssues } from '@/api';
-import { transformIssueNode } from '@/api/github/schemas/postSchema';
+import { CollectionSchema, transformIssueNode } from '@/api/github/schemas/postSchema';
 import { downloadAsset } from '@/lib';
 
 const posts = defineCollection({
@@ -29,17 +28,7 @@ const posts = defineCollection({
       }
     },
   },
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    thumbnail: z.string().optional(),
-    status: z.string(),
-    contentType: z.string(),
-    featured: z.boolean(),
-    tags: z.array(z.string()),
-    createdAt: z.string(),
-    updatedAt: z.string(),
-  }),
+  schema: CollectionSchema,
 });
 
 export const collections = { posts };

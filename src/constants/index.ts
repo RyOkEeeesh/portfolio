@@ -30,4 +30,6 @@ export const IMG_CONTAINER = {
   BODY: 'download-asset',
 } as const;
 
+export const FEATURED = 'featured' as const;
+
 export const ASSET_MAP_PATH = 'src/data/assets-map.json' as const;
