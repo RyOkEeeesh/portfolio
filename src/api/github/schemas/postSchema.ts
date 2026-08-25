@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ISSUE_META, ROUTES } from '@/constants';
+import { ISSUE_META, ROUTES, POSTS } from '@/constants';
 
 export const ContentsSchema = z.enum([ROUTES.PROJECT, ROUTES.BLOG, ROUTES.NOTE]);
 export const StatusSchema = z.enum(['draft', 'published', 'archived']);
@@ -76,7 +76,7 @@ export function transformIssueNode(issue: RawIssueNodeType) {
   // --- 3. UI/ドメイン用の最終構造 ---
   return {
     id: String(issue.number),
-    collection: 'posts' as const,
+    collection: POSTS,
     body: cleanBody,
     data: {
       title: issue.title,

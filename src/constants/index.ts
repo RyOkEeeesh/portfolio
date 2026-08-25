@@ -1,10 +1,10 @@
-export const POSTS = 'posts';
-export const DATA = 'data';
+export const POSTS = 'posts' as const;
+export const DATA = 'data' as const;
 
-export const PREV_URL = 'prev-url';
+export const PREV_URL = 'prev-url' as const;
 
 // url
-export const BASE_URL = 'kaji.blog';
+export const BASE_URL = 'kaji.blog' as const;
 
 // slug
 export const ROUTES = {
@@ -28,6 +28,6 @@ export const ISSUE_META = {
 export const IMG_CONTAINER = {
   THUMBNAIL: 'thumbnail',
   BODY: 'download-asset',
-};
+} as const;
 
-export const ASSET_MAP_PATH = 'src/data/assets-map.json';
+export const ASSET_MAP_PATH = 'src/data/assets-map.json' as const;
