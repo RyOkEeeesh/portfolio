@@ -6,6 +6,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    env:
+      GITHUB_REPO: ${{ github.repository }}
+      GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
     
     steps:
       - name: Checkout repository
