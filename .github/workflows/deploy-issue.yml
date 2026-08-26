@@ -4,13 +4,6 @@ on:
   issues:
     types: [labeled]
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-  actions: write
-  issues: write
-
 concurrency:
   group: issue-deploy-${{ github.event.issue.number }}
   cancel-in-progress: true
@@ -23,10 +16,14 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    permissions:
+      issues: write
+
     steps:
       - name: Remove status:published label (non-owner)
         uses: actions/github-script@v9
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             await github.rest.issues.removeLabel({
               owner: context.repo.owner,
@@ -44,6 +41,11 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      actions: write
+      issues: write
+
     env:
       ISSUE_NUMBER: ${{ github.event.issue.number }}
       ISSUE_TITLE: ${{ github.event.issue.title }}
@@ -55,7 +57,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
 
       - uses: ./.github/actions/setup-pnpm
 
@@ -66,6 +68,7 @@ jobs:
         if: failure()
         uses: actions/github-script@v9
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const issueNumber = context.issue.number;
             const owner = context.repo.owner;
