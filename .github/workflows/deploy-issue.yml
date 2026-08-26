@@ -23,7 +23,7 @@ jobs:
       - name: Remove status:published label (non-owner)
         uses: actions/github-script@v9
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.REPO_TOKEN }}
           script: |
             await github.rest.issues.removeLabel({
               owner: context.repo.owner,
@@ -57,7 +57,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - uses: ./.github/actions/setup-pnpm
 
