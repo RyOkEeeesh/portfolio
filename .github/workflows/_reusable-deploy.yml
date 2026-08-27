@@ -12,6 +12,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    container:
+      image: mcr.microsoft.com/playwright:v1.62.1-noble
+
     env:
       GITHUB_REPO: ${{ github.repository }}
       GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
@@ -21,9 +24,6 @@ jobs:
         uses: actions/checkout@v7
 
       - uses: ./.github/actions/setup-pnpm
-
-      - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps
 
       - name: Build site
         run: pnpm run build
