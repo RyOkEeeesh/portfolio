@@ -36,7 +36,7 @@ describe('getIssue & validateIssue (環境変数経由) の統合テスト', () 
         { name: 'type:note', color: '00ff00' },
       ],
       null,
-      2
+      2,
     );
 
     setupEnv({ ISSUE_LABELS: actionsFormattedLabels });
