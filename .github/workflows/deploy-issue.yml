@@ -55,25 +55,28 @@ jobs:
               issue_number: issueNumber,
             });
 
-            const currentStatusLabels = issue.data.labels
-              .map(label => typeof label === 'string' ? label : label.name)
-              .filter(name => name.startsWith('status:'));
+            const currentLabels = issue.data.labels
+              .map(label => typeof label === 'string' ? label : label.name);
 
-            for (const labelName of currentStatusLabels) {
-              await github.rest.issues.removeLabel({
+            const otherStatusLabels = currentLabels.filter(
+              name => name.startsWith('status:') && name !== 'status:draft'
+            );
+
+            const hasDraft = currentLabels.includes('status:draft');
+
+            if (otherStatusLabels.length > 0 || !hasDraft) {
+              const updatedLabels = [
+                ...currentLabels.filter(name => !name.startsWith('status:')),
+                'status:draft'
+              ];
+
+              await github.rest.issues.setLabels({
                 owner,
                 repo,
                 issue_number: issueNumber,
-                name: labelName,
+                labels: updatedLabels,
               });
             }
-
-            await github.rest.issues.addLabels({
-              owner,
-              repo,
-              issue_number: issueNumber,
-              labels: ['status:draft'],
-            });
 
   call-deploy:
     needs: validate
