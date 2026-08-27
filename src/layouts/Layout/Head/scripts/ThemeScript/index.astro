@@ -1,4 +1,4 @@
-<script is:inline>
+<script is:inline data-astro-rerun>
   const themeKey = 'theme';
   const light = 'light';
   const dark = 'dark';
@@ -6,15 +6,16 @@
   const getInitTheme = () =>
     localStorage.getItem(themeKey) ?? (window.matchMedia('(prefers-color-scheme: dark)').matches ? dark : light);
 
-  const applyTheme = theme => {
+  const applyTheme = (theme) => {
     document.documentElement.setAttribute(`data-${themeKey}`, theme);
     localStorage.setItem(themeKey, theme);
   };
 
   applyTheme(getInitTheme());
 
-  document.addEventListener('astro:after-swap', () => {
-    applyTheme(getInitTheme());
+  document.addEventListener('astro:before-swap', (event) => {
+    const currentTheme = document.documentElement.getAttribute(`data-${themeKey}`) ?? getInitTheme();
+    event.newDocument.documentElement.setAttribute(`data-${themeKey}`, currentTheme);
   });
 
   document.addEventListener('astro:page-load', () => {
