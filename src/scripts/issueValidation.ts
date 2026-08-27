@@ -102,7 +102,7 @@ export function validateIssue(issue: RawIssueNodeType): ValidationResult {
   return { success: true };
 }
 
-export function main() {
+function main() {
   const rawIssue = getIssue();
   const result = validateIssue(rawIssue);
 
@@ -116,3 +116,5 @@ export function main() {
 
   console.log('検証成功');
 }
+
+main();
