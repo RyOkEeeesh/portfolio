@@ -23,12 +23,12 @@ jobs:
 
     env:
       ISSUE_NUMBER: ${{ github.event.issue.number }}
-      ISSUE_TITLE: ${{ github.event.issue.title }}
-      ISSUE_BODY: ${{ github.event.issue.body }}
-      ISSUE_URL: ${{ github.event.issue.html_url }}
-      ISSUE_CREATED_AT: ${{ github.event.issue.created_at }}
-      ISSUE_UPDATED_AT: ${{ github.event.issue.updated_at }}
-      ISSUE_LABELS: ${{ toJSON(github.event.issue.labels) }}
+      ISSUE_TITLE: '${{ github.event.issue.title }}'
+      ISSUE_BODY: '${{ github.event.issue.body }}'
+      ISSUE_URL: '${{ github.event.issue.html_url }}'
+      ISSUE_CREATED_AT: '${{ github.event.issue.created_at }}'
+      ISSUE_UPDATED_AT: '${{ github.event.issue.updated_at }}'
+      ISSUE_LABELS: '${{ toJSON(github.event.issue.labels) }}'
 
     steps:
       - name: Checkout repository

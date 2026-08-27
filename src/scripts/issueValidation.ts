@@ -25,8 +25,8 @@ export function getIssue(): RawIssueNodeType {
             color: String(item.color ?? ''),
           }));
       }
-    } catch {
-      labelNodes = [];
+    } catch (error) {
+      console.error('ISSUE_LABELS の JSON パースに失敗しました:', error);
     }
   }
 
@@ -49,7 +49,9 @@ export function validateIssue(issue: RawIssueNodeType): ValidationResult {
   const statusLabels = issue.labels.nodes.filter(l => l.name.startsWith('status:'));
   const typeLabels = issue.labels.nodes.filter(l => l.name.startsWith('type:'));
 
-  if (statusLabels.length > 1) {
+  if (statusLabels.length === 0) {
+    errors.push('ステータスラベル(status:)が設定されていません。');
+  } else if (statusLabels.length > 1) {
     errors.push(`ステータス(status:)が複数設定されています: ${statusLabels.map(l => l.name).join(', ')}`);
   } else {
     const isPublished = statusLabels.some(l => l.name === 'status:published');
