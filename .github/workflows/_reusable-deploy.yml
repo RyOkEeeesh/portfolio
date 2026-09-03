@@ -1,7 +1,7 @@
 name: "Reusable Deploy Process"
 
 on:
-  workflow_call:
+  workflow_call: {}
 
 permissions:
   contents: read

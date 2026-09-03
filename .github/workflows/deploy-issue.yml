@@ -2,7 +2,7 @@ name: Deploy via Issue Label
 
 on:
   issues:
-    types: [labeled]
+    types: [labeled, unlabeled]
 
 concurrency:
   group: issue-deploy-${{ github.event.issue.number }}
@@ -11,6 +11,7 @@ concurrency:
 jobs:
   validate:
     if: |
+      github.event.action == 'labeled' &&
       github.event.issue.user.login == github.repository_owner &&
       contains(github.event.issue.labels.*.name, 'status:published')
 
@@ -78,8 +79,22 @@ jobs:
               });
             }
 
+  unpublish:
+    if: |
+      github.event.action == 'unlabeled' &&
+      github.event.issue.user.login == github.repository_owner &&
+      github.event.label.name == 'status:published'
+ 
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - name: No-op (unpublish triggers redeploy only)
+        run: echo "status:published removed from issue #${{ github.event.issue.number }} — redeploying to drop it from the site."
+ 
   call-deploy:
-    needs: validate
-    if: needs.validate.result == 'success'
+    needs: [validate, unpublish]
+    if: |
+      always() &&
+      (needs.validate.result == 'success' || needs.unpublish.result == 'success')
     uses: ./.github/workflows/_reusable-deploy.yml
     secrets: inherit
