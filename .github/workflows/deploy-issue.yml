@@ -9,11 +9,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  validate:
+  handle-label:
+    # status: / type: いずれかのラベルが追加されたら発火。
     if: |
       github.event.action == 'labeled' &&
       github.event.issue.user.login == github.repository_owner &&
-      contains(github.event.issue.labels.*.name, 'status:published')
+      (startsWith(github.event.label.name, 'status:') || startsWith(github.event.label.name, 'type:') || startsWith(github.event.label.name, 'tag:'))
 
     runs-on: ubuntu-latest
 
@@ -22,6 +23,9 @@ jobs:
       actions: write
       issues: write
 
+    outputs:
+      should-deploy: ${{ steps.normalize.outputs.should-deploy }}
+
     env:
       ISSUE_NUMBER: ${{ github.event.issue.number }}
       ISSUE_TITLE: '${{ github.event.issue.title }}'
@@ -29,7 +33,6 @@ jobs:
       ISSUE_URL: '${{ github.event.issue.html_url }}'
       ISSUE_CREATED_AT: '${{ github.event.issue.created_at }}'
       ISSUE_UPDATED_AT: '${{ github.event.issue.updated_at }}'
-      ISSUE_LABELS: '${{ toJSON(github.event.issue.labels) }}'
 
     steps:
       - name: Checkout repository
@@ -37,64 +40,146 @@ jobs:
 
       - uses: ./.github/actions/setup-pnpm
 
-      - name: Run validation
-        run: pnpm run validate
-
-      - name: Revert status labels to draft on failure
-        if: failure()
+      - name: Normalize status/type labels
+        id: normalize
         uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const issueNumber = context.issue.number;
             const owner = context.repo.owner;
             const repo = context.repo.repo;
+            const issueNumber = context.issue.number;
+            const addedLabel = context.payload.label.name;
+            const addedPrefix = addedLabel.split(':')[0] + ':';
 
-            const issue = await github.rest.issues.get({
+            const { data: issue } = await github.rest.issues.get({
               owner,
               repo,
               issue_number: issueNumber,
             });
 
-            const currentLabels = issue.data.labels
-              .map(label => typeof label === 'string' ? label : label.name);
-
-            const otherStatusLabels = currentLabels.filter(
-              name => name.startsWith('status:') && name !== 'status:draft'
+            let normalizedLabels = issue.labels.map(l =>
+              typeof l === 'string' ? { name: l, color: '' } : { name: l.name, color: l.color || '' }
             );
 
-            const hasDraft = currentLabels.includes('status:draft');
+            async function mostRecentLabelName(prefix) {
+              const events = await github.paginate(github.rest.issues.listEventsForTimeline, {
+                owner,
+                repo,
+                issue_number: issueNumber,
+                per_page: 100,
+              });
 
-            if (otherStatusLabels.length > 0 || !hasDraft) {
-              const updatedLabels = [
-                ...currentLabels.filter(name => !name.startsWith('status:')),
-                'status:draft'
+              const matches = events.filter(
+                e => e.event === 'labeled' && e.label && e.label.name.startsWith(prefix)
+              );
+
+              return matches.length > 0 ? matches[matches.length - 1].label.name : null;
+            }
+
+            let changed = false;
+
+            for (const prefix of ['status:', 'type:']) {
+              const sameCategory = normalizedLabels.filter(l => l.name.startsWith(prefix));
+              if (sameCategory.length <= 1) continue;
+
+              let keepName;
+              if (prefix === addedPrefix) {
+                keepName = addedLabel;
+              } else {
+                keepName = (await mostRecentLabelName(prefix)) ?? sameCategory[sameCategory.length - 1].name;
+              }
+
+              normalizedLabels = [
+                ...normalizedLabels.filter(l => !l.name.startsWith(prefix)),
+                { name: keepName, color: '' },
               ];
+              changed = true;
+            }
 
+            // 今回追加されたラベルが(APIラグ等で)まだ反映されていない場合の保険
+            if (!normalizedLabels.some(l => l.name === addedLabel)) {
+              normalizedLabels = [
+                ...normalizedLabels.filter(l => !l.name.startsWith(addedPrefix)),
+                { name: addedLabel, color: '' },
+              ];
+              changed = true;
+            }
+
+            if (changed) {
               await github.rest.issues.setLabels({
                 owner,
                 repo,
                 issue_number: issueNumber,
-                labels: updatedLabels,
+                labels: normalizedLabels.map(l => l.name),
               });
             }
+
+            const shouldValidate = addedLabel === 'status:published';
+            const shouldDeploy = addedPrefix === 'status:' || addedPrefix === 'type:' || addedPrefix === 'tag:';
+
+            core.setOutput('normalized-labels', JSON.stringify(normalizedLabels));
+            core.setOutput('should-validate', shouldValidate ? 'true' : 'false');
+            core.setOutput('should-deploy', shouldDeploy ? 'true' : 'false');
+
+      - name: Run validation
+        id: validate
+        if: steps.normalize.outputs.should-validate == 'true'
+        continue-on-error: true
+        env:
+          ISSUE_LABELS: ${{ steps.normalize.outputs.normalized-labels }}
+        run: pnpm run validate
+
+      - name: Revert status label to draft on validation failure
+        if: steps.validate.outcome == 'failure'
+        uses: actions/github-script@v9
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const issueNumber = context.issue.number;
+
+            const { data: issue } = await github.rest.issues.get({
+              owner,
+              repo,
+              issue_number: issueNumber,
+            });
+
+            const currentLabels = issue.labels.map(l => (typeof l === 'string' ? l : l.name));
+
+            const updatedLabels = [
+              ...currentLabels.filter(name => !name.startsWith('status:')),
+              'status:draft',
+            ];
+
+            await github.rest.issues.setLabels({
+              owner,
+              repo,
+              issue_number: issueNumber,
+              labels: updatedLabels,
+            });
 
   unpublish:
     if: |
       github.event.action == 'unlabeled' &&
-      github.event.issue.user.login == github.repository_owner &&
-      github.event.label.name == 'status:published'
- 
+      github.event.label.name == 'status:published' &&
+      github.event.issue.user.login == github.repository_owner
+
     runs-on: ubuntu-latest
- 
+
     steps:
       - name: No-op (unpublish triggers redeploy only)
-        run: echo "status:published removed from issue #${{ github.event.issue.number }} — redeploying to drop it from the site."
- 
+        run: |
+          echo "status:published removed from issue #${{ github.event.issue.number }} — redeploying to drop it from the site."
+
   call-deploy:
-    needs: [validate, unpublish]
+    needs: [handle-label, unpublish]
     if: |
       always() &&
-      (needs.validate.result == 'success' || needs.unpublish.result == 'success')
+      (
+        (needs.handle-label.result == 'success' && needs.handle-label.outputs.should-deploy == 'true') ||
+        needs.unpublish.result == 'success'
+      )
     uses: ./.github/workflows/_reusable-deploy.yml
     secrets: inherit
