@@ -17,8 +17,7 @@
 - Vanilla CSS
 - GitHub Pages
 - GitHub Actions
-- GitHub REST API（必要なら将来的にGraphQLへ移行）
-- react-markdown + remark-gfm（Markdown表示）
+- GitHub GraphQL
 
 ※ Three.jsやReactは後から追加可能（トップページ演出用）
 
@@ -294,12 +293,6 @@ GitHub Pages Deploy
 
 ---
 
-## OGP画像生成
-
-記事ごとに自動生成。
-
----
-
 ## シンタックスハイライト
 
 コード表示強化。
@@ -309,18 +302,6 @@ GitHub Pages Deploy
 ## ダークモード
 
 CSSのみで実装予定。
-
----
-
-## View Transition API
-
-ページ遷移アニメーション。
-
----
-
-## GitHub GraphQL
-
-REST APIから移行予定。
 
 ---
 
