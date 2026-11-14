@@ -51,3 +51,4 @@ public/thumbnail/*
 !public/thumbnail/index.png
 src/data/assets-map.json
 public/download-asset/*
+skills/system/run-workflow/

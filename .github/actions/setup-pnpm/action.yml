@@ -4,14 +4,8 @@ description: 'Checkout, setup pnpm with cache, and install'
 runs:
   using: "composite"
   steps:
-    - name: Setup pnpm
-      uses: pnpm/action-setup@v6
-
-    - name: Setup Node.js
-      uses: actions/setup-node@v7
-      with:
-        node-version: '24'
-        cache: 'pnpm'
+    - name: Setup mise
+      uses: jdx/mise-action@v5
 
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
