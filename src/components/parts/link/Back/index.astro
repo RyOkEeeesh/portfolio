@@ -10,9 +10,10 @@ interface Props {
 const { href } = Astro.props;
 ---
 
-<div class="back">
-  <a class="link-back" href={href || '/'} data-href={href} data-route={route}>
+<div class="back-wrap">
+  <a class="link-back" href={href || '/'} data-href={href} data-route={route} aria-label="戻る">
     <BackIcon class="icon" />
+    <span class="back-label sub">back</span>
   </a>
 </div>
 
@@ -32,15 +33,42 @@ const { href } = Astro.props;
 </script>
 
 <style>
-  .back {
-    overflow: hidden;
-    display: inline-block;
-    border-radius: 50%;
-    transition: background-color 0.2s ease-out;
-    margin-bottom: 2rem;
+  .back-wrap {
+    margin-bottom: 1.5rem;
   }
 
-  .back:hover {
-    background-color: var(--clr-border);
+  .link-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.35rem 0.75rem 0.35rem 0.45rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--clr-border);
+    background-color: var(--clr-bg-surface);
+    color: var(--clr-txt-sub);
+    transition:
+      border-color var(--duration-common),
+      background-color var(--duration-common),
+      color var(--duration-common),
+      transform var(--duration-common);
+
+    &:hover {
+      border-color: var(--clr-border-active);
+      background-color: var(--clr-bg-subtle);
+      color: var(--clr-txt-main);
+      transform: translateX(-2px);
+    }
+  }
+
+  .icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    fill: currentColor;
+  }
+
+  .back-label {
+    font-size: var(--font-size-mut-txt-s);
+    color: inherit;
+    line-height: 1;
   }
 </style>

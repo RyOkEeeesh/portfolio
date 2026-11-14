@@ -15,25 +15,23 @@ const { route } = Astro.props;
 const posts = await getPublishedPosts(route, 3);
 ---
 
-<section>
+<section class="content-section">
   <Title route={route} />
-  <div>
-    <PostContainer posts={posts} />
-  </div>
+  {posts.length === 0 ? <div class="empty-state sub">No {route} posts yet.</div> : <PostContainer posts={posts} />}
 </section>
 
 <style>
-  .title-content {
+  .content-section {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    user-select: none;
-    border-bottom: 2px solid var(--clr-border);
-    padding: 0.5rem 0.25rem;
+    flex-direction: column;
+    gap: 1.25rem;
   }
 
-  .link-text {
-    opacity: calc(0.6 + var(--is-hovered, 0) * 0.4);
-    transition: opacity var(--duration-common);
+  .empty-state {
+    padding: 2rem 1.25rem;
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--clr-border);
+    text-align: center;
+    font-size: var(--font-size-mut-txt-s);
   }
 </style>

@@ -26,18 +26,49 @@ const { route } = Astro.params;
 const { posts } = Astro.props;
 ---
 
-<Layout title={`${route}一覧`}>
-  <main>
+<Layout title={route}>
+  <main class="list-page">
     <Back href="/" />
-    <Title>{route}</Title>
+    <header class="page-header">
+      <Title>{route}</Title>
+      <span class="count sub">{posts.length} {posts.length === 1 ? 'post' : 'posts'}</span>
+    </header>
     {
       posts.length === 0 ? (
-        <p>記事がありません。</p>
+        <div class="empty-state sub">No {route} posts yet.</div>
       ) : (
-        <article>
+        <section class="posts-section">
           <PostsContainer posts={posts} />
-        </article>
+        </section>
       )
     }
   </main>
 </Layout>
+
+<style>
+  .list-page {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .page-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.75rem;
+    border-bottom: 1px solid var(--clr-border);
+  }
+
+  .count {
+    font-size: var(--font-size-mut-txt-s);
+  }
+
+  .empty-state {
+    padding: 3rem 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--clr-border);
+    text-align: center;
+    font-size: var(--font-size-mut-txt-m);
+  }
+</style>

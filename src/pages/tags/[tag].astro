@@ -1,8 +1,8 @@
 ---
 import Layout from '@/layouts/Layout/index.astro';
 
-import PostCard from '@/components/card/PostCard/index.astro';
 import Back from '@/components/parts/link/Back/index.astro';
+import PostsContainer from '@/components/parts/PostsContainer/index.astro';
 import Title from '@/components/parts/Title/index.astro';
 
 import { getPosts, getTags } from '@/lib';
@@ -23,20 +23,49 @@ export async function getStaticPaths() {
 const { posts, tag } = Astro.props;
 ---
 
-<Layout title={tag.name}>
-  <main>
+<Layout title={`#${tag.name}`}>
+  <main class="tag-detail-page">
     <Back href="/tags" />
-    <Title>{tag.name}</Title>
+    <header class="page-header">
+      <Title>#{tag.name}</Title>
+      <span class="count sub">{posts.length} {posts.length === 1 ? 'post' : 'posts'}</span>
+    </header>
     {
       posts.length === 0 ? (
-        <p>記事がありません。</p>
+        <div class="empty-state sub">No posts yet.</div>
       ) : (
-        <article>
-          {posts.map(post => (
-            <PostCard post={post} />
-          ))}
-        </article>
+        <section class="posts-section">
+          <PostsContainer posts={posts} />
+        </section>
       )
     }
   </main>
 </Layout>
+
+<style>
+  .tag-detail-page {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .page-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.75rem;
+    border-bottom: 1px solid var(--clr-border);
+  }
+
+  .count {
+    font-size: var(--font-size-mut-txt-s);
+  }
+
+  .empty-state {
+    padding: 3rem 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--clr-border);
+    text-align: center;
+    font-size: var(--font-size-mut-txt-m);
+  }
+</style>

@@ -5,8 +5,23 @@ import AboutCard from '@/components/card/AboutCard/index.astro';
 import ContentCard from '@/components/views/Top/ContentCard/index.astro';
 ---
 
-<main>
+<main class="top-main">
   <AboutCard />
-  {ContentsSchema.options.map(route => <ContentCard route={route} />)}
-  <!-- <ContentCard route='tags' /> -->
+  <div class="sections">
+    {ContentsSchema.options.map(route => <ContentCard route={route} />)}
+  </div>
 </main>
+
+<style>
+  .top-main {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  .sections {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+</style>

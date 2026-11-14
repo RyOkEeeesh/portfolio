@@ -13,7 +13,7 @@ const { route } = Astro.props;
 
 <div class="title-content">
   <Title>{route}</Title>
-  <Link href={route}><span class="link-text">view all</span></Link>
+  <Link href={`/${route}`}><span class="link-text sub">view all</span></Link>
 </div>
 
 <style>
@@ -22,14 +22,15 @@ const { route } = Astro.props;
     align-items: center;
     justify-content: space-between;
     user-select: none;
-    border-bottom: 2px solid var(--clr-border);
-    padding: 0.5rem 0.25rem;
-    transition: border-bottom var(--duration-common);
+    border-bottom: 1px solid var(--clr-border);
+    padding: 0 0.15rem 0.65rem;
+    transition: border-color var(--duration-common);
   }
 
   .link-text {
-    font-size: var(--font-size-mut-txt-m);
-    opacity: calc(0.6 + var(--is-hovered, 0) * 0.4);
+    font-size: var(--font-size-mut-txt-s);
+    color: var(--clr-txt-main);
+    opacity: calc(0.65 + var(--is-hovered, 0) * 0.35);
     transition: opacity var(--duration-common);
   }
 </style>

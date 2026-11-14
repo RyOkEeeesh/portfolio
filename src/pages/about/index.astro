@@ -4,19 +4,158 @@ import { SITE_DATA } from '@/data';
 import Layout from '@/layouts/Layout/index.astro';
 
 import GithubIcon from '@/components/parts/image/GithubIcon/index.astro';
+import Back from '@/components/parts/link/Back/index.astro';
+import Link from '@/components/parts/link/Link/index.astro';
+import Title from '@/components/parts/Title/index.astro';
 ---
 
-<Layout title="プロファイル">
-  <main>
-    <section>
-      <!-- 自己紹介 -->
-      <div class="center">
-        <GithubIcon />
-        <p>{`${SITE_DATA.user.name.last} ${SITE_DATA.user.name.first}`}</p>
-        <div class="external-links">
-          <a href="https://github.com/RyOkEeeesh" target="_blank" rel="noopener noreferrer">GitHub</a>
+<Layout title="about">
+  <main class="about-page">
+    <Back href="/" />
+    <header class="page-header">
+      <Title>about</Title>
+    </header>
+
+    <section class="profile-card">
+      <div class="profile-top">
+        <GithubIcon width={96} height={96} />
+        <div class="profile-info">
+          <span class="role sub">Developer · Student</span>
+          <h3 class="name">
+            {SITE_DATA.user.name.last}{' '}
+            {SITE_DATA.user.name.first}
+            <span class="reading sub">{SITE_DATA.user.reading.last} {SITE_DATA.user.reading.first}</span>
+          </h3>
+          <p class="affiliation sub">{SITE_DATA.user.affiliation}</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="links-grid">
+        <div class="link-item">
+          <span class="link-label sub">GitHub</span>
+          <Link href={`https://github.com/${SITE_DATA.user.githubId}`}>
+            <span class="link-val sub">@{SITE_DATA.user.githubId}</span>
+          </Link>
+        </div>
+        <div class="link-item">
+          <span class="link-label sub">Email</span>
+          <Link href={`mailto:${SITE_DATA.user.email}`}>
+            <span class="link-val sub">{SITE_DATA.user.email}</span>
+          </Link>
         </div>
       </div>
     </section>
   </main>
 </Layout>
+
+<style>
+  .about-page {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .page-header {
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.75rem;
+    border-bottom: 1px solid var(--clr-border);
+  }
+
+  .profile-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--clr-border);
+    background-color: var(--clr-bg-surface);
+    box-shadow: 0 2px 10px var(--clr-shadow);
+  }
+
+  .profile-top {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .role {
+    font-size: var(--font-size-mut-txt-s);
+    letter-spacing: 0.04em;
+  }
+
+  .name {
+    font-family: var(--font-title);
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.65rem;
+    line-height: 1.3;
+  }
+
+  .reading {
+    font-size: var(--font-size-mut-txt-s);
+    font-weight: 400;
+  }
+
+  .affiliation {
+    font-size: var(--font-size-mut-txt-m);
+  }
+
+  .divider {
+    height: 1px;
+    background-color: var(--clr-border);
+  }
+
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .link-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--clr-border);
+    background-color: var(--clr-bg-main);
+    transition: border-color var(--duration-common);
+
+    &:hover {
+      border-color: var(--clr-border-active);
+    }
+  }
+
+  .link-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .link-val {
+    font-size: var(--font-size-mut-txt-m);
+    color: var(--clr-txt-main);
+  }
+
+  @media (max-width: 640px) {
+    .profile-card {
+      padding: 1.5rem 1.25rem;
+    }
+
+    .profile-top {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  }
+</style>

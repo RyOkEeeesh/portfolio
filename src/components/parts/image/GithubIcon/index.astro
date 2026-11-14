@@ -6,7 +6,7 @@ interface Props {
   height?: number;
 }
 
-const { width = 100, height = 100 } = Astro.props;
+const { width = 84, height = 84 } = Astro.props;
 
 const IconURL = 'https://avatars.githubusercontent.com/u/169122209';
 ---
@@ -24,5 +24,8 @@ const IconURL = 'https://avatars.githubusercontent.com/u/169122209';
 <style>
   .icon {
     border-radius: 50%;
+    border: 1px solid var(--clr-border);
+    background-color: var(--clr-bg-subtle);
+    flex-shrink: 0;
   }
 </style>

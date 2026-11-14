@@ -5,51 +5,68 @@
   --font-sub: "JetBrains Mono", monospace;
 
   /* font-size */
-  --font-size-mut-title-l: clamp(1.5rem, 3vw + 1rem, 2.5rem);
-  --font-size-mut-title-m: clamp(1rem, 1vw + 1rem, 1.5rem);
-  --font-size-mut-txt-m: clamp(0.5rem, 1vw + 0.5rem, 1rem);
-  --font-size-mut-txt-s: clamp(0.5rem, 1vw + 0.5rem, 0.8rem);
+  --font-size-mut-title-l: clamp(1.35rem, 2.2vw + 0.9rem, 2rem);
+  --font-size-mut-title-m: clamp(1.15rem, 1.2vw + 0.9rem, 1.5rem);
+  --font-size-mut-txt-m: clamp(0.875rem, 0.4vw + 0.8rem, 1rem);
+  --font-size-mut-txt-s: clamp(0.75rem, 0.3vw + 0.7rem, 0.85rem);
 
   /* sizing */
   --h-header: 4rem;
   --w-min-content: 300px;
-  --w-max-content: 960px; /* 要調整 */
-  --h-footer: 1.2rem;
+  --w-max-content: 920px;
+  --h-footer: 4.5rem;
+
+  /* border-radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
 
   /* spacing */
-  --spacing-gap-nav: 1.2rem;
-
-  /* color */
-  --clr-footer: #4b5563; /* gray-600 */
-  --clr-shadow: rgb(from #111827 r g b / 0.3); /* gray-900 */
+  --spacing-gap-nav: 1.25rem;
 
   /* duration */
-  --duration-common: 0.15s ease;
+  --duration-common: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* 明度調整要 */
-  --num-txt-sub: 25;
-  --num-border: 23;
-
-  /* dvice */
+  /* device */
   --media-width: 768px;
+
+  /* default (light) theme fallbacks */
+  --theme-icon: url("/img/icon/light.svg");
+  --clr-bg-main: #f8fafc;
+  --clr-bg-surface: #ffffff;
+  --clr-bg-subtle: #f1f5f9;
+  --clr-txt-main: #0f172a;
+  --clr-txt-sub: #64748b;
+  --clr-border: #e2e8f0;
+  --clr-border-active: #94a3b8;
+  --clr-footer: #64748b;
+  --clr-shadow: rgb(15 23 42 / 0.06);
 }
 
 :root[data-theme="light"] {
   --theme-icon: url("/img/icon/light.svg");
-  --clr-bg-main: #f3f4f6; /* gray-100 */
-  --clr-txt-main: #334155; /* slate-700 */
-  --clr-txt-sub: hsl(from var(--clr-txt-main) h s calc(l + var(--num-txt-sub)));
-  --clr-border-active: #9ca3af; /* gray-400 */
-  --clr-border: hsl(from var(--clr-border-active) h s calc(l + var(--num-border)));
+  --clr-bg-main: #f8fafc;
+  --clr-bg-surface: #ffffff;
+  --clr-bg-subtle: #f1f5f9;
+  --clr-txt-main: #0f172a;
+  --clr-txt-sub: #64748b;
+  --clr-border: #e2e8f0;
+  --clr-border-active: #94a3b8;
+  --clr-footer: #64748b;
+  --clr-shadow: rgb(15 23 42 / 0.06);
 }
 
 :root[data-theme="dark"] {
   --theme-icon: url("/img/icon/dark.svg");
-  --clr-bg-main: #111827; /* gray-900 */
-  --clr-txt-main: #e2e8f0; /* slate-200 */
-  --clr-txt-sub: hsl(from var(--clr-txt-main) h s calc(l - var(--num-txt-sub)));
-  --clr-border-active: #6b7280; /* gray-500 */
-  --clr-border: hsl(from var(--clr-border-active) h s calc(l - var(--num-border)));
+  --clr-bg-main: #0b0f19;
+  --clr-bg-surface: #111827;
+  --clr-bg-subtle: #1e293b;
+  --clr-txt-main: #f1f5f9;
+  --clr-txt-sub: #94a3b8;
+  --clr-border: #1e293b;
+  --clr-border-active: #475569;
+  --clr-footer: #64748b;
+  --clr-shadow: rgb(0 0 0 / 0.35);
 }
 
 *,
@@ -65,7 +82,10 @@ html {
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-  font-size: clamp(16px, 2vw, 18px);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -73,8 +93,8 @@ body {
   background-color: var(--clr-bg-main);
   color: var(--clr-txt-main);
   transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+    background-color 0.25s ease,
+    color 0.25s ease;
 }
 
 img,
@@ -109,7 +129,11 @@ button {
 .contents {
   width: 100%;
   min-height: calc(100vh - var(--h-footer));
-  padding: var(--h-header);
+  padding: calc(var(--h-header) + 2.5rem) 1.5rem 4rem;
+}
+
+.contents.center {
+  align-items: flex-start;
 }
 
 main {
@@ -130,11 +154,15 @@ main {
 
 .sub {
   font-family: var(--font-sub);
-  font-weight: 200;
+  font-weight: 400;
   color: var(--clr-txt-sub);
 }
 
 /* コードブロック */
+.expressive-code {
+  margin: 1.5rem 0;
+}
+
 .expressive-code .code-icon {
   width: 1rem;
   aspect-ratio: 1;
@@ -144,4 +172,10 @@ main {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .contents {
+    padding: calc(var(--h-header) + 1.5rem) 1rem 3rem;
+  }
 }

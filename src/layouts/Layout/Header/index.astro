@@ -10,13 +10,15 @@ import { BASE_URL, ROUTES } from '@/constants';
         {
           Object.entries(ROUTES).map(([_, value]) => (
             <li>
-              <a href={`/${value}`}>{value}</a>
+              <a class="nav-link" href={`/${value}`}>
+                {value}
+              </a>
             </li>
           ))
         }
       </ul>
       <div class="center">
-        <button class="theme-btn canter" type="button">
+        <button class="theme-btn center" type="button" aria-label="テーマを切り替え">
           <span class="theme-icon"></span>
         </button>
       </div>
@@ -32,30 +34,33 @@ import { BASE_URL, ROUTES } from '@/constants';
     z-index: 10;
     width: 100%;
     height: var(--h-header);
+    padding: 0 1.5rem;
     font-family: var(--font-title);
     font-weight: 700;
-    background-color: rgb(from var(--clr-bg-main) r g b / 0.8);
-    box-shadow: 0 0px 0px var(--clr-shadow);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    background-color: rgb(from var(--clr-bg-main) r g b / 0.82);
+    border-bottom: 1px solid transparent;
+    box-shadow: 0 0 0 transparent;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     transition:
       background-color var(--duration-common),
+      border-color var(--duration-common),
       box-shadow var(--duration-common);
 
     &.is-scrolled {
-      border-color: var(--clr-border);
-      box-shadow: 0 2px 4px var(--clr-shadow);
+      border-bottom-color: var(--clr-border);
+      box-shadow: 0 4px 16px var(--clr-shadow);
     }
   }
 
   h1 {
-    font-size: var(--font-size-mut-title-l);
-    font-weight: 700;
-    opacity: 1;
-    transition: opacity 0.15s;
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    transition: opacity var(--duration-common);
 
     &:hover {
-      opacity: 0.8;
+      opacity: 0.75;
     }
   }
 
@@ -65,32 +70,86 @@ import { BASE_URL, ROUTES } from '@/constants';
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1rem;
   }
 
   nav {
     height: var(--h-header);
     display: flex;
-    gap: var(--spacing-gap-nav);
+    gap: 1rem;
     align-items: center;
-    font-size: 1.1rem;
+    font-family: var(--font-sub);
+    font-size: 0.9rem;
+    font-weight: 400;
 
     ul {
-      text-decoration: none;
       display: flex;
-      gap: var(--spacing-gap-nav);
+      align-items: center;
+      gap: 0.25rem;
+    }
+  }
+
+  .nav-link {
+    display: inline-block;
+    padding: 0.35rem 0.65rem;
+    border-radius: var(--radius-sm);
+    color: var(--clr-txt-sub);
+    transition:
+      color var(--duration-common),
+      background-color var(--duration-common);
+
+    &:hover {
+      color: var(--clr-txt-main);
+      background-color: var(--clr-bg-subtle);
     }
   }
 
   .theme-btn {
-    padding-top: 0.4rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--clr-border);
+    background-color: var(--clr-bg-surface);
+    transition:
+      border-color var(--duration-common),
+      background-color var(--duration-common);
+
+    &:hover {
+      border-color: var(--clr-border-active);
+      background-color: var(--clr-bg-subtle);
+    }
   }
 
   .theme-icon {
     display: inline-block;
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.15rem;
+    height: 1.15rem;
     -webkit-mask: var(--theme-icon) no-repeat center / contain;
     mask: var(--theme-icon) no-repeat center / contain;
     background-color: var(--clr-txt-main);
+    transition: background-color var(--duration-common);
+  }
+
+  @media (max-width: 640px) {
+    header {
+      padding: 0 1rem;
+    }
+
+    h1 {
+      font-size: 1.1rem;
+    }
+
+    nav {
+      gap: 0.4rem;
+      font-size: 0.8rem;
+
+      ul {
+        gap: 0.1rem;
+      }
+    }
+
+    .nav-link {
+      padding: 0.25rem 0.45rem;
+    }
   }
 </style>
